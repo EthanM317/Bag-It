@@ -30,6 +30,7 @@ export class Backend {
     // -- Users --
     // Get all users in the database
 	static getUsers() {
+		console.log("Getting users...");
 		api.get("/accounts/users")
 			.then((res) => res.data)
 			.then((data) => {

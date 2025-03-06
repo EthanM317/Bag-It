@@ -1,16 +1,16 @@
 import React from "react";
 import { useState } from "react";
 
-import { Backend } from "../api";
-
+import { Backend, api } from "../api";
 
 function TestPage() {
-    
-    // Backend.getUsers();
+	Backend.getUsers();
 
-    return <div>
-        <p>i love shit</p>
-    </div>
+	return (
+		<div>
+			<p>i love shit</p>
+		</div>
+	);
 }
 
 export default TestPage;

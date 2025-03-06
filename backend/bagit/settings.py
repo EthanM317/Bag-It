@@ -63,6 +63,9 @@ INSTALLED_APPS = [
     # my applications
     "accounts",
     "clothing",
+
+    # Place after everything
+    "django_cleanup.apps.CleanupConfig",
 ]
 
 MIDDLEWARE = [
@@ -145,9 +148,11 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static')
+# ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Where we store images
 MEDIA_URL = "media/"
