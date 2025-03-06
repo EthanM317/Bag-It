@@ -23,11 +23,11 @@ function TopPanelBar() {
         <ShoppingBagIcon  className='bag' style={{ fontSize: "50px" }}/>
         
       </div>
-      <div className='categoryBar'>
+      {/* <div className='categoryBar'>
         <h4>Popular Categories</h4>
-      </div>
-      
+      </div> */}
     </div>
+    
     
   )
 }

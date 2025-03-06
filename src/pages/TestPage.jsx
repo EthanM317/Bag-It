@@ -9,7 +9,7 @@ function TestPage() {
     // Backend.getUsers();
 
     return <div>
-        <p>i love shit</p>
+        <p>test</p>
     </div>
 }
 
