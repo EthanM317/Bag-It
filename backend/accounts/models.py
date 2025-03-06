@@ -32,11 +32,12 @@ class Bag(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    # Reference to the user that created the bag
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bags")
 
     # One to many relationship
     # "related_name" is the field name on the user that references all their bags
     # ex. user.bags
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bags")
 
     # Set manager
     objects = BagManager()

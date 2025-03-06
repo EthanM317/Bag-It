@@ -1,15 +1,14 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-import { Backend } from "../api";
-
+import { Backend, api } from "../api";
 
 function TestPage() {
     
     // Backend.getUsers();
 
     return <div>
-        <p>test</p>
+        <p>i love shit</p>
     </div>
 }
 
