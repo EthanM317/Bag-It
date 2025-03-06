@@ -23,11 +23,15 @@ function TestPage() {
 
 	return (
 		<div>
-			<p>i love shit</p>
+			{/* <p>i love shit</p> */}
 			{items.map((item) => (
                 <>
                     <p>{item.name}</p>
-                    <img src={item.image} alt={item.name} />
+                    <img src={item.image} alt={item.name} style={{
+                        width: 200,
+                        height: 200,
+                        display: "inline"
+                    }} />
                 </>
 			))}
 		</div>
