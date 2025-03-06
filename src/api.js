@@ -27,20 +27,31 @@ api.interceptors.request.use(
 
 // -- Backend wrapper class --
 export class Backend {
-    // -- Users --
-    // Get all users in the database
+	// -- Users --
+	// Get all users in the database
 	static getUsers() {
 		console.log("Getting users...");
 		api.get("/accounts/users/")
 			.then((res) => res.data)
 			.then((data) => {
 				let users = data;
-                console.log(users);
-                return users;
+				console.log(users);
+				return users;
+			})
+			.catch((err) => alert(err));
+	}
+
+	static getClothing() {
+		api.get("/clothing/")
+			.then((res) => res.data)
+			.then((data) => {
+				let clothing = data;
+				// console.log(clothing);
+				return clothing;
 			})
 			.catch((err) => alert(err));
 	}
 
 	// -- Clothing --
-	static getClothing() {}
+	// static getClothing() {}
 }
