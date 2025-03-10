@@ -17,3 +17,33 @@ Bag-It! aims to be an accessible and intuitive tool for people who want to put t
 - Male | Female | Unisex
 ### Brands
 - Nike | Jordan | Tommy Hilfiger | Gucci
+
+## Build Instructions
+### Clone the Repository
+Open terminal and run the following commands:
+```bash
+git clone https://github.com/EthanM317/Bag-It
+```
+
+### Install Dependencies
+Change into the repository directory by running:
+```bash
+cd Bag-It
+```
+
+Once you’re inside the repository directory, run the following command to install the dependencies:
+```bash
+npm install
+```
+
+### Run test server
+After installing the dependencies, run:
+```bash
+npm run dev
+```
+
+It’ll output something like this:
+
+![Example output](./blueprint/TestExample.png)
+
+Paste http://localhost:5173/ into your browser of choice to preview the website.
