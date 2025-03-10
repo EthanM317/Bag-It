@@ -1,6 +1,7 @@
 import { api } from "../api";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 
 // A login form
 // TODO: See if Mui already has one of these
@@ -9,9 +10,11 @@ function Form() {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
-    const [outputMsg, setOutputMsg] = useState("");
+	const [outputMsg, setOutputMsg] = useState("");
 
 	const navigate = useNavigate();
+
+	const name = method === "login" ? "Login" : "Register";
 
 	const handleSubmit = async (e) => {
 		setLoading(true);
@@ -19,8 +22,15 @@ function Form() {
 
 		// TODO: Post request to login
 		try {
-            setOutputMsg("Username: " + username + " Password: " + password);
-            console.log(outputMsg);
+			const res = await api.post(Route, { username, password });
+
+			if (method === "login") {
+				localStorage.setItem(ACCESS_TOKEN, res.data.access);
+				localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+			}
+
+			setOutputMsg("Username: " + username + " Password: " + password);
+			console.log(outputMsg);
 		} catch (error) {
 			alert(error);
 		} finally {
@@ -50,9 +60,7 @@ function Form() {
 				Login
 			</button>
 
-            {outputMsg && 
-            <p>{outputMsg}</p>
-            }
+			{outputMsg && <p>{outputMsg}</p>}
 		</form>
 	);
 }
