@@ -8,6 +8,9 @@ function TestPage() {
 
 	useEffect(() => {
 		getItems();
+		
+		// console.log(localStorage);
+		// localStorage.clear();
 	}, []);
 
 	const getItems = () => {
@@ -21,9 +24,25 @@ function TestPage() {
 			.catch((err) => alert(err));
 	};
 
+
+	// If localStorage has a bad token, we might need to clear it. My quick solution for now...
+	// TODO: figure out how to handle it properly later
+	const clearLocalStorage = () => {
+		localStorage.clear();
+		console.log("Cleared local storage.");
+		alert("Cleared local storage.\n(This will log you out.)");
+	}
+
 	return (
 		<div>
-			{/* <p>i love shit</p> */}
+			<div>
+				<p>USE THIS BUTTON IF YOU GET AN ERROR LIKE "request failed with status code 401".<br/>This could be the result of a bad access/refresh token that the backend is rejecting for some reason...</p>
+				<button onClick={clearLocalStorage}>
+					CLEAR LOCAL STORAGE
+				</button>
+			</div>
+
+			{/* TODO: Investigate "Each child in a list should have a unique 'key' error" */}
 			{items.map((item) => (
                 <>
                     <p>{item.name}</p>

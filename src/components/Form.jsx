@@ -22,12 +22,12 @@ function Form() {
 
 		// TODO: Post request to login
 		try {
-			const res = await api.post(Route, { username, password });
+			// const res = await api.post(Route, { username, password });
 
-			if (method === "login") {
-				localStorage.setItem(ACCESS_TOKEN, res.data.access);
-				localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-			}
+			// if (method === "login") {
+			// 	localStorage.setItem(ACCESS_TOKEN, res.data.access);
+			// 	localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+			// }
 
 			setOutputMsg("Username: " + username + " Password: " + password);
 			console.log(outputMsg);
