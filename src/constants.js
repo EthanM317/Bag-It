@@ -7,6 +7,7 @@ export const Url = {
 	// -- Frontend --
 	HOME: 		"/",
 	LOGIN: 		"/login",
+	LOGOUT:		"/logout",
 	REGISTER: 	"/register",
 	PROFILE: 	"/profile",
 

@@ -11,6 +11,12 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
 
+function Logout() {
+	// Clear refresh/access token
+	localStorage.clear();
+	return <Navigate to={Url.LOGIN} />;
+}
+
 // -- Main page manager for the whole site --
 
 function App() {
@@ -23,6 +29,7 @@ function App() {
 
 				{/* Account related */}
 				<Route path={Url.LOGIN} element={<LoginPage />} />
+				<Route path={Url.LOGOUT} element={<Logout />} />
 				<Route path={Url.REGISTER} element={<RegisterPage />} />
 				<Route path={Url.PROFILE} element={<ProfilePage />} />
 			</Routes>
