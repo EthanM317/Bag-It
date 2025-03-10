@@ -7,11 +7,11 @@ import { api } from "../api";
 // NOTE: You can only view your own profile currently...
 
 function ProfilePage() {
-    
-
-	return <>
-        <h1>User's Profile</h1>
-    </>;
+	return (
+		<div>
+			<h1>User's Profile Page</h1>
+		</div>
+	);
 }
 
 export default ProfilePage;
