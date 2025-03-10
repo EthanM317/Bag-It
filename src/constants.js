@@ -15,4 +15,6 @@ export const Url = {
     // -- Backend --
     // backend urls go here
     BACKEND_CLOTHING:   "/clothing/",
+
+    BACKEND_TOKEN:      "/accounts/token/"
 }

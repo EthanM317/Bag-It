@@ -1,46 +1,52 @@
 import { api } from "../api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 
 // A login form
 // TODO: See if Mui already has one of these
 
-function Form() {
+// route: backend url to make the post request to on submit
+// register: whether we're registering (true), or just logging in (false)
+function Form({ route, register }) {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [outputMsg, setOutputMsg] = useState("");
 
 	const navigate = useNavigate();
-
-	const name = method === "login" ? "Login" : "Register";
+	const formTitle = register ? "Register" : "Login";
 
 	const handleSubmit = async (e) => {
-		setLoading(true);
+		// TODO: Figure out what this means
 		e.preventDefault();
 
-		// TODO: Post request to login
 		try {
-			// const res = await api.post(Route, { username, password });
+			// Make post request
+			const res = await api.post(route, { username, password });
 
-			// if (method === "login") {
-			// 	localStorage.setItem(ACCESS_TOKEN, res.data.access);
-			// 	localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-			// }
+			if (register) {
+				localStorage.setItem(ACCESS_TOKEN, res.data.access);
+				localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+			}
 
 			setOutputMsg("Username: " + username + " Password: " + password);
 			console.log(outputMsg);
 		} catch (error) {
 			alert(error);
 		} finally {
-			setLoading(false);
 		}
 	};
 
+	useEffect(() => {
+		// DEBUG print what's in the localStorage so I can see the keys
+		console.log(localStorage);
+	}, []);
+
+
 	return (
 		<form onSubmit={handleSubmit} className="form-container">
-			<h1>Login</h1>
+			<h1>{formTitle}</h1>
 			<input
 				className="form-input"
 				type="text"
@@ -57,7 +63,7 @@ function Form() {
 				placeholder="Password"
 			/>
 			<button className="form-button" type="submit">
-				Login
+				{formTitle}
 			</button>
 
 			{outputMsg && <p>{outputMsg}</p>}

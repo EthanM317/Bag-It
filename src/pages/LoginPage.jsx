@@ -1,15 +1,13 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { api } from "../api";
 
+import { Url } from "../constants";
 import Form from "../components/Form";
-import "../styles/home.css";
 
 function LoginPage() {
 	return (
 		<>
 			<h1 className="title">Login Page</h1>
-			<Form />
+			<Form route={Url.BACKEND_TOKEN} register={false} />
 		</>
 	);
 }
