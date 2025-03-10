@@ -7,6 +7,7 @@ import { Url } from "../constants";
 function TestPage() {
 	const [items, setItems] = useState([]);
 
+	// Gets called once when the component is created
 	useEffect(() => {
 		getItems();
 	}, []);
