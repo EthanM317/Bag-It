@@ -2,21 +2,19 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 import { Backend, api } from "../api";
+import { Url } from "../constants";
 
 function TestPage() {
 	const [items, setItems] = useState([]);
 
 	useEffect(() => {
 		getItems();
-		
-		// console.log(localStorage);
-		// localStorage.clear();
 	}, []);
 
 	const getItems = () => {
 		// setItems(Backend.getClothing());
 
-		api.get("/clothing/")
+		api.get(Url.BACKEND_CLOTHING)
 			.then((res) => res.data)
 			.then((data) => {
 				setItems(data);
