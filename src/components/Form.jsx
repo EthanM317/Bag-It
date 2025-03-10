@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 
+import { Url } from "../constants";
+
 // A login form
 // TODO: See if Mui already has one of these
 
@@ -17,21 +19,26 @@ function Form({ route, register }) {
 	const navigate = useNavigate();
 	const formTitle = register ? "Register" : "Login";
 
+	// Called when the user presses the button
 	const handleSubmit = async (e) => {
 		// TODO: Figure out what this means
 		e.preventDefault();
 
 		try {
 			// Make post request
-			const res = await api.post(route, { username, password });
+			let res = await api.post(route, { username, password });
 
 			if (register) {
-				localStorage.setItem(ACCESS_TOKEN, res.data.access);
-				localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+				// If registering, we need to send another request to log in
+				res = await api.post(Url.BACKEND_TOKEN, { username, password });
 			}
 
-			setOutputMsg("Username: " + username + " Password: " + password);
-			console.log(outputMsg);
+			// Get token
+			localStorage.setItem(ACCESS_TOKEN, res.data.access);
+			localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+
+			// Go to profile after logging in
+			navigate(Url.PROFILE);
 		} catch (error) {
 			alert(error);
 		} finally {
@@ -42,7 +49,6 @@ function Form({ route, register }) {
 		// DEBUG print what's in the localStorage so I can see the keys
 		console.log(localStorage);
 	}, []);
-
 
 	return (
 		<form onSubmit={handleSubmit} className="form-container">
@@ -62,10 +68,23 @@ function Form({ route, register }) {
 				onChange={(e) => setPassword(e.target.value)}
 				placeholder="Password"
 			/>
+			{!register && (
+				<p>
+					Don't have an account?{" "}
+					<a
+						href=""
+						onClick={() => {
+							navigate(Url.REGISTER);
+						}}
+					>
+						Sign up here.
+					</a>
+				</p>
+			)}
+
 			<button className="form-button" type="submit">
 				{formTitle}
 			</button>
-
 			{outputMsg && <p>{outputMsg}</p>}
 		</form>
 	);

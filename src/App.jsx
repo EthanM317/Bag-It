@@ -8,6 +8,7 @@ import { Url } from "./constants.js";
 import TestPage from "./pages/TestPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
 
 // -- Main page manager for the whole site --
@@ -22,6 +23,7 @@ function App() {
 
 				{/* Account related */}
 				<Route path={Url.LOGIN} element={<LoginPage />} />
+				<Route path={Url.REGISTER} element={<RegisterPage />} />
 				<Route path={Url.PROFILE} element={<ProfilePage />} />
 			</Routes>
 		</BrowserRouter>
