@@ -10,6 +10,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function Logout() {
 	// Clear refresh/access token
@@ -31,7 +32,16 @@ function App() {
 				<Route path={Url.LOGIN} element={<LoginPage />} />
 				<Route path={Url.LOGOUT} element={<Logout />} />
 				<Route path={Url.REGISTER} element={<RegisterPage />} />
-				<Route path={Url.PROFILE} element={<ProfilePage />} />
+
+				{/* The Profile page can only be accessed by a user that's logged in right now */}
+				<Route
+					path={Url.PROFILE}
+					element={
+						<ProtectedRoute>
+							<ProfilePage />
+						</ProtectedRoute>
+					}
+				/>
 			</Routes>
 		</BrowserRouter>
 	);
