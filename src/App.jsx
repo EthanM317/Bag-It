@@ -12,6 +12,8 @@ import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
+import ProductsTestPage from "./pages/ProductsTestPage.jsx";
+
 
 function Logout() {
 	// Clear refresh/access token
@@ -46,6 +48,8 @@ function App() {
 
 				{/* DEBUG */}
 				<Route path={Url.TEST} element={<TestPage />} />
+				<Route path={"/products"} element={<ProductsTestPage />} />
+				<Route path={"/products/:id"} element={<ProductsTestPage />} />
 			</Routes>
 		</BrowserRouter>
 	);
