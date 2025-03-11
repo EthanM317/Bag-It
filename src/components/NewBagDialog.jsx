@@ -14,15 +14,16 @@ import { useNavigate } from "react-router";
 
 // Button and Dialog for creating a new bag
 
-function NewBagDialog({ returnUrl }) {
+function NewBagDialog({ reloadFunc }) {
 	const [open, setOpen] = useState(false);
-    const [newBagName, setNewBagName] = useState("");
-    const [newBagDesc, setNewBagDesc] = useState("");
+	const [newBagName, setNewBagName] = useState("");
+	const [newBagDesc, setNewBagDesc] = useState("");
 
-    const navigate = useNavigate();
+	const navigate = useNavigate();
 
 	const openDialog = () => {
-        setNewBagName("");
+		setNewBagName("");
+		setNewBagDesc("");
 		setOpen(true);
 	};
 
@@ -30,23 +31,26 @@ function NewBagDialog({ returnUrl }) {
 		setOpen(false);
 	};
 
-    const submitDialog = async () => {
-        // Don't let us submit the dialog if we haven't typed anything
-        if (newBagName == "")
-            return;
+	const submitDialog = async () => {
+		// Don't let us submit the dialog if we haven't typed anything
+		if (newBagName == "") return;
 
-        try {
-            // Use api to create bag
-            const res = await api.post(Url.BACKEND_BAG_CREATE, {"title": newBagName, "description": newBagDesc});
-            navigate(returnUrl); // Cheap way to update the bag list. Reload the page
+		try {
+			// Use api to create bag
+			const res = await api.post(Url.BACKEND_BAG_CREATE, {
+				title: newBagName,
+				description: newBagDesc,
+			});
+			// navigate(returnUrl); // Cheap way to update the bag list. Reload the page
 
-            // alert("This doesn't do anything yet.\nBag name: " + newBagName);
-            setOpen(false);
-        }
-        catch (error) {
-            alert(error);
-        }
-    }
+			reloadFunc();
+
+			// alert("This doesn't do anything yet.\nBag name: " + newBagName);
+			setOpen(false);
+		} catch (error) {
+			alert(error);
+		}
+	};
 
 	return (
 		<>
@@ -76,16 +80,22 @@ function NewBagDialog({ returnUrl }) {
 						label="Bag Name"
 						fullWidth
 						variant="standard"
-                        onChange={(e) => setNewBagName(e.target.value)}
+						onChange={(e) => setNewBagName(e.target.value)}
 					/>
-                    <TextField
+					<TextField
+						required
 						margin="dense"
 						id="desc"
 						name="description"
 						label="Description"
 						fullWidth
 						variant="standard"
-                        onChange={(e) => setNewBagDesc(e.target.value)}
+						onChange={(e) => {
+							let desc = e.target.value;
+							if (!desc) desc = "";
+
+							setNewBagDesc(desc);
+						}}
 					/>
 				</DialogContent>
 				<DialogActions>

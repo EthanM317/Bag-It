@@ -4,6 +4,10 @@ import { useNavigate } from "react-router";
 import {
 	Avatar,
 	Button,
+	Dialog,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
 	Fab,
 	List,
 	ListItemAvatar,
@@ -28,13 +32,15 @@ function ProfilePage() {
 	const [username, setUsername] = useState("");
 	const [userId, setUserId] = useState("");
 	const [bags, setBags] = useState([]);
+	const [delDialogOpen, setDelDialogOpen] = useState(false);
+	const [deleteId, setDeleteId] = useState(-1);
 
 	// Need to do this to use "navigate" function
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		getUserInfo();
-	}, [bags]);
+	}, []);
 
 	// Get user information from backend
 	const getUserInfo = async () => {
@@ -45,22 +51,27 @@ function ProfilePage() {
 			setUserId(res.data[0].id);
 
 			// Get the user's bags
-			res = await api.get(Url.BACKEND_BAG + "?userId=" + userId);
+			res = await api.get(Url.BACKEND_BAG + "?userId=" + res.data[0].id);
 			setBags(res.data);
 		} catch (error) {
 			alert(error);
 		}
 	};
 
-	const deleteBag = async (bagId) => {
-		const res = await api.delete(Url.BACKEND_BAG_DELETE + bagId);
+	const deleteBag = async () => {
+		if (deleteId < 0) {
+			alert("Error: Bag ID does not exist.");
+			return;
+		}
+
+		const res = await api.delete(Url.BACKEND_BAG_DELETE + deleteId);
 		console.log(res);
 
 		// Linear search through bags until we find the correct one
 		let bag;
 		let i = 0;
 		for (; i < bags.length; i++) {
-			if (bags[i].id == bagId) {
+			if (bags[i].id == deleteId) {
 				bag = bags[i];
 				break;
 			}
@@ -68,7 +79,21 @@ function ProfilePage() {
 
 		// Delete the bag at that position in the list
 		bags.splice(i);
-		alert("Deleted bag '" + bag.title + "' (ID: " + bag.id + ")");
+		setBags(bags);
+		// alert("Deleted bag '" + bag.title + "' (ID: " + bag.id + ")");
+
+		closeDeleteDialog();
+	};
+
+	// Delete dialog
+	const openDeleteDialog = (bagId) => {
+		setDeleteId(bagId);
+		setDelDialogOpen(true);
+	};
+
+	const closeDeleteDialog = () => {
+		setDelDialogOpen(false);
+		setDeleteId(-1);
 	};
 
 	return (
@@ -76,7 +101,7 @@ function ProfilePage() {
 			<h1>{username}'s Profile Page</h1>
 			<div>
 				<h2>{username}'s Bags</h2>
-				<NewBagDialog returnUrl={Url.PROFILE} />
+				<NewBagDialog reloadFunc={() => getUserInfo()} />
 
 				<List
 					sx={{
@@ -106,12 +131,26 @@ function ProfilePage() {
 								primary={bag.title}
 								secondary={bag.description}
 							/>
-							<Button onClick={() => deleteBag(bag.id)}>
+							{/* <Button onClick={() => deleteBag(bag.id)}>
+								Delete
+							</Button> */}
+							<Button onClick={() => openDeleteDialog(bag.id)}>
 								Delete
 							</Button>
 						</ListItemButton>
 					))}
 				</List>
+
+				<Dialog open={delDialogOpen} onClose={closeDeleteDialog}>
+					<DialogTitle>Delete Bag</DialogTitle>
+					<DialogContent>
+						<DialogContentText>
+							Are you sure you want to delete this bag?
+						</DialogContentText>
+						<Button onClick={deleteBag}>Delete it</Button>
+						<Button onClick={closeDeleteDialog}>Cancel</Button>
+					</DialogContent>
+				</Dialog>
 			</div>
 		</div>
 	);
