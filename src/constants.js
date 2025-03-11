@@ -15,7 +15,13 @@ export const Url = {
 	TEST: 		"/test",
 
 	// -- Backend --
-	BACKEND_CLOTHING:	"/clothing/",
-	BACKEND_REGISTER:	"/accounts/signup/",
-	BACKEND_TOKEN:		"/accounts/token/",
+	BACKEND_CLOTHING:		"/clothing/",
+	BACKEND_REGISTER:		"/accounts/signup/",
+	BACKEND_TOKEN:			"/accounts/token/",
+
+	BACKEND_USER:			"/accounts/users/",
+	BACKEND_CURRENT_USER:	"/accounts/users/current/",
+
+	BACKEND_BAG:			"/accounts/bag/",
+	BACKEND_BAG_CREATE:		"/accounts/bag/create/",
 };

@@ -26,6 +26,8 @@ import NewBagDialog from "../components/NewBagDialog";
 function ProfilePage() {
 	// State vars
 	const [username, setUsername] = useState("");
+	const [userId, setUserId] = useState("");
+	const [bags, setBags] = useState([]);
 
 	// Need to do this to use "navigate" function
 	const navigate = useNavigate();
@@ -37,9 +39,14 @@ function ProfilePage() {
 	// Get user information from backend
 	const getUserInfo = async () => {
 		try {
-			// Get the currently authenticated user
-			const res = await api.get("/accounts/users/current/");
+			// Get the currently authenticated user's name and id
+			let res = await api.get(Url.BACKEND_CURRENT_USER);
 			setUsername(res.data[0].username);
+			setUserId(res.data[0].id);
+
+			// Get the user's bags
+			res = await api.get(Url.BACKEND_BAG + "?userId=" + userId);
+			setBags(res.data);
 		} catch (error) {
 			alert(error);
 		}
@@ -51,9 +58,9 @@ function ProfilePage() {
 	};
 
 	// DEBUG create a bunch of dummy bags
-	let bags = [];
+	let testBags = [];
 	for (let i = 0; i < 100; i++) {
-		bags.push({ title: "Bag #" + i, subtitle: "This is bag #" + i });
+		testBags.push({ title: "Bag #" + i, subtitle: "This is bag #" + i });
 	}
 
 	return (
@@ -61,10 +68,7 @@ function ProfilePage() {
 			<h1>{username}'s Profile Page</h1>
 			<div>
 				<h2>{username}'s Bags</h2>
-				{/* <Button variant="contained" onClick={addBagClicked}>
-					+ Add Bag
-				</Button> */}
-				<NewBagDialog />
+				<NewBagDialog returnUrl={Url.PROFILE} />
 
 				<List
 					sx={{
@@ -92,7 +96,7 @@ function ProfilePage() {
 							</ListItemAvatar>
 							<ListItemText
 								primary={bag.title}
-								secondary={bag.subtitle}
+								secondary={bag.description}
 							/>
 							<Button>Delete</Button>
 							{/* <Fab
@@ -104,6 +108,21 @@ function ProfilePage() {
 							</Fab> */}
 						</ListItemButton>
 					))}
+
+					{/* {testBags.map((bag) => (
+						<ListItemButton>
+							<ListItemAvatar>
+								<Avatar>
+									<ShoppingBagOutlinedIcon />
+								</Avatar>
+							</ListItemAvatar>
+							<ListItemText
+								primary={bag.title}
+								secondary={bag.subtitle}
+							/>
+							<Button>Delete</Button>
+						</ListItemButton>
+					))} */}
 				</List>
 			</div>
 		</div>

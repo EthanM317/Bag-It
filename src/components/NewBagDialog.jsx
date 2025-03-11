@@ -8,12 +8,18 @@ import {
 	TextField,
 } from "@mui/material";
 import { use, useState } from "react";
+import { api } from "../api";
+import { Url } from "../constants";
+import { useNavigate } from "react-router";
 
 // Button and Dialog for creating a new bag
 
-function NewBagDialog({ state }) {
+function NewBagDialog({ returnUrl }) {
 	const [open, setOpen] = useState(false);
     const [newBagName, setNewBagName] = useState("");
+    const [newBagDesc, setNewBagDesc] = useState("");
+
+    const navigate = useNavigate();
 
 	const openDialog = () => {
         setNewBagName("");
@@ -24,13 +30,22 @@ function NewBagDialog({ state }) {
 		setOpen(false);
 	};
 
-    const submitDialog = () => {
+    const submitDialog = async () => {
         // Don't let us submit the dialog if we haven't typed anything
         if (newBagName == "")
             return;
 
-        alert("This doesn't do anything yet.\nBag name: " + newBagName);
-        setOpen(false);
+        try {
+            // Use api to create bag
+            const res = await api.post(Url.BACKEND_BAG_CREATE, {"title": newBagName, "description": newBagDesc});
+            navigate(returnUrl); // Cheap way to update the bag list. Reload the page
+
+            // alert("This doesn't do anything yet.\nBag name: " + newBagName);
+            setOpen(false);
+        }
+        catch (error) {
+            alert(error);
+        }
     }
 
 	return (
@@ -62,6 +77,15 @@ function NewBagDialog({ state }) {
 						fullWidth
 						variant="standard"
                         onChange={(e) => setNewBagName(e.target.value)}
+					/>
+                    <TextField
+						margin="dense"
+						id="desc"
+						name="description"
+						label="Description"
+						fullWidth
+						variant="standard"
+                        onChange={(e) => setNewBagDesc(e.target.value)}
 					/>
 				</DialogContent>
 				<DialogActions>
