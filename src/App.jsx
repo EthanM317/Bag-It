@@ -45,6 +45,7 @@ function App() {
 						</ProtectedRoute>
 					}
 				/>
+				<Route path={Url.PROFILE + "/:id"} element={<ProfilePage />} />
 
 				{/* DEBUG */}
 				<Route path={Url.TEST} element={<TestPage />} />

@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import {
 	Avatar,
 	Button,
@@ -34,9 +34,14 @@ function ProfilePage() {
 	const [bags, setBags] = useState([]);
 	const [delDialogOpen, setDelDialogOpen] = useState(false);
 	const [deleteId, setDeleteId] = useState(-1);
+	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const [userNotFound, setUserNotFound] = useState(false);
 
 	// Need to do this to use "navigate" function
 	const navigate = useNavigate();
+
+	// Param from dynamic route
+	const { id } = useParams();
 
 	useEffect(() => {
 		getUserInfo();
@@ -44,18 +49,57 @@ function ProfilePage() {
 
 	// Get user information from backend
 	const getUserInfo = async () => {
-		try {
-			// Get the currently authenticated user's name and id
-			let res = await api.get(Url.BACKEND_CURRENT_USER);
-			setUsername(res.data[0].username);
-			setUserId(res.data[0].id);
+		let userDataStuff;
+		let bagData;
 
-			// Get the user's bags
-			res = await api.get(Url.BACKEND_BAG + "?userId=" + res.data[0].id);
-			setBags(res.data);
+		try {
+			const userResponse = await api.get(Url.BACKEND_CURRENT_USER);
+			userDataStuff = userResponse.data[0];
+
+			// THIS IS SO FUNNY
+			if (id && id != userDataStuff.id)
+				throw new Error("Search using id");
+
+			const bagResponse = await api.get(
+				Url.BACKEND_BAG + "?userId=" + userDataStuff.id
+			);
+			bagData = bagResponse.data;
+
+			setIsAuthenticated(true);
 		} catch (error) {
-			alert(error);
+			// User probably isn't logged in. Try using ID from parameters
+			if (!id) {
+				// Nope, something's just broken
+				alert(error);
+				setUserNotFound(true);
+				return;
+			}
+
+			try {
+				const userResponse = await api.get(
+					Url.BACKEND_USER + "?userId=" + id
+				);
+				userDataStuff = userResponse.data[0];
+
+				if (!userDataStuff || userDataStuff.length <= 0) {
+					// Couldn't find the user
+					setUserNotFound(true);
+					return;
+				}
+
+				const bagResponse = await api.get(
+					Url.BACKEND_BAG + "?userId=" + id
+				);
+				bagData = bagResponse.data;
+			} catch (error) {
+				alert(error);
+				return;
+			}
+			setIsAuthenticated(false);
 		}
+		setUsername(userDataStuff.username);
+		setUserId(userDataStuff.userId);
+		setBags(bagData);
 	};
 
 	const deleteBag = async () => {
@@ -80,12 +124,9 @@ function ProfilePage() {
 		// Delete the bag at that position in the list
 		bags.splice(i);
 		setBags(bags);
-		// alert("Deleted bag '" + bag.title + "' (ID: " + bag.id + ")");
-
 		closeDeleteDialog();
 	};
 
-	
 	// -- The delete dialog --
 	const openDeleteDialog = (bagId) => {
 		setDeleteId(bagId);
@@ -99,60 +140,76 @@ function ProfilePage() {
 
 	return (
 		<div>
-			<h1>{username}'s Profile Page</h1>
-			<div>
-				<h2>{username}'s Bags</h2>
-				<NewBagDialog reloadFunc={() => getUserInfo()} />
+			{userNotFound && <h2>Error: User not found</h2>}
 
-				<List
-					sx={{
-						width: "100%",
-						maxWidth: 360,
-						bgcolor: "background.paper",
-					}}
-					component="nav"
-					aria-labelledby="nested-list-subheader"
-					subheader={
-						<ListSubheader
-							component="div"
-							id="nested-list-subheader"
-						>
-							Bags
-						</ListSubheader>
-					}
-				>
-					{bags.map((bag) => (
-						<ListItemButton>
-							<ListItemAvatar>
-								<Avatar>
-									<ShoppingBagOutlinedIcon />
-								</Avatar>
-							</ListItemAvatar>
-							<ListItemText
-								primary={bag.title}
-								secondary={bag.description}
-							/>
-							{/* <Button onClick={() => deleteBag(bag.id)}>
+			{!userNotFound && (
+				<div>
+					<h1>{username}'s Profile Page</h1>
+					<h2>{username}'s Bags</h2>
+					{isAuthenticated && (
+						<NewBagDialog reloadFunc={() => getUserInfo()} />
+					)}
+
+					<List
+						sx={{
+							width: "100%",
+							maxWidth: 360,
+							bgcolor: "background.paper",
+						}}
+						component="nav"
+						aria-labelledby="nested-list-subheader"
+						subheader={
+							<ListSubheader
+								component="div"
+								id="nested-list-subheader"
+							>
+								Bags
+							</ListSubheader>
+						}
+					>
+						{bags.map((bag) => (
+							<ListItemButton>
+								<ListItemAvatar>
+									<Avatar>
+										<ShoppingBagOutlinedIcon />
+									</Avatar>
+								</ListItemAvatar>
+								<ListItemText
+									primary={bag.title}
+									secondary={bag.description}
+								/>
+								{/* <Button onClick={() => deleteBag(bag.id)}>
 								Delete
 							</Button> */}
-							<Button onClick={() => openDeleteDialog(bag.id)}>
-								Delete
-							</Button>
-						</ListItemButton>
-					))}
-				</List>
-
-				<Dialog open={delDialogOpen} onClose={closeDeleteDialog}>
-					<DialogTitle>Delete Bag</DialogTitle>
-					<DialogContent>
-						<DialogContentText>
-							Are you sure you want to delete this bag?
-						</DialogContentText>
-						<Button onClick={deleteBag}>Delete it</Button>
-						<Button onClick={closeDeleteDialog}>Cancel</Button>
-					</DialogContent>
-				</Dialog>
-			</div>
+								{isAuthenticated && (
+									<Button
+										onClick={() => openDeleteDialog(bag.id)}
+									>
+										Delete
+									</Button>
+								)}
+							</ListItemButton>
+						))}
+					</List>
+					{isAuthenticated && (
+						<Dialog
+							open={delDialogOpen}
+							onClose={closeDeleteDialog}
+						>
+							<DialogTitle>Delete Bag</DialogTitle>
+							<DialogContent>
+								<DialogContentText>
+									Are you sure you want to delete this bag?
+								</DialogContentText>
+								<Button onClick={deleteBag}>Delete it</Button>
+								<Button onClick={closeDeleteDialog}>
+									Cancel
+								</Button>
+							</DialogContent>
+						</Dialog>
+					)}
+				</div>
+			)}
 		</div>
 	);
 }
