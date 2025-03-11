@@ -1,0 +1,75 @@
+import {
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
+	TextField,
+} from "@mui/material";
+import { use, useState } from "react";
+
+// Button and Dialog for creating a new bag
+
+function NewBagDialog({ state }) {
+	const [open, setOpen] = useState(false);
+    const [newBagName, setNewBagName] = useState("");
+
+	const openDialog = () => {
+        setNewBagName("");
+		setOpen(true);
+	};
+
+	const closeDialog = () => {
+		setOpen(false);
+	};
+
+    const submitDialog = () => {
+        // Don't let us submit the dialog if we haven't typed anything
+        if (newBagName == "")
+            return;
+
+        alert("This doesn't do anything yet.\nBag name: " + newBagName);
+        setOpen(false);
+    }
+
+	return (
+		<>
+			<Button variant="contained" onClick={openDialog}>
+				+ Add Bag
+			</Button>
+			<Dialog
+				open={open}
+				onClose={closeDialog}
+				// TODO: Figure out what this two things are
+				aria-labelledby="alert-dialog-title"
+				aria-describedby="alert-dialog-description"
+			>
+				<DialogTitle id="alert-dialog-title">
+					Add a New Bag.
+				</DialogTitle>
+				<DialogContent>
+					<DialogContentText>
+						Create the best outfit anyone's ever seen in their life.
+					</DialogContentText>
+					<TextField
+						autoFocus
+						required
+						margin="dense"
+						id="name"
+						name="bagname"
+						label="Bag Name"
+						fullWidth
+						variant="standard"
+                        onChange={(e) => setNewBagName(e.target.value)}
+					/>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={submitDialog}>OK</Button>
+				</DialogActions>
+			</Dialog>
+		</>
+	);
+}
+
+export default NewBagDialog;

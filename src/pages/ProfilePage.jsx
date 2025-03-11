@@ -18,6 +18,7 @@ import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 
 import { api } from "../api";
 import { ACCESS_TOKEN, Url } from "../constants";
+import NewBagDialog from "../components/NewBagDialog";
 
 // Page displaying the user's username and bags
 // NOTE: You can only view your own profile currently...
@@ -60,10 +61,10 @@ function ProfilePage() {
 			<h1>{username}'s Profile Page</h1>
 			<div>
 				<h2>{username}'s Bags</h2>
-				{/* <button onClick={addBagClicked}>+ Add Bag</button> */}
-				<Button variant="contained" onClick={addBagClicked}>
+				{/* <Button variant="contained" onClick={addBagClicked}>
 					+ Add Bag
-				</Button>
+				</Button> */}
+				<NewBagDialog />
 
 				<List
 					sx={{
@@ -103,6 +104,7 @@ function ProfilePage() {
 							</Fab> */}
 						</ListItemButton>
 					))}
+
 					{/* <ListItemButton>
 						<ListItemIcon>
 							<ShoppingBagOutlinedIcon />
