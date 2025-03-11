@@ -17,6 +17,11 @@ function ProductsTestPage() {
 	}, []);
 
 	async function getProductFromId(_id) {
+		if (isNaN(_id)) {
+			setProducts([]);
+			return;
+		}
+
 		if (!_id) console.log("Getting all products...");
 		else console.log("Getting product ID: " + _id);
 
