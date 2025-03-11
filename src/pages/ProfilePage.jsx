@@ -2,7 +2,11 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import {
+	Avatar,
+	Button,
+	Fab,
 	List,
+	ListItemAvatar,
 	ListItemButton,
 	ListItemText,
 	ListSubheader,
@@ -10,6 +14,7 @@ import {
 import ListItem from "@mui/material/ListItemIcon";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 
 import { api } from "../api";
 import { ACCESS_TOKEN, Url } from "../constants";
@@ -55,7 +60,11 @@ function ProfilePage() {
 			<h1>{username}'s Profile Page</h1>
 			<div>
 				<h2>{username}'s Bags</h2>
-				<button onClick={addBagClicked}>+ Add Bag</button>
+				{/* <button onClick={addBagClicked}>+ Add Bag</button> */}
+				<Button variant="contained" onClick={addBagClicked}>
+					+ Add Bag
+				</Button>
+
 				<List
 					sx={{
 						width: "100%",
@@ -75,13 +84,23 @@ function ProfilePage() {
 				>
 					{bags.map((bag) => (
 						<ListItemButton>
-							<ListItemIcon>
-								<ShoppingBagOutlinedIcon />
-							</ListItemIcon>
+							<ListItemAvatar>
+								<Avatar>
+									<ShoppingBagOutlinedIcon />
+								</Avatar>
+							</ListItemAvatar>
 							<ListItemText
 								primary={bag.title}
 								secondary={bag.subtitle}
 							/>
+							<Button>Delete</Button>
+							{/* <Fab
+								size="small"
+								color="primary"
+								// aria-label="add"
+							>
+								<DeleteOutlinedIcon />
+							</Fab> */}
 						</ListItemButton>
 					))}
 					{/* <ListItemButton>

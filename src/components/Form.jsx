@@ -72,6 +72,7 @@ function Form({ route, register }) {
 		<Button variant="contained" onClick={handleSubmit}>{formTitle}</Button>
 	</div>
 
+	// OLD non-Material ui code
 	return (
 		<form onSubmit={handleSubmit} className="form-container">
 			<h1>{formTitle}</h1>
