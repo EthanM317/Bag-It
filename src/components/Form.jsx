@@ -1,9 +1,9 @@
-import { api } from "../api";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
+import { Button, TextField } from "@mui/material";
 
-import { Url } from "../constants";
+import { ACCESS_TOKEN, REFRESH_TOKEN, Url } from "../constants";
+import { api } from "../api";
 
 // A login form
 // TODO: See if Mui already has one of these
@@ -11,13 +11,21 @@ import { Url } from "../constants";
 // route: backend url to make the post request to on submit
 // register: whether we're registering (true), or just logging in (false)
 function Form({ route, register }) {
+	// State vars
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [outputMsg, setOutputMsg] = useState("");
 
-	const navigate = useNavigate();
 	const formTitle = register ? "Register" : "Login";
+
+	// Setup navigate function
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		// DEBUG print what's in the localStorage so I can see the keys
+		console.log(localStorage);
+	}, []);
 
 	// Called when the user presses the button
 	const handleSubmit = async (e) => {
@@ -45,10 +53,24 @@ function Form({ route, register }) {
 		}
 	};
 
-	useEffect(() => {
-		// DEBUG print what's in the localStorage so I can see the keys
-		console.log(localStorage);
-	}, []);
+	return <div>
+		{!register && (
+				<p>
+					Don't have an account?{" "}
+					<a
+						href=""
+						onClick={() => {
+							navigate(Url.REGISTER);
+						}}
+					>
+						Sign up here.
+					</a>
+				</p>
+			)}
+		<TextField label="Username" onChange={(e) => setUsername(e.target.value)}></TextField>
+		<TextField type="password" label="Password" onChange={(e) => setPassword(e.target.value)}></TextField>
+		<Button variant="contained" onClick={handleSubmit}>{formTitle}</Button>
+	</div>
 
 	return (
 		<form onSubmit={handleSubmit} className="form-container">
