@@ -36,6 +36,7 @@ function ProfilePage() {
 	const [deleteId, setDeleteId] = useState(-1);
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [userNotFound, setUserNotFound] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 
 	// Need to do this to use "navigate" function
 	const navigate = useNavigate();
@@ -51,6 +52,8 @@ function ProfilePage() {
 	const getUserInfo = async () => {
 		let userDataStuff;
 		let bagData;
+
+		setIsLoading(true);
 
 		try {
 			const userResponse = await api.get(Url.BACKEND_CURRENT_USER);
@@ -100,6 +103,8 @@ function ProfilePage() {
 		setUsername(userDataStuff.username);
 		setUserId(userDataStuff.userId);
 		setBags(bagData);
+
+		setIsLoading(false);
 	};
 
 	const deleteBag = async () => {
@@ -142,7 +147,7 @@ function ProfilePage() {
 		<div>
 			{userNotFound && <h2>Error: User not found</h2>}
 
-			{!userNotFound && (
+			{!isLoading && !userNotFound && (
 				<div>
 					<h1>{username}'s Profile Page</h1>
 					<h2>{username}'s Bags</h2>
