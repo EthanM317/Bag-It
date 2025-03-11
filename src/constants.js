@@ -24,4 +24,5 @@ export const Url = {
 
 	BACKEND_BAG:			"/accounts/bag/",
 	BACKEND_BAG_CREATE:		"/accounts/bag/create/",
+	BACKEND_BAG_DELETE:		"/accounts/bag/delete/",
 };

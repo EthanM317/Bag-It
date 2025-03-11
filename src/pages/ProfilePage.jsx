@@ -34,7 +34,7 @@ function ProfilePage() {
 
 	useEffect(() => {
 		getUserInfo();
-	}, []);
+	}, [bags]);
 
 	// Get user information from backend
 	const getUserInfo = async () => {
@@ -52,16 +52,24 @@ function ProfilePage() {
 		}
 	};
 
-	const addBagClicked = () => {
-		// navigate(Url.HOME);
-		alert("Does nothing right now");
-	};
+	const deleteBag = async (bagId) => {
+		const res = await api.delete(Url.BACKEND_BAG_DELETE + bagId);
+		console.log(res);
 
-	// DEBUG create a bunch of dummy bags
-	let testBags = [];
-	for (let i = 0; i < 100; i++) {
-		testBags.push({ title: "Bag #" + i, subtitle: "This is bag #" + i });
-	}
+		// Linear search through bags until we find the correct one
+		let bag;
+		let i = 0;
+		for (; i < bags.length; i++) {
+			if (bags[i].id == bagId) {
+				bag = bags[i];
+				break;
+			}
+		}
+
+		// Delete the bag at that position in the list
+		bags.splice(i);
+		alert("Deleted bag '" + bag.title + "' (ID: " + bag.id + ")");
+	};
 
 	return (
 		<div>
@@ -98,31 +106,11 @@ function ProfilePage() {
 								primary={bag.title}
 								secondary={bag.description}
 							/>
-							<Button>Delete</Button>
-							{/* <Fab
-								size="small"
-								color="primary"
-								// aria-label="add"
-							>
-								<DeleteOutlinedIcon />
-							</Fab> */}
+							<Button onClick={() => deleteBag(bag.id)}>
+								Delete
+							</Button>
 						</ListItemButton>
 					))}
-
-					{/* {testBags.map((bag) => (
-						<ListItemButton>
-							<ListItemAvatar>
-								<Avatar>
-									<ShoppingBagOutlinedIcon />
-								</Avatar>
-							</ListItemAvatar>
-							<ListItemText
-								primary={bag.title}
-								secondary={bag.subtitle}
-							/>
-							<Button>Delete</Button>
-						</ListItemButton>
-					))} */}
 				</List>
 			</div>
 		</div>
