@@ -104,26 +104,6 @@ function ProfilePage() {
 							</Fab> */}
 						</ListItemButton>
 					))}
-
-					{/* <ListItemButton>
-						<ListItemIcon>
-							<ShoppingBagOutlinedIcon />
-						</ListItemIcon>
-						<ListItemText
-							primary="Bag 1"
-							secondary="Your first bag."
-						/>
-					</ListItemButton>
-
-					<ListItemButton>
-						<ListItemIcon>
-							<ShoppingBagOutlinedIcon />
-						</ListItemIcon>
-						<ListItemText
-							primary="Bag 1"
-							secondary="Your second bag."
-						/>
-					</ListItemButton> */}
 				</List>
 			</div>
 		</div>
