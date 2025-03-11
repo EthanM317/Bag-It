@@ -29,20 +29,20 @@ import NewBagDialog from "../components/NewBagDialog";
 
 function ProfilePage() {
 	// State vars
-	const [username, setUsername] = useState("");
-	const [userId, setUserId] = useState("");
-	const [bags, setBags] = useState([]);
-	const [delDialogOpen, setDelDialogOpen] = useState(false);
-	const [deleteId, setDeleteId] = useState(-1);
-	const [isAuthenticated, setIsAuthenticated] = useState(false);
-	const [userNotFound, setUserNotFound] = useState(false);
-	const [isLoading, setIsLoading] = useState(true);
-
-	// Need to do this to use "navigate" function
-	const navigate = useNavigate();
+	const [username, setUsername] = useState(""); // The username to display on the page
+	const [userId, setUserId] = useState(""); // Current userId to use for api calls
+	const [bags, setBags] = useState([]); // List of the user's bags
+	const [delDialogOpen, setDelDialogOpen] = useState(false); // Whether or not the delete-bag dialog is open
+	const [deleteId, setDeleteId] = useState(-1); // The ID of the bag to delete (used by the delete dialog)
+	const [isAuthenticated, setIsAuthenticated] = useState(false); // Whether or not the user is signed in (allows you to delete your own bags)
+	const [userNotFound, setUserNotFound] = useState(false); // Display error if the user couldn't be found
+	const [isLoading, setIsLoading] = useState(true); // Is the page still fetching information from the backend?
 
 	// Param from dynamic route
 	const { id } = useParams();
+
+	// Need to do this to use "navigate" function
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		getUserInfo();
@@ -55,15 +55,15 @@ function ProfilePage() {
 
 		setIsLoading(true);
 
-		// Verify the id
-		if (isNaN(id))
-		{
+		// Verify the id from parameter
+		if (isNaN(id)) {
 			setIsLoading(false);
 			setUserNotFound(true);
 			return;
 		}
 
 		try {
+			// Get currently-logged-in user's info and bags from backend
 			const userResponse = await api.get(Url.BACKEND_CURRENT_USER);
 			userDataStuff = userResponse.data[0];
 
@@ -76,9 +76,11 @@ function ProfilePage() {
 			);
 			bagData = bagResponse.data;
 
+			// Allow us to edit bags on this page
 			setIsAuthenticated(true);
 		} catch (error) {
-			// User probably isn't logged in. Try using ID from parameters
+			// If we caught an error, the user probably isn't logged in
+			// Try using ID from parameters
 			if (!id) {
 				// Nope, something's just broken
 				alert(error);
@@ -87,6 +89,7 @@ function ProfilePage() {
 			}
 
 			try {
+				// Get user info and user's bags from backend using the url parameter id
 				const userResponse = await api.get(
 					Url.BACKEND_USER + "?userId=" + id
 				);
@@ -106,6 +109,8 @@ function ProfilePage() {
 				alert(error);
 				return;
 			}
+
+			// Don't allow us to edit bags on this page
 			setIsAuthenticated(false);
 		}
 		setUsername(userDataStuff.username);

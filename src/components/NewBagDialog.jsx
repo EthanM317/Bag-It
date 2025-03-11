@@ -41,11 +41,9 @@ function NewBagDialog({ reloadFunc }) {
 				title: newBagName,
 				description: newBagDesc,
 			});
-			// navigate(returnUrl); // Cheap way to update the bag list. Reload the page
 
 			reloadFunc();
 
-			// alert("This doesn't do anything yet.\nBag name: " + newBagName);
 			setOpen(false);
 		} catch (error) {
 			alert(error);
