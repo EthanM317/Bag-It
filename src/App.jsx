@@ -11,6 +11,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import NotFoundPage from "./pages/NotFoundPage.jsx";
 
 function Logout() {
 	// Clear refresh/access token
@@ -25,6 +26,7 @@ function App() {
 		<BrowserRouter>
 			<Routes>
 				{/* Link URLS to jsx pages here */}
+				<Route path="*" element={<NotFoundPage />}/>
 				<Route path={Url.HOME} element={<HomePage />} />
 				<Route path={Url.TEST} element={<TestPage />} />
 
