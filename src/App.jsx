@@ -28,14 +28,13 @@ function App() {
 				{/* Link URLS to jsx pages here */}
 				<Route path="*" element={<NotFoundPage />}/>
 				<Route path={Url.HOME} element={<HomePage />} />
-				<Route path={Url.TEST} element={<TestPage />} />
 
 				{/* Account related */}
 				<Route path={Url.LOGIN} element={<LoginPage />} />
 				<Route path={Url.LOGOUT} element={<Logout />} />
 				<Route path={Url.REGISTER} element={<RegisterPage />} />
 
-				{/* The Profile page can only be accessed by a user that's logged in right now */}
+				{/* "ProtectedRoute" means a page can only be accessed if the user is logged in */}
 				<Route
 					path={Url.PROFILE}
 					element={
@@ -44,6 +43,9 @@ function App() {
 						</ProtectedRoute>
 					}
 				/>
+
+				{/* DEBUG */}
+				<Route path={Url.TEST} element={<TestPage />} />
 			</Routes>
 		</BrowserRouter>
 	);

@@ -85,7 +85,8 @@ function ProfilePage() {
 		closeDeleteDialog();
 	};
 
-	// Delete dialog
+	
+	// -- The delete dialog --
 	const openDeleteDialog = (bagId) => {
 		setDeleteId(bagId);
 		setDelDialogOpen(true);
