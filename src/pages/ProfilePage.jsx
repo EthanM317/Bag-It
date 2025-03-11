@@ -55,12 +55,20 @@ function ProfilePage() {
 
 		setIsLoading(true);
 
+		// Verify the id
+		if (isNaN(id))
+		{
+			setIsLoading(false);
+			setUserNotFound(true);
+			return;
+		}
+
 		try {
 			const userResponse = await api.get(Url.BACKEND_CURRENT_USER);
 			userDataStuff = userResponse.data[0];
 
 			// THIS IS SO FUNNY
-			if (id && id != userDataStuff.id)
+			if (!id || id != userDataStuff.id)
 				throw new Error("Search using id");
 
 			const bagResponse = await api.get(
