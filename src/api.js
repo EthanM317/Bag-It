@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ACCESS_TOKEN } from "./constants";
+import { ACCESS_TOKEN, Url } from "./constants";
 
 // -- Communicate with backend using Axios --
 export const api = axios.create({
@@ -29,16 +29,27 @@ api.interceptors.request.use(
 export class Backend {
 	// -- Users --
 	// Get all users in the database
-	static getUsers() {
-		console.log("Getting users...");
-		api.get("/accounts/users/")
-			.then((res) => res.data)
-			.then((data) => {
-				let users = data;
-				console.log(users);
-				return users;
-			})
-			.catch((err) => alert(err));
+	// static getUsers() {
+	// 	console.log("Getting users...");
+	// 	api.get("/accounts/users/")
+	// 		.then((res) => res.data)
+	// 		.then((data) => {
+	// 			let users = data;
+	// 			console.log(users);
+	// 			return users;
+	// 		})
+	// 		.catch((err) => alert(err));
+	// }
+
+	static async getUsers() {
+		try {
+			const res = await api.get(Url.BACKEND_USER);
+			console.log("Working");
+			console.log(res.data);
+			return res.data;
+		} catch (error) {
+			alert(error);
+		}
 	}
 
 	static getClothing() {
