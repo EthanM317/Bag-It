@@ -51,10 +51,6 @@ function ProfilePage() {
 		getUserInfo();
 	}, []);
 
-	useEffect(() => {
-		console.log(bags);
-	}, [bags]);
-
 	// Get user information from backend
 	const getUserInfo = async () => {
 		let userDataStuff;
