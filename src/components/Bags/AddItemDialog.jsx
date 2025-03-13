@@ -103,9 +103,7 @@ function AddItemDialog({ productItems, addItem }) {
 								// onClick={(e) => clickBag(e, bag.id)}
 							>
 								<ListItemAvatar>
-									{/* <Avatar>
-										<ShoppingBagOutlinedIcon />
-									</Avatar> */}
+
             		            <img width={64} height={64} src={item.image} alt={item.name} />
 
 								</ListItemAvatar>
@@ -125,18 +123,6 @@ function AddItemDialog({ productItems, addItem }) {
 							</ListItem>
 						))}
 					</List>
-
-					{/* <DialogContentText id="scroll-dialog-description"> */}
-
-					{/* {productItems.map((item) => (
-                            <p>{item.name}</p>
-                        ))
-
-                        } */}
-
-					{/* {[...new Array(50)]
-                        .map(() => "qqiowjtoqwtoqfo iqmfoiq oimwfqmwoi fqmogmweoigogm owgmw opiegmoiw egoipmwm egoipwme gowmeg owme gw").join('\n')} */}
-					{/* </DialogContentText> */}
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={submitDialog}>Back</Button>

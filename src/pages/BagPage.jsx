@@ -57,18 +57,52 @@ function BagPage() {
 		}
 	}
 
-
-	function addItem(e, itemId, itemName) {
+	async function addItem(e, itemId, itemName) {
 		e.stopPropagation();
 
 		try {
-			
-		}
-		catch(error) {
+			const res = await api.post(Url.BACKEND_BAG_ITEM_CREATE, {
+				bagParent: bagId,
+				clothingItem: itemId,
+			});
 
+			// Add item to local list
+			let temp = structuredClone(bagItems);
+			temp.push(res.data);
+			setBagItems(temp);
+		} catch (error) {
+			alert(error);
 		}
 
 		console.log("added item: " + itemName);
+	}
+
+	async function deleteItem(e, itemId) {
+		e.stopPropagation();
+
+		try {
+			const res = await api.delete(Url.BACKEND_BAG_ITEM_DELETE + itemId);
+
+			// Update local list
+			let temp = bagItems;
+			let deleteIndex = -1;
+			for (let i = 0; i < temp.length; i++) {
+				// Linear search through this user's bags until we find the one
+				if (temp[i].id == itemId) {
+					deleteIndex = i;
+					break;
+				}
+			}
+
+			// Item couldn't be found
+			if (deleteIndex < 0) return;
+
+			// Delete the bag at that position in the list
+			temp.splice(deleteIndex, 1);
+			setBagItems(temp);
+		} catch (error) {
+			alert(error);
+		}
 	}
 
 	return (
@@ -76,8 +110,11 @@ function BagPage() {
 			{!isLoading && (
 				<div>
 					<h1>{bag.title}'s items</h1>
-					<AddItemDialog addItem={addItem} productItems={productItems} />
-					<ItemList items={bagItems} />
+					<AddItemDialog
+						addItem={addItem}
+						productItems={productItems}
+					/>
+					<ItemList deleteItem={deleteItem} items={bagItems} />
 				</div>
 			)}
 		</>
