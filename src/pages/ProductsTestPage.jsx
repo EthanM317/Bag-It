@@ -17,7 +17,7 @@ function ProductsTestPage() {
 	}, []);
 
 	async function getProductFromId(_id) {
-		if (isNaN(_id)) {
+		if (_id && isNaN(_id)) {
 			setProducts([]);
 			return;
 		}
@@ -27,7 +27,8 @@ function ProductsTestPage() {
 
 		try {
 			let url = Url.BACKEND_CLOTHING;
-			if (_id) url += "?itemId=" + _id;
+			if (_id) 
+				url += "?itemId=" + _id;
 
 			const res = await api.get(url);
 			setProducts(res.data);
