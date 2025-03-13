@@ -6,18 +6,27 @@ import {
 	DialogContentText,
 	DialogTitle,
 	TextField,
+    Avatar,
+	List,
+	ListItemAvatar,
+	ListItemButton,
+	ListItemText,
+	ListSubheader,
+    ListItem,
 } from "@mui/material";
-import { use, useState } from "react";
+
+import { use, useEffect, useState } from "react";
 import { api } from "../../api";
 import { Url } from "../../constants";
 import { useNavigate } from "react-router";
 
-function AddItemDialog() {
+function AddItemDialog({ productItems, addItem }) {
 	const [open, setOpen] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(true);
 
 	const navigate = useNavigate();
 
-    const openDialog = () => {
+	const openDialog = () => {
 		setOpen(true);
 	};
 
@@ -25,7 +34,9 @@ function AddItemDialog() {
 		setOpen(false);
 	};
 
-    const submitDialog = async () => {
+	useEffect(() => {}, []);
+
+	const submitDialog = async () => {
 		// Don't let us submit the dialog if we haven't typed anything
 		// if (newBagName == "") return;
 
@@ -44,10 +55,10 @@ function AddItemDialog() {
 		// 	// Close the dialog
 		// 	setOpen(false);
 		// } catch (error) {
-            // 	alert(error);
-            // }
-        
-        setOpen(false);
+		// 	alert(error);
+		// }
+
+		setOpen(false);
 	};
 
 	return (
@@ -69,10 +80,66 @@ function AddItemDialog() {
 					<DialogContentText>
 						Add a new item to your bag.
 					</DialogContentText>
-					
+
+					<List
+						sx={{
+							width: "100%",
+							maxWidth: 600,
+							bgcolor: "background.paper",
+						}}
+						component="nav"
+						// aria-labelledby="nested-list-subheader"
+						subheader={
+							<ListSubheader
+								component="div"
+								id="nested-list-subheader"
+							>
+								Clothing Items
+							</ListSubheader>
+						}
+					>
+						{productItems.map((item) => (
+							<ListItem
+								// onClick={(e) => clickBag(e, bag.id)}
+							>
+								<ListItemAvatar>
+									{/* <Avatar>
+										<ShoppingBagOutlinedIcon />
+									</Avatar> */}
+            		            <img width={64} height={64} src={item.image} alt={item.name} />
+
+								</ListItemAvatar>
+								<ListItemText
+									primary={item.name}
+								/>
+								{isAuthenticated && (
+									<Button
+                                    variant="contained"
+										onClick={(e) =>
+											addItem(e, item.id, item.name)
+										}
+									>
+										Add
+									</Button>
+								)}
+							</ListItem>
+						))}
+					</List>
+
+					{/* <DialogContentText id="scroll-dialog-description"> */}
+
+					{/* {productItems.map((item) => (
+                            <p>{item.name}</p>
+                        ))
+
+                        } */}
+
+					{/* {[...new Array(50)]
+                        .map(() => "qqiowjtoqwtoqfo iqmfoiq oimwfqmwoi fqmogmweoigogm owgmw opiegmoiw egoipmwm egoipwme gowmeg owme gw").join('\n')} */}
+					{/* </DialogContentText> */}
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={submitDialog}>OK</Button>
+					<Button onClick={submitDialog}>Back</Button>
 				</DialogActions>
 			</Dialog>
 		</>

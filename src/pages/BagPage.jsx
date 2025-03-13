@@ -9,7 +9,8 @@ import AddItemDialog from "../components/Bags/AddItemDialog";
 function BagPage() {
 	const [isLoading, setIsLoading] = useState(true);
 	const [bag, setBag] = useState({}); // Bag object with title/description
-	const [items, setItems] = useState([]);
+	const [bagItems, setBagItems] = useState([]);
+	const [productItems, setProductItems] = useState([]);
 
 	const navigate = useNavigate();
 	const { bagId } = useParams();
@@ -24,15 +25,13 @@ function BagPage() {
 		getBagInfo();
 	}, []);
 
-
 	async function getBagInfo() {
 		setIsLoading(true);
 		// Get bag title/description
 		try {
-			const res = await api.get(Url.BACKEND_BAG + "?bagId=" + bagId)
+			const res = await api.get(Url.BACKEND_BAG + "?bagId=" + bagId);
 			setBag(res.data[0]);
-		}
-		catch (error) {
+		} catch (error) {
 			alert(error);
 		}
 
@@ -42,11 +41,34 @@ function BagPage() {
 			const res = await api.get(
 				Url.BACKEND_BAG_ITEMS + "?bagParent=" + bagId
 			);
-			setItems(res.data);
+			setBagItems(res.data);
 		} catch (error) {
 			alert(error);
 		}
 		setIsLoading(false);
+
+		// Get All bagit items
+		try {
+			const res = await api.get(Url.BACKEND_CLOTHING);
+			// console.log(res.data);
+			setProductItems(res.data);
+		} catch (error) {
+			alert(error);
+		}
+	}
+
+
+	function addItem(e, itemId, itemName) {
+		e.stopPropagation();
+
+		try {
+			
+		}
+		catch(error) {
+
+		}
+
+		console.log("added item: " + itemName);
 	}
 
 	return (
@@ -54,8 +76,8 @@ function BagPage() {
 			{!isLoading && (
 				<div>
 					<h1>{bag.title}'s items</h1>
-					<AddItemDialog />
-					<ItemList items={items} />
+					<AddItemDialog addItem={addItem} productItems={productItems} />
+					<ItemList items={bagItems} />
 				</div>
 			)}
 		</>
