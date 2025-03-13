@@ -46,10 +46,14 @@ function Form({ route, register }) {
 		} catch (error) {
 			// TODO: Check what happens if the refresh token is invalid
 			// it'll probably do this here
-			alert(
-				"Warning: if you're seeing this your access token is prolly invalid.\nPlease take a screenshot of the next error and send it to me."
-			);
-			alert(error);
+			// alert(
+			// 	"Warning: if you're seeing this your access token is prolly invalid.\nPlease take a screenshot of the next error and send it to me."
+			// );
+			// alert(error);
+
+			// DEBUG clear local storage for now
+			alert("Token invalid, clearing local storage...");
+			localStorage.clear();
 		}
 	}
 
