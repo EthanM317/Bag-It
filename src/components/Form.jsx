@@ -23,27 +23,32 @@ function Form({ route, register }) {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		// DEBUG print what's in the localStorage so I can see the keys
-		// console.log(localStorage);
 		checkToken();
 	}, []);
-	
+
 	// Check if the user is already logged in
 	async function checkToken() {
 		let refreshToken = localStorage.getItem(REFRESH_TOKEN);
 
-		if (!refreshToken)
-			return;
+		// If we don't have a refresh token, don't do anything
+		if (!refreshToken) return;
 
-		// If user is already logged in, just go to profile
 		try {
-			const res = await api.post(Url.BACKEND_TOKEN_REFRESH, {"refresh": refreshToken});
-			
+			// Check if this is a valid refresh token
+			const res = await api.post(Url.BACKEND_TOKEN_REFRESH, {
+				refresh: refreshToken,
+			});
+
+			// If user is already logged in, just go to profile
 			if (res.data) {
-				// navigate(Url.PROFILE);
+				navigate(Url.PROFILE);
 			}
-		}
-		catch (error) {
+		} catch (error) {
+			// TODO: Check what happens if the refresh token is invalid
+			// it'll probably do this here
+			alert(
+				"Warning: if you're seeing this your access token is prolly invalid.\nPlease take a screenshot of the next error and send it to me."
+			);
 			alert(error);
 		}
 	}
@@ -72,10 +77,11 @@ function Form({ route, register }) {
 			alert(error);
 		} finally {
 		}
-	};
+	}
 
-	return <div>
-		{!register && (
+	return (
+		<div>
+			{!register && (
 				<p>
 					Don't have an account?{" "}
 					<a
@@ -88,10 +94,20 @@ function Form({ route, register }) {
 					</a>
 				</p>
 			)}
-		<TextField label="Username" onChange={(e) => setUsername(e.target.value)}></TextField>
-		<TextField type="password" label="Password" onChange={(e) => setPassword(e.target.value)}></TextField>
-		<Button variant="contained" onClick={handleSubmit}>{formTitle}</Button>
-	</div>
+			<TextField
+				label="Username"
+				onChange={(e) => setUsername(e.target.value)}
+			></TextField>
+			<TextField
+				type="password"
+				label="Password"
+				onChange={(e) => setPassword(e.target.value)}
+			></TextField>
+			<Button variant="contained" onClick={handleSubmit}>
+				{formTitle}
+			</Button>
+		</div>
+	);
 
 	// OLD non-Material ui code
 	return (
