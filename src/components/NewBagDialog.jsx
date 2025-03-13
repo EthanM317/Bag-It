@@ -14,7 +14,7 @@ import { useNavigate } from "react-router";
 
 // Button and Dialog for creating a new bag
 
-function NewBagDialog({ reloadFunc }) {
+function NewBagDialog({ bags, setBags }) {
 	const [open, setOpen] = useState(false);
 	const [newBagName, setNewBagName] = useState("");
 	const [newBagDesc, setNewBagDesc] = useState("");
@@ -42,7 +42,18 @@ function NewBagDialog({ reloadFunc }) {
 				description: newBagDesc,
 			});
 
-			reloadFunc();
+			// console.log(res.data);
+
+			// Add new bag to the end of our local array
+			let temp = bags;
+			temp.push(res.data);
+			setBags(temp);
+			
+			// console.log(bags);
+
+			// bags.push(res.data)
+			// console.log(bags);
+			// setBags(bags);
 
 			setOpen(false);
 		} catch (error) {

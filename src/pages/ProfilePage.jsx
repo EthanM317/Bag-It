@@ -50,6 +50,10 @@ function ProfilePage() {
 		getUserInfo();
 	}, []);
 
+	useEffect(() => {
+		console.log(bags);
+	}, [bags]);
+
 	// Get user information from backend
 	const getUserInfo = async () => {
 		let userDataStuff;
@@ -129,21 +133,24 @@ function ProfilePage() {
 		}
 
 		const res = await api.delete(Url.BACKEND_BAG_DELETE + deleteId);
-		console.log(res);
 
-		// Linear search through bags until we find the correct one
-		let bag;
-		let i = 0;
-		for (; i < bags.length; i++) {
-			if (bags[i].id == deleteId) {
-				bag = bags[i];
+		let temp = bags;
+		let deleteIndex = -1;
+		for (let i = 0; i < temp.length; i++) {
+			// Linear search through this user's bags until we find the one
+			if (temp[i].id == deleteId) {
+				deleteIndex = i;	
 				break;
 			}
 		}
 
+		// Bag couldn't be found
+		if (deleteIndex < 0) return;
+
 		// Delete the bag at that position in the list
-		bags.splice(i);
-		setBags(bags);
+		temp.splice(deleteIndex);
+		console.log(temp);
+		setBags(temp);
 		closeDeleteDialog();
 	};
 
@@ -158,18 +165,26 @@ function ProfilePage() {
 		setDeleteId(-1);
 	};
 
+	function logoutClicked() {
+		navigate(Url.LOGOUT);
+	}
+
 	return (
 		<div>
 			{userNotFound && <h2>Error: User not found</h2>}
 
 			{!isLoading && !userNotFound && (
 				<div>
+					<Button variant="contained" onClick={logoutClicked}>
+						Logout
+					</Button>
+
 					<h1>{username}'s Profile Page</h1>
 					<h2>{username}'s Bags</h2>
 
 					{/* Add Bag button and dialog */}
 					{isAuthenticated && (
-						<NewBagDialog reloadFunc={() => getUserInfo()} />
+						<NewBagDialog bags={bags} setBags={setBags} />
 					)}
 
 					{/* Search bar for bag list */}
