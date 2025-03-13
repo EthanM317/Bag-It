@@ -19,6 +19,7 @@ export const Url = {
 	BACKEND_CLOTHING:		"/clothing/",
 	BACKEND_REGISTER:		"/accounts/signup/",
 	BACKEND_TOKEN:			"/accounts/token/",
+	BACKEND_TOKEN_REFRESH:	"/accounts/token/refresh/",
 
 	BACKEND_USER:			"/accounts/users/",
 	BACKEND_CURRENT_USER:	"/accounts/users/current/",

@@ -24,11 +24,32 @@ function Form({ route, register }) {
 
 	useEffect(() => {
 		// DEBUG print what's in the localStorage so I can see the keys
-		console.log(localStorage);
+		// console.log(localStorage);
+		checkToken();
 	}, []);
+	
+	// Check if the user is already logged in
+	async function checkToken() {
+		let refreshToken = localStorage.getItem(REFRESH_TOKEN);
+
+		if (!refreshToken)
+			return;
+
+		// If user is already logged in, just go to profile
+		try {
+			const res = await api.post(Url.BACKEND_TOKEN_REFRESH, {"refresh": refreshToken});
+			
+			if (res.data) {
+				// navigate(Url.PROFILE);
+			}
+		}
+		catch (error) {
+			alert(error);
+		}
+	}
 
 	// Called when the user presses the button
-	const handleSubmit = async (e) => {
+	async function handleSubmit(e) {
 		// TODO: Figure out what this means
 		e.preventDefault();
 
