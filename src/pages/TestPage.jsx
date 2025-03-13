@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-
+import "../styles/Feed.css";
 import { Backend, api } from "../api";
 import { Url } from "../constants";
 
@@ -33,26 +33,24 @@ function TestPage() {
 	}
 
 	return (
-		<div>
-			<div>
-				<p>USE THIS BUTTON IF YOU GET AN ERROR LIKE "request failed with status code 401".<br/>This could be the result of a bad access/refresh token that the backend is rejecting for some reason...</p>
-				<button onClick={clearLocalStorage}>
-					CLEAR LOCAL STORAGE
-				</button>
-			</div>
+		<div className="container">
+    		<div className="errorMessage">
+        	<p>
+            	USE THIS BUTTON IF YOU GET AN ERROR LIKE "request failed with status code 401".
+            	<br />
+            	This could be the result of a bad access/refresh token that the backend is rejecting for some reason...
+        	</p>
+        	<button onClick={clearLocalStorage}>CLEAR LOCAL STORAGE</button>
+    		</div>
 
-			{/* TODO: Investigate "Each child in a list should have a unique 'key' error" */}
-			{items.map((item) => (
-                <>
-                    <p>{item.name}</p>
-                    <img src={item.image} alt={item.name} style={{
-                        width: 200,
-                        height: 200,
-                        display: "inline"
-                    }} />
-                </>
-			))}
+    		{items.map((item) => (
+        		<div key={item.id} className="itemContainer">
+            		<p>{item.name}</p>
+            		<img className="image" src={item.image} alt={item.name} />
+        		</div>
+    		))}
 		</div>
+
 	);
 }
 

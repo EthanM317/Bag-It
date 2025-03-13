@@ -1,0 +1,25 @@
+.container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 80%; 
+    border: 2px solid black;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.itemContainer {
+    width: 200px;
+    height: auto;
+    background-color: lightblue;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #000;
+}
+
+.image {
+    width: 100%;
+    height: auto;
+}
