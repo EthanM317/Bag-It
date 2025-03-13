@@ -14,7 +14,7 @@ import { useNavigate } from "react-router";
 
 // Button and Dialog for creating a new bag
 
-function NewBagDialog({ reloadFunc }) {
+function NewBagDialog({ newBag }) {
 	const [open, setOpen] = useState(false);
 	const [newBagName, setNewBagName] = useState("");
 	const [newBagDesc, setNewBagDesc] = useState("");
@@ -31,20 +31,12 @@ function NewBagDialog({ reloadFunc }) {
 		setOpen(false);
 	};
 
-	const submitDialog = async () => {
+	const submitDialog = () => {
 		// Don't let us submit the dialog if we haven't typed anything
 		if (newBagName == "") return;
 
 		try {
-			// Use api to create bag
-			const res = await api.post(Url.BACKEND_BAG_CREATE, {
-				title: newBagName,
-				description: newBagDesc,
-			});
-
-			// Lazily reload the entire page to just update the bags in the baglist
-			reloadFunc();
-
+			newBag(newBagName, newBagDesc);
 			setOpen(false);
 		} catch (error) {
 			alert(error);

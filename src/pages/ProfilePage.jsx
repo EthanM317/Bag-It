@@ -123,6 +123,26 @@ function ProfilePage() {
 		setIsLoading(false);
 	};
 
+	const newBag = async (newBagName, newBagDesc) => {
+		try {
+			const res = await api.post(Url.BACKEND_BAG_CREATE, {
+				title: newBagName,
+				description: newBagDesc,
+			});
+
+			// Update local bags value
+			// NOTE: we need to work on a deep copy of the array, otherwise nothing works
+			let temp = structuredClone(bags);
+			temp.push(res.data);
+			setBags(temp);
+
+			console.log(temp);
+			console.log(bags);
+		} catch (error) {
+			alert(error);
+		}
+	};
+
 	const deleteBag = async () => {
 		if (deleteId < 0) {
 			alert("Error: Bag ID does not exist.");
@@ -136,7 +156,7 @@ function ProfilePage() {
 		for (let i = 0; i < temp.length; i++) {
 			// Linear search through this user's bags until we find the one
 			if (temp[i].id == deleteId) {
-				deleteIndex = i;	
+				deleteIndex = i;
 				break;
 			}
 		}
@@ -184,7 +204,7 @@ function ProfilePage() {
 
 					{/* Add Bag button and dialog */}
 					{isAuthenticated && (
-						<NewBagDialog reloadFunc={getUserInfo} />
+						<NewBagDialog newBag={newBag} />
 					)}
 
 					{/* Search bar for bag list */}
@@ -202,8 +222,12 @@ function ProfilePage() {
 					/>
 
 					{/* Bag list */}
-					<BagList bags={bags} isAuthenticated={isAuthenticated} openDeleteDialog={openDeleteDialog}/>
-					
+					<BagList
+						bags={bags}
+						isAuthenticated={isAuthenticated}
+						openDeleteDialog={openDeleteDialog}
+					/>
+
 					{isAuthenticated && (
 						<Dialog
 							open={delDialogOpen}
