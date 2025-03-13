@@ -25,7 +25,6 @@ import { ACCESS_TOKEN, Url } from "../constants";
 import NewBagDialog from "../components/NewBagDialog";
 
 // Page displaying the user's username and bags
-// NOTE: You can only view your own profile currently...
 
 function ProfilePage() {
 	// State vars
