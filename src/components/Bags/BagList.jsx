@@ -10,6 +10,8 @@ import {
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import React from "react";
 
+// List of bags
+
 function BagList({ bags, isAuthenticated, openDeleteDialog }) {
 	return (
 		<List

@@ -3,29 +3,18 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import {
 	Autocomplete,
-	Avatar,
 	Button,
 	Dialog,
 	DialogContent,
 	DialogContentText,
 	DialogTitle,
-	Fab,
-	List,
-	ListItemAvatar,
-	ListItemButton,
-	ListItemText,
-	ListSubheader,
 	TextField,
 } from "@mui/material";
-import ListItem from "@mui/material/ListItemIcon";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
-import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 
 import { api } from "../api";
-import { ACCESS_TOKEN, Url } from "../constants";
-import NewBagDialog from "../components/NewBagDialog";
-import BagList from "../components/BagList";
+import { Url } from "../constants";
+import BagList from "../components/Bags/BagList";
+import NewBagDialog from "../components/Bags/NewBagDialog";
 
 // Page displaying the user's username and bags
 

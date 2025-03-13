@@ -14,6 +14,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 import ProductsTestPage from "./pages/ProductsTestPage.jsx";
 import Item from "./pages/Item.jsx";
+import BagPage from "./pages/BagPage.jsx";
 
 
 function Logout() {
@@ -37,6 +38,10 @@ function App() {
 				<Route path={Url.LOGIN} element={<LoginPage />} />
 				<Route path={Url.LOGOUT} element={<Logout />} />
 				<Route path={Url.REGISTER} element={<RegisterPage />} />
+
+				{/* Bag related */}
+				<Route path={Url.BAGS} element={<BagPage />} />
+				<Route path={Url.BAGS + "/:bagId"} element={<BagPage />} />
 
 				{/* "ProtectedRoute" means a page can only be accessed if the user is logged in */}
 				<Route
