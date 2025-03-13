@@ -15,7 +15,7 @@ function ProductsTestPage() {
 
 	useEffect(() => {
 		getProductFromId(id);
-	}, []);
+	}, [id]); // ✅ Updates when `id` changes
 
 	async function getProductFromId(_id) {
 		if (_id && isNaN(_id)) {
@@ -23,8 +23,7 @@ function ProductsTestPage() {
 			return;
 		}
 
-		if (!_id) console.log("Getting all products...");
-		else console.log("Getting product ID: " + _id);
+		console.log(_id ? `Getting product ID: ${_id}` : "Getting all products...");
 
 		try {
 			let url = Url.BACKEND_CLOTHING;
@@ -44,35 +43,28 @@ function ProductsTestPage() {
 
 			{/* Search bar */}
 			<Autocomplete 
-				options={products.map((product) => {
-					return product.name;
-				})}
-
-				sx={{width: 500}}
+				options={products} // ✅ Store full objects
+				getOptionLabel={(option) => option.name} // ✅ Properly map names
+				sx={{ width: 500 }}
 				renderInput={(params) => (
 					<TextField {...params} label="Search Products..." />
 				)}
 			/>
 
-			{products.length > 0 &&
-				products.map((product) => (
-					<>
-						{id && <h3>{product.name + " - (id: " + id + ")"}</h3>}
-						{!id && <h3>{product.name}</h3>}
-
-						<p>{product.description}</p>
-						<img
-							src={product.image}
-							alt={product.name}
-							style={{
-								width: 200,
-								height: 200,
-								display: "inline",
-							}}
-						/>
-					</>
-				))}
-			{products.length <= 0 && <p>Product not found</p>}
+			{/* Product List */}
+			<div className="container"> {/* ✅ Flexbox container */}
+				{products.length > 0 ? (
+					products.map((product) => (
+						<div key={product.id} className="itemContainer"> {/* ✅ Flex item */}
+							<h3>{product.name} {id && `- (id: ${id})`}</h3>
+							<img className="image" src={product.image} alt={product.name} />
+							<a href="/item"><span className="productPageLink"></span></a>
+						</div>
+					))
+				) : (
+					<p>Product not found</p>
+				)}
+			</div>
 		</>
 	);
 }
