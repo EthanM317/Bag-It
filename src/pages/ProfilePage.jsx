@@ -25,6 +25,7 @@ import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { api } from "../api";
 import { ACCESS_TOKEN, Url } from "../constants";
 import NewBagDialog from "../components/NewBagDialog";
+import BagList from "../components/BagList";
 
 // Page displaying the user's username and bags
 
@@ -205,47 +206,8 @@ function ProfilePage() {
 					/>
 
 					{/* Bag list */}
-					<List
-						sx={{
-							width: "100%",
-							maxWidth: 360,
-							bgcolor: "background.paper",
-						}}
-						component="nav"
-						// aria-labelledby="nested-list-subheader"
-						subheader={
-							<ListSubheader
-								component="div"
-								id="nested-list-subheader"
-							>
-								Bags
-							</ListSubheader>
-						}
-					>
-						{bags.map((bag) => (
-							<ListItemButton>
-								<ListItemAvatar>
-									<Avatar>
-										<ShoppingBagOutlinedIcon />
-									</Avatar>
-								</ListItemAvatar>
-								<ListItemText
-									primary={bag.title}
-									secondary={bag.description}
-								/>
-								{/* <Button onClick={() => deleteBag(bag.id)}>
-								Delete
-							</Button> */}
-								{isAuthenticated && (
-									<Button
-										onClick={() => openDeleteDialog(bag.id)}
-									>
-										Delete
-									</Button>
-								)}
-							</ListItemButton>
-						))}
-					</List>
+					<BagList bags={bags} isAuthenticated={isAuthenticated} openDeleteDialog={openDeleteDialog}/>
+					
 					{isAuthenticated && (
 						<Dialog
 							open={delDialogOpen}
