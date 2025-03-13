@@ -11,7 +11,7 @@ export const Url = {
 	REGISTER: 	"/register",
 	PROFILE: 	"/profile",
 	ITEM:		"/item",
-	BAGS:		"/bags", 
+	BAG:		"/bag", 
 
 	// DEBUG
 	TEST: 		"/test",

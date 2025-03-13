@@ -9,13 +9,19 @@ import {
 } from "@mui/material";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import React from "react";
+import { useNavigate } from "react-router";
+import { Url } from "../../constants";
 
 // List of bags
 
 function BagList({ bags, isAuthenticated, openDeleteDialog }) {
+	const navigate = useNavigate();
 
-	function clickBag(bagId) {
+
+	function clickBag(e, bagId) {
+		// e.preventDefault();
 		console.log("Clicked. bagId: " + bagId);
+		navigate(Url.BAG + "/" + bagId);
 	}
 
 	return (
@@ -34,7 +40,7 @@ function BagList({ bags, isAuthenticated, openDeleteDialog }) {
 			}
 		>
 			{bags.map((bag) => (
-				<ListItemButton onClick={() => clickBag(bag.id)}>
+				<ListItemButton onClick={(e) => clickBag(e, bag.id)}>
 					<ListItemAvatar>
 						<Avatar>
 							<ShoppingBagOutlinedIcon />
