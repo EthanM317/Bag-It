@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import {
+	Autocomplete,
 	Avatar,
 	Button,
 	Dialog,
@@ -14,6 +15,7 @@ import {
 	ListItemButton,
 	ListItemText,
 	ListSubheader,
+	TextField,
 } from "@mui/material";
 import ListItem from "@mui/material/ListItemIcon";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -30,12 +32,13 @@ function ProfilePage() {
 	// State vars
 	const [username, setUsername] = useState(""); // The username to display on the page
 	const [userId, setUserId] = useState(""); // Current userId to use for api calls
-	const [bags, setBags] = useState([]); // List of the user's bags
-	const [delDialogOpen, setDelDialogOpen] = useState(false); // Whether or not the delete-bag dialog is open
-	const [deleteId, setDeleteId] = useState(-1); // The ID of the bag to delete (used by the delete dialog)
 	const [isAuthenticated, setIsAuthenticated] = useState(false); // Whether or not the user is signed in (allows you to delete your own bags)
 	const [userNotFound, setUserNotFound] = useState(false); // Display error if the user couldn't be found
 	const [isLoading, setIsLoading] = useState(true); // Is the page still fetching information from the backend?
+
+	const [bags, setBags] = useState([]); // List of the user's bags
+	const [delDialogOpen, setDelDialogOpen] = useState(false); // Whether or not the delete-bag dialog is open
+	const [deleteId, setDeleteId] = useState(-1); // The ID of the bag to delete (used by the delete dialog)
 
 	// Param from dynamic route
 	const { id } = useParams();
@@ -163,10 +166,27 @@ function ProfilePage() {
 				<div>
 					<h1>{username}'s Profile Page</h1>
 					<h2>{username}'s Bags</h2>
+
+					{/* Add Bag button and dialog */}
 					{isAuthenticated && (
 						<NewBagDialog reloadFunc={() => getUserInfo()} />
 					)}
 
+					{/* Search bar for bag list */}
+					<br />
+					<br />
+					<Autocomplete
+						// Use all the bag titles as keywords in the autocomplete search
+						options={bags.map((bag) => {
+							return bag.title;
+						})}
+						sx={{ width: 300 }}
+						renderInput={(params) => (
+							<TextField {...params} label="Bag" />
+						)}
+					/>
+
+					{/* Bag list */}
 					<List
 						sx={{
 							width: "100%",
