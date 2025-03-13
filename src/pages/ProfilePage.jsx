@@ -123,25 +123,25 @@ function ProfilePage() {
 		setIsLoading(false);
 	};
 
-	const newBag = async (newBagName, newBagDesc) => {
-		try {
-			const res = await api.post(Url.BACKEND_BAG_CREATE, {
-				title: newBagName,
-				description: newBagDesc,
-			});
+	// const newBag = async (newBagName, newBagDesc) => {
+	// 	try {
+	// 		const res = await api.post(Url.BACKEND_BAG_CREATE, {
+	// 			title: newBagName,
+	// 			description: newBagDesc,
+	// 		});
 
-			// Update local bags value
-			// NOTE: we need to work on a deep copy of the array, otherwise nothing works
-			let temp = structuredClone(bags);
-			temp.push(res.data);
-			setBags(temp);
+	// 		// Update local bags value
+	// 		// NOTE: we need to work on a deep copy of the array, otherwise nothing works
+	// 		let temp = structuredClone(bags);
+	// 		temp.push(res.data);
+	// 		setBags(temp);
 
-			console.log(temp);
-			console.log(bags);
-		} catch (error) {
-			alert(error);
-		}
-	};
+	// 		console.log(temp);
+	// 		console.log(bags);
+	// 	} catch (error) {
+	// 		alert(error);
+	// 	}
+	// };
 
 	const deleteBag = async () => {
 		if (deleteId < 0) {
@@ -181,10 +181,6 @@ function ProfilePage() {
 		setDeleteId(-1);
 	};
 
-	async function test(newBags) {
-		await setBags(newBags);
-	}
-
 	function logoutClicked() {
 		navigate(Url.LOGOUT);
 	}
@@ -204,7 +200,7 @@ function ProfilePage() {
 
 					{/* Add Bag button and dialog */}
 					{isAuthenticated && (
-						<NewBagDialog newBag={newBag} />
+						<NewBagDialog bags={bags} setBags={setBags} />
 					)}
 
 					{/* Search bar for bag list */}
