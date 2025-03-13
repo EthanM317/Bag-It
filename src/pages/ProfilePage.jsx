@@ -132,7 +132,7 @@ function ProfilePage() {
 	// 	}
 	// };
 
-	const deleteBag = async () => {
+	const deleteBag = async (e) => {
 		if (deleteId < 0) {
 			alert("Error: Bag ID does not exist.");
 			return;
@@ -160,7 +160,10 @@ function ProfilePage() {
 	};
 
 	// -- The delete dialog --
-	const openDeleteDialog = (bagId) => {
+	const openDeleteDialog = (e, bagId) => {
+		// Don't let us click buttons underneath this one
+		e.stopPropagation();
+
 		setDeleteId(bagId);
 		setDelDialogOpen(true);
 	};

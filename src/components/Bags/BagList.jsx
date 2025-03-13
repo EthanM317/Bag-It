@@ -13,6 +13,11 @@ import React from "react";
 // List of bags
 
 function BagList({ bags, isAuthenticated, openDeleteDialog }) {
+
+	function clickBag(bagId) {
+		console.log("Clicked. bagId: " + bagId);
+	}
+
 	return (
 		<List
 			sx={{
@@ -29,7 +34,7 @@ function BagList({ bags, isAuthenticated, openDeleteDialog }) {
 			}
 		>
 			{bags.map((bag) => (
-				<ListItemButton>
+				<ListItemButton onClick={() => clickBag(bag.id)}>
 					<ListItemAvatar>
 						<Avatar>
 							<ShoppingBagOutlinedIcon />
@@ -43,7 +48,7 @@ function BagList({ bags, isAuthenticated, openDeleteDialog }) {
 								Delete
 							</Button> */}
 					{isAuthenticated && (
-						<Button onClick={() => openDeleteDialog(bag.id)}>
+						<Button onClick={(e) => openDeleteDialog(e, bag.id)}>
 							Delete
 						</Button>
 					)}
