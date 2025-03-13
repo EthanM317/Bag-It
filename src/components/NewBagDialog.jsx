@@ -42,6 +42,7 @@ function NewBagDialog({ reloadFunc }) {
 				description: newBagDesc,
 			});
 
+			// Lazily reload the entire page to just update the bags in the baglist
 			reloadFunc();
 
 			setOpen(false);
