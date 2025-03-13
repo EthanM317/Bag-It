@@ -108,46 +108,6 @@ function Form({ route, register }) {
 			</Button>
 		</div>
 	);
-
-	// OLD non-Material ui code
-	return (
-		<form onSubmit={handleSubmit} className="form-container">
-			<h1>{formTitle}</h1>
-			<input
-				className="form-input"
-				type="text"
-				value={username}
-				onChange={(e) => setUsername(e.target.value)}
-				placeholder="Username"
-			/>
-
-			<input
-				className="form-input"
-				type="password"
-				value={password}
-				onChange={(e) => setPassword(e.target.value)}
-				placeholder="Password"
-			/>
-			{!register && (
-				<p>
-					Don't have an account?{" "}
-					<a
-						href=""
-						onClick={() => {
-							navigate(Url.REGISTER);
-						}}
-					>
-						Sign up here.
-					</a>
-				</p>
-			)}
-
-			<button className="form-button" type="submit">
-				{formTitle}
-			</button>
-			{outputMsg && <p>{outputMsg}</p>}
-		</form>
-	);
 }
 
 export default Form;
