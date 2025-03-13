@@ -13,6 +13,7 @@ import ProfilePage from "./pages/ProfilePage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 import ProductsTestPage from "./pages/ProductsTestPage.jsx";
+import Item from "./pages/Item.jsx";
 
 
 function Logout() {
@@ -30,6 +31,7 @@ function App() {
 				{/* Link URLS to jsx pages here */}
 				<Route path="*" element={<NotFoundPage />}/>
 				<Route path={Url.HOME} element={<HomePage />} />
+				<Route path={Url.ITEM} element={<Item />} />
 
 				{/* Account related */}
 				<Route path={Url.LOGIN} element={<LoginPage />} />

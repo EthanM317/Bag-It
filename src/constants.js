@@ -10,6 +10,7 @@ export const Url = {
 	LOGOUT:		"/logout",
 	REGISTER: 	"/register",
 	PROFILE: 	"/profile",
+	ITEM:		"/item",
 
 	// DEBUG
 	TEST: 		"/test",
