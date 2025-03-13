@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import {
+	Autocomplete,
 	Avatar,
 	Button,
 	Dialog,
@@ -14,6 +15,7 @@ import {
 	ListItemButton,
 	ListItemText,
 	ListSubheader,
+	TextField,
 } from "@mui/material";
 import ListItem from "@mui/material/ListItemIcon";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -23,20 +25,21 @@ import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { api } from "../api";
 import { ACCESS_TOKEN, Url } from "../constants";
 import NewBagDialog from "../components/NewBagDialog";
+import BagList from "../components/BagList";
 
 // Page displaying the user's username and bags
-// NOTE: You can only view your own profile currently...
 
 function ProfilePage() {
 	// State vars
 	const [username, setUsername] = useState(""); // The username to display on the page
 	const [userId, setUserId] = useState(""); // Current userId to use for api calls
-	const [bags, setBags] = useState([]); // List of the user's bags
-	const [delDialogOpen, setDelDialogOpen] = useState(false); // Whether or not the delete-bag dialog is open
-	const [deleteId, setDeleteId] = useState(-1); // The ID of the bag to delete (used by the delete dialog)
 	const [isAuthenticated, setIsAuthenticated] = useState(false); // Whether or not the user is signed in (allows you to delete your own bags)
 	const [userNotFound, setUserNotFound] = useState(false); // Display error if the user couldn't be found
 	const [isLoading, setIsLoading] = useState(true); // Is the page still fetching information from the backend?
+
+	const [bags, setBags] = useState([]); // List of the user's bags
+	const [delDialogOpen, setDelDialogOpen] = useState(false); // Whether or not the delete-bag dialog is open
+	const [deleteId, setDeleteId] = useState(-1); // The ID of the bag to delete (used by the delete dialog)
 
 	// Param from dynamic route
 	const { id } = useParams();
@@ -56,7 +59,7 @@ function ProfilePage() {
 		setIsLoading(true);
 
 		// Verify the id from parameter
-		if (isNaN(id)) {
+		if (id && isNaN(id)) {
 			setIsLoading(false);
 			setUserNotFound(true);
 			return;
@@ -68,7 +71,7 @@ function ProfilePage() {
 			userDataStuff = userResponse.data[0];
 
 			// THIS IS SO FUNNY
-			if (!id || id != userDataStuff.id)
+			if (id && id != userDataStuff.id)
 				throw new Error("Search using id");
 
 			const bagResponse = await api.get(
@@ -120,6 +123,26 @@ function ProfilePage() {
 		setIsLoading(false);
 	};
 
+	// const newBag = async (newBagName, newBagDesc) => {
+	// 	try {
+	// 		const res = await api.post(Url.BACKEND_BAG_CREATE, {
+	// 			title: newBagName,
+	// 			description: newBagDesc,
+	// 		});
+
+	// 		// Update local bags value
+	// 		// NOTE: we need to work on a deep copy of the array, otherwise nothing works
+	// 		let temp = structuredClone(bags);
+	// 		temp.push(res.data);
+	// 		setBags(temp);
+
+	// 		console.log(temp);
+	// 		console.log(bags);
+	// 	} catch (error) {
+	// 		alert(error);
+	// 	}
+	// };
+
 	const deleteBag = async () => {
 		if (deleteId < 0) {
 			alert("Error: Bag ID does not exist.");
@@ -127,21 +150,23 @@ function ProfilePage() {
 		}
 
 		const res = await api.delete(Url.BACKEND_BAG_DELETE + deleteId);
-		console.log(res);
 
-		// Linear search through bags until we find the correct one
-		let bag;
-		let i = 0;
-		for (; i < bags.length; i++) {
-			if (bags[i].id == deleteId) {
-				bag = bags[i];
+		let temp = bags;
+		let deleteIndex = -1;
+		for (let i = 0; i < temp.length; i++) {
+			// Linear search through this user's bags until we find the one
+			if (temp[i].id == deleteId) {
+				deleteIndex = i;
 				break;
 			}
 		}
 
+		// Bag couldn't be found
+		if (deleteIndex < 0) return;
+
 		// Delete the bag at that position in the list
-		bags.splice(i);
-		setBags(bags);
+		temp.splice(deleteIndex, 1);
+		setBags(temp);
 		closeDeleteDialog();
 	};
 
@@ -156,59 +181,49 @@ function ProfilePage() {
 		setDeleteId(-1);
 	};
 
+	function logoutClicked() {
+		navigate(Url.LOGOUT);
+	}
+
 	return (
 		<div>
 			{userNotFound && <h2>Error: User not found</h2>}
 
 			{!isLoading && !userNotFound && (
 				<div>
+					<Button variant="contained" onClick={logoutClicked}>
+						Logout
+					</Button>
+
 					<h1>{username}'s Profile Page</h1>
 					<h2>{username}'s Bags</h2>
+
+					{/* Add Bag button and dialog */}
 					{isAuthenticated && (
-						<NewBagDialog reloadFunc={() => getUserInfo()} />
+						<NewBagDialog bags={bags} setBags={setBags} />
 					)}
 
-					<List
-						sx={{
-							width: "100%",
-							maxWidth: 360,
-							bgcolor: "background.paper",
-						}}
-						component="nav"
-						aria-labelledby="nested-list-subheader"
-						subheader={
-							<ListSubheader
-								component="div"
-								id="nested-list-subheader"
-							>
-								Bags
-							</ListSubheader>
-						}
-					>
-						{bags.map((bag) => (
-							<ListItemButton>
-								<ListItemAvatar>
-									<Avatar>
-										<ShoppingBagOutlinedIcon />
-									</Avatar>
-								</ListItemAvatar>
-								<ListItemText
-									primary={bag.title}
-									secondary={bag.description}
-								/>
-								{/* <Button onClick={() => deleteBag(bag.id)}>
-								Delete
-							</Button> */}
-								{isAuthenticated && (
-									<Button
-										onClick={() => openDeleteDialog(bag.id)}
-									>
-										Delete
-									</Button>
-								)}
-							</ListItemButton>
-						))}
-					</List>
+					{/* Search bar for bag list */}
+					<br />
+					<br />
+					<Autocomplete
+						// Use all the bag titles as keywords in the autocomplete search
+						options={bags.map((bag) => {
+							return bag.title;
+						})}
+						sx={{ width: 300 }}
+						renderInput={(params) => (
+							<TextField {...params} label="Bag" />
+						)}
+					/>
+
+					{/* Bag list */}
+					<BagList
+						bags={bags}
+						isAuthenticated={isAuthenticated}
+						openDeleteDialog={openDeleteDialog}
+					/>
+
 					{isAuthenticated && (
 						<Dialog
 							open={delDialogOpen}

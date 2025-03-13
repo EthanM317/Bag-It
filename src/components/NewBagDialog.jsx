@@ -14,7 +14,7 @@ import { useNavigate } from "react-router";
 
 // Button and Dialog for creating a new bag
 
-function NewBagDialog({ reloadFunc }) {
+function NewBagDialog({ bags, setBags }) {
 	const [open, setOpen] = useState(false);
 	const [newBagName, setNewBagName] = useState("");
 	const [newBagDesc, setNewBagDesc] = useState("");
@@ -36,14 +36,18 @@ function NewBagDialog({ reloadFunc }) {
 		if (newBagName == "") return;
 
 		try {
-			// Use api to create bag
+			// Create new bag in the backend based on the provided text fields
 			const res = await api.post(Url.BACKEND_BAG_CREATE, {
 				title: newBagName,
 				description: newBagDesc,
 			});
 
-			reloadFunc();
+			// Update the local bags list
+			let temp = structuredClone(bags);
+			temp.push(res.data);
+			setBags(temp);
 
+			// Close the dialog
 			setOpen(false);
 		} catch (error) {
 			alert(error);
@@ -59,8 +63,8 @@ function NewBagDialog({ reloadFunc }) {
 				open={open}
 				onClose={closeDialog}
 				// TODO: Figure out what this two things are
-				aria-labelledby="alert-dialog-title"
-				aria-describedby="alert-dialog-description"
+				// aria-labelledby="alert-dialog-title"
+				// aria-describedby="alert-dialog-description"
 			>
 				<DialogTitle id="alert-dialog-title">
 					Add a New Bag.

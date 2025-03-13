@@ -23,12 +23,38 @@ function Form({ route, register }) {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		// DEBUG print what's in the localStorage so I can see the keys
-		console.log(localStorage);
+		checkToken();
 	}, []);
 
+	// Check if the user is already logged in
+	async function checkToken() {
+		let refreshToken = localStorage.getItem(REFRESH_TOKEN);
+
+		// If we don't have a refresh token, don't do anything
+		if (!refreshToken) return;
+
+		try {
+			// Check if this is a valid refresh token
+			const res = await api.post(Url.BACKEND_TOKEN_REFRESH, {
+				refresh: refreshToken,
+			});
+
+			// If user is already logged in, just go to profile
+			if (res.data) {
+				navigate(Url.PROFILE);
+			}
+		} catch (error) {
+			// TODO: Check what happens if the refresh token is invalid
+			// it'll probably do this here
+			alert(
+				"Warning: if you're seeing this your access token is prolly invalid.\nPlease take a screenshot of the next error and send it to me."
+			);
+			alert(error);
+		}
+	}
+
 	// Called when the user presses the button
-	const handleSubmit = async (e) => {
+	async function handleSubmit(e) {
 		// TODO: Figure out what this means
 		e.preventDefault();
 
@@ -51,46 +77,10 @@ function Form({ route, register }) {
 			alert(error);
 		} finally {
 		}
-	};
+	}
 
-	return <div>
-		{!register && (
-				<p>
-					Don't have an account?{" "}
-					<a
-						href=""
-						onClick={() => {
-							navigate(Url.REGISTER);
-						}}
-					>
-						Sign up here.
-					</a>
-				</p>
-			)}
-		<TextField label="Username" onChange={(e) => setUsername(e.target.value)}></TextField>
-		<TextField type="password" label="Password" onChange={(e) => setPassword(e.target.value)}></TextField>
-		<Button variant="contained" onClick={handleSubmit}>{formTitle}</Button>
-	</div>
-
-	// OLD non-Material ui code
 	return (
-		<form onSubmit={handleSubmit} className="form-container">
-			<h1>{formTitle}</h1>
-			<input
-				className="form-input"
-				type="text"
-				value={username}
-				onChange={(e) => setUsername(e.target.value)}
-				placeholder="Username"
-			/>
-
-			<input
-				className="form-input"
-				type="password"
-				value={password}
-				onChange={(e) => setPassword(e.target.value)}
-				placeholder="Password"
-			/>
+		<div>
 			{!register && (
 				<p>
 					Don't have an account?{" "}
@@ -104,12 +94,19 @@ function Form({ route, register }) {
 					</a>
 				</p>
 			)}
-
-			<button className="form-button" type="submit">
+			<TextField
+				label="Username"
+				onChange={(e) => setUsername(e.target.value)}
+			></TextField>
+			<TextField
+				type="password"
+				label="Password"
+				onChange={(e) => setPassword(e.target.value)}
+			></TextField>
+			<Button variant="contained" onClick={handleSubmit}>
 				{formTitle}
-			</button>
-			{outputMsg && <p>{outputMsg}</p>}
-		</form>
+			</Button>
+		</div>
 	);
 }
 

@@ -2,6 +2,7 @@ import { useParams } from "react-router";
 import { api } from "../api";
 import { Url } from "../constants";
 import { useEffect, useState } from "react";
+import { Autocomplete, TextField } from "@mui/material";
 
 // You can search the product database by adding the productID to the end of the URL
 // ex. "/products/5"
@@ -17,7 +18,7 @@ function ProductsTestPage() {
 	}, []);
 
 	async function getProductFromId(_id) {
-		if (isNaN(_id)) {
+		if (_id && isNaN(_id)) {
 			setProducts([]);
 			return;
 		}
@@ -40,6 +41,19 @@ function ProductsTestPage() {
 		<>
 			<h1>Products List</h1>
 			{!id && <h2>Here are all the products</h2>}
+
+			{/* Search bar */}
+			<Autocomplete 
+				options={products.map((product) => {
+					return product.name;
+				})}
+
+				sx={{width: 500}}
+				renderInput={(params) => (
+					<TextField {...params} label="Search Products..." />
+				)}
+			/>
+
 			{products.length > 0 &&
 				products.map((product) => (
 					<>

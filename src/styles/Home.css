@@ -58,14 +58,16 @@
   bottom: 0;
 }
 .title{
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  text-align: center;
+
+  /* position: absolute; */
+  /* left: 50%; */
+  /* transform: translateX(-50%); */
   top: 20%;
 }
 .catchphrase{
-  left: 50%;
-  transform: translateX(30%);
+  /* left: 50%; */
+  /* transform: translateX(30%); */
 }
 
 
