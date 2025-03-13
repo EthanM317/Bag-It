@@ -148,8 +148,7 @@ function ProfilePage() {
 		if (deleteIndex < 0) return;
 
 		// Delete the bag at that position in the list
-		temp.splice(deleteIndex);
-		console.log(temp);
+		temp.splice(deleteIndex, 1);
 		setBags(temp);
 		closeDeleteDialog();
 	};
@@ -164,6 +163,10 @@ function ProfilePage() {
 		setDelDialogOpen(false);
 		setDeleteId(-1);
 	};
+
+	async function test(newBags) {
+		await setBags(newBags);
+	}
 
 	function logoutClicked() {
 		navigate(Url.LOGOUT);
@@ -184,7 +187,7 @@ function ProfilePage() {
 
 					{/* Add Bag button and dialog */}
 					{isAuthenticated && (
-						<NewBagDialog bags={bags} setBags={setBags} />
+						<NewBagDialog reloadFunc={getUserInfo} />
 					)}
 
 					{/* Search bar for bag list */}
@@ -209,7 +212,7 @@ function ProfilePage() {
 							bgcolor: "background.paper",
 						}}
 						component="nav"
-						aria-labelledby="nested-list-subheader"
+						// aria-labelledby="nested-list-subheader"
 						subheader={
 							<ListSubheader
 								component="div"

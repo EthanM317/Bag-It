@@ -14,7 +14,7 @@ import { useNavigate } from "react-router";
 
 // Button and Dialog for creating a new bag
 
-function NewBagDialog({ bags, setBags }) {
+function NewBagDialog({ reloadFunc }) {
 	const [open, setOpen] = useState(false);
 	const [newBagName, setNewBagName] = useState("");
 	const [newBagDesc, setNewBagDesc] = useState("");
@@ -42,18 +42,7 @@ function NewBagDialog({ bags, setBags }) {
 				description: newBagDesc,
 			});
 
-			// console.log(res.data);
-
-			// Add new bag to the end of our local array
-			let temp = bags;
-			temp.push(res.data);
-			setBags(temp);
-			
-			// console.log(bags);
-
-			// bags.push(res.data)
-			// console.log(bags);
-			// setBags(bags);
+			reloadFunc();
 
 			setOpen(false);
 		} catch (error) {
@@ -70,8 +59,8 @@ function NewBagDialog({ bags, setBags }) {
 				open={open}
 				onClose={closeDialog}
 				// TODO: Figure out what this two things are
-				aria-labelledby="alert-dialog-title"
-				aria-describedby="alert-dialog-description"
+				// aria-labelledby="alert-dialog-title"
+				// aria-describedby="alert-dialog-description"
 			>
 				<DialogTitle id="alert-dialog-title">
 					Add a New Bag.
