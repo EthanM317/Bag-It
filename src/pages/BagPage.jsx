@@ -14,12 +14,12 @@ function BagPage() {
             navigate(Url.PROFILE);
         }
 
-        console.log(Backend.getUsers());
+        // console.log(Backend.getUsers());
     }, []);
 
  
 	return <>
-
+        
     </>;
 }
 
