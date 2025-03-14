@@ -1,24 +1,37 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import image from '../assets/pear.png'
+import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/Item.css";
 
-function Item() {
-  return <>
-    {/*image of product*/}
-    <img src={image} alt="image of product" className="Image" />
-    <div className="ItemInfo">
-        <h1 className="Name">This is the item name</h1>
-        <p className="description">This bold update to the AJ4 turns a classic into a showstopper. Premium materials, like soft, supple leather, give these kicks a luxurious look and feel. Gold details, like a detachable Jumpman tag, pop against the Triple White upper, putting all eyes on you. Lace 'em up and step into nothing-but-net style.</p>
-    </div>
-    <div className="tagList">
-        <h2 className="tag">Size:</h2>
-        <h2 className="tag">Type:</h2>
-        <h2 className="tag">Colour:</h2>
-        <h2 className="tag">Gender:</h2>
-        <h2 className="tag">Brand:</h2>
-    </div>
-  </>;
-}
+export default function Item() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const product = location.state;
 
-export default Item;
+  // Redirect if no product data is found
+  if (!product) {
+    navigate("/products"); // Redirect back to product list
+    return null;
+  }
+
+  return (
+    <div className="ItemContainer">
+      {/* Conditionally render image only if `product.image` is available */}
+      {product.image ? (
+        <img src={product.image} alt={product.name} className="Image" />
+      ) : (
+        <p>No image available</p> // Provide a fallback message or image
+      )}
+
+      <div className="ItemInfo">
+        <h1 className="Name">{product.name || "Unknown Product"}</h1>
+        <p className="description">{product.description || "No description available."}</p>
+      </div>
+      <div className="tagList">
+        <h2 className="tag">Size: {product.size || "N/A"}</h2>
+        <h2 className="tag">Type: {product.type || "N/A"}</h2>
+        <h2 className="tag">Colour: {product.color || "N/A"}</h2>
+        <h2 className="tag">Gender: {product.gender || "N/A"}</h2>
+        <h2 className="tag">Brand: {product.brand || "N/A"}</h2>
+      </div>
+    </div>
+  );
+}

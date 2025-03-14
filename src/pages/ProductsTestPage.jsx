@@ -3,6 +3,8 @@ import { api } from "../api";
 import { Url } from "../constants";
 import { useEffect, useState } from "react";
 import { Autocomplete, TextField } from "@mui/material";
+import React from 'react';
+import {Link} from 'react-router-dom';
 
 // You can search the product database by adding the productID to the end of the URL
 // ex. "/products/5"
@@ -55,10 +57,13 @@ function ProductsTestPage() {
 			<div className="container"> {/* ✅ Flexbox container */}
 				{products.length > 0 ? (
 					products.map((product) => (
-						<div key={product.id} className="itemContainer"> {/* ✅ Flex item */}
+						<div key={product.id} className="itemContainer"> 
 							<h3>{product.name} {id && `- (id: ${id})`}</h3>
 							<img className="image" src={product.image} alt={product.name} />
-							<a href="/item"><span className="productPageLink"></span></a>
+							<Link to="/item" state={{...product}}>
+  <span className="productPageLink"></span>
+</Link>
+								
 						</div>
 					))
 				) : (
