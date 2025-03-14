@@ -11,21 +11,24 @@ export const Url = {
 	REGISTER: 	"/register",
 	PROFILE: 	"/profile",
 	ITEM:		"/item",
-	BAGS:		"/bags", 
+	BAG:		"/bag", 
 
 	// DEBUG
 	TEST: 		"/test",
 
 	// -- Backend --
-	BACKEND_CLOTHING:		"/clothing/",
-	BACKEND_REGISTER:		"/accounts/signup/",
-	BACKEND_TOKEN:			"/accounts/token/",
-	BACKEND_TOKEN_REFRESH:	"/accounts/token/refresh/",
+	BACKEND_CLOTHING:			"/clothing/",
+	BACKEND_REGISTER:			"/accounts/signup/",
+	BACKEND_TOKEN:				"/accounts/token/",
+	BACKEND_TOKEN_REFRESH:		"/accounts/token/refresh/",
 
-	BACKEND_USER:			"/accounts/users/",
-	BACKEND_CURRENT_USER:	"/accounts/users/current/",
+	BACKEND_USER:				"/accounts/users/",
+	BACKEND_CURRENT_USER:		"/accounts/users/current/",
 
-	BACKEND_BAG:			"/accounts/bag/",
-	BACKEND_BAG_CREATE:		"/accounts/bag/create/",
-	BACKEND_BAG_DELETE:		"/accounts/bag/delete/",
+	BACKEND_BAG:				"/accounts/bag/",
+	BACKEND_BAG_CREATE:			"/accounts/bag/create/",
+	BACKEND_BAG_DELETE:			"/accounts/bag/delete/",
+	BACKEND_BAG_ITEMS:			"/accounts/bag/item/",
+	BACKEND_BAG_ITEM_CREATE:	"/accounts/bag/item/create/",
+	BACKEND_BAG_ITEM_DELETE:	"/accounts/bag/item/delete/",
 };

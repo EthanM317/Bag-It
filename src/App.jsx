@@ -40,8 +40,8 @@ function App() {
 				<Route path={Url.REGISTER} element={<RegisterPage />} />
 
 				{/* Bag related */}
-				<Route path={Url.BAGS} element={<BagPage />} />
-				<Route path={Url.BAGS + "/:bagId"} element={<BagPage />} />
+				<Route path={Url.BAG} element={<BagPage />} />
+				<Route path={Url.BAG + "/:bagId"} element={<BagPage />} />
 
 				{/* "ProtectedRoute" means a page can only be accessed if the user is logged in */}
 				<Route
