@@ -18,6 +18,7 @@ function NewBagDialog({ bags, setBags }) {
 	const [open, setOpen] = useState(false);
 	const [newBagName, setNewBagName] = useState("");
 	const [newBagDesc, setNewBagDesc] = useState("");
+	const [isAdding, setIsAdding] = useState(false);
 
 	const navigate = useNavigate();
 
@@ -34,6 +35,12 @@ function NewBagDialog({ bags, setBags }) {
 	const submitDialog = async () => {
 		// Don't let us submit the dialog if we haven't typed anything
 		if (newBagName == "") return;
+
+		// Don't try to submit while we're already submitting
+		if (isAdding)
+			return;
+
+		setIsAdding(true);
 
 		try {
 			// Create new bag in the backend based on the provided text fields
@@ -52,6 +59,8 @@ function NewBagDialog({ bags, setBags }) {
 		} catch (error) {
 			alert(error);
 		}
+
+		setIsAdding(false);
 	};
 
 	return (
