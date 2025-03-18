@@ -26,10 +26,10 @@ export default function Item() {
         <p className="description">{product.description || "No description available."}</p>
       </div>
       <div className="tagList">
-        <h2 className="tag">Size: {product.size || "N/A"}</h2>
-        <h2 className="tag">Type: {product.type || "N/A"}</h2>
-        <h2 className="tag">Colour: {product.color || "N/A"}</h2>
-        <h2 className="tag">Gender: {product.gender || "N/A"}</h2>
+        <h2 className="tag">Size: {{ 0: "Extra Small", 1: "Small", 2: "Medium", 3: "Large", 4: "Extra Large" }[product.size] || "N/A"}</h2>
+        <h2 className="tag">Type: {{ 0: "Shorts", 1: "Pants", 2: "T-Shirt", 3: "Dress", 4: "Shoes", 5: "Hat", 6: "Hoodie", 7: "Shirt" }[product.type]|| "N/A"}</h2>
+        <h2 className="tag">Colour: {product.color|| "N/A"}</h2>
+        <h2 className="tag">Gender: {{0: "Male", 1: "Female", 2: "Unisex"}[product.gender] || "N/A"}</h2>
         <h2 className="tag">Brand: {product.brand || "N/A"}</h2>
       </div>
     </div>
