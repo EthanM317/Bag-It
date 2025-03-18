@@ -14,7 +14,7 @@ import {
 import { api } from "../api";
 import { Url } from "../constants";
 import BagList from "../components/Bags/BagList";
-import NewBagDialog from "../components/Bags/NewBagDialog";
+import AddBagDialog from "../components/Bags/AddBagDialog";
 
 // Page displaying the user's username and bags
 
@@ -192,7 +192,7 @@ function ProfilePage() {
 
 					{/* Add Bag button and dialog */}
 					{isAuthenticated && (
-						<NewBagDialog bags={bags} setBags={setBags} />
+						<AddBagDialog bags={bags} setBags={setBags} />
 					)}
 
 					{/* Search bar for bag list */}

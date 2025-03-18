@@ -14,15 +14,21 @@ import { useNavigate } from "react-router";
 
 // Button and Dialog for creating a new bag
 
-function NewBagDialog({ bags, setBags }) {
+function AddBagDialog({ bags, setBags }) {
 	const [open, setOpen] = useState(false);
 	const [newBagName, setNewBagName] = useState("");
 	const [newBagDesc, setNewBagDesc] = useState("");
+
+	// Used to hide the forms when adding a new bag
 	const [isAdding, setIsAdding] = useState(false);
 
 	const navigate = useNavigate();
 
 	const openDialog = () => {
+		// Show the fields
+		setIsAdding(false);
+
+		// Clear fields
 		setNewBagName("");
 		setNewBagDesc("");
 		setOpen(true);
@@ -35,10 +41,6 @@ function NewBagDialog({ bags, setBags }) {
 	const submitDialog = async () => {
 		// Don't let us submit the dialog if we haven't typed anything
 		if (newBagName == "") return;
-
-		// Don't try to submit while we're already submitting
-		if (isAdding)
-			return;
 
 		setIsAdding(true);
 
@@ -59,8 +61,6 @@ function NewBagDialog({ bags, setBags }) {
 		} catch (error) {
 			alert(error);
 		}
-
-		setIsAdding(false);
 	};
 
 	return (
@@ -78,43 +78,60 @@ function NewBagDialog({ bags, setBags }) {
 				<DialogTitle id="alert-dialog-title">
 					Add a New Bag.
 				</DialogTitle>
-				<DialogContent>
-					<DialogContentText>
-						Create the best outfit anyone's ever seen in their life.
-					</DialogContentText>
-					<TextField
-						autoFocus
-						required
-						margin="dense"
-						id="name"
-						name="bagname"
-						label="Bag Name"
-						fullWidth
-						variant="standard"
-						onChange={(e) => setNewBagName(e.target.value)}
-					/>
-					<TextField
-						required
-						margin="dense"
-						id="desc"
-						name="description"
-						label="Description"
-						fullWidth
-						variant="standard"
-						onChange={(e) => {
-							let desc = e.target.value;
-							if (!desc) desc = "";
 
-							setNewBagDesc(desc);
-						}}
-					/>
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={submitDialog}>OK</Button>
-				</DialogActions>
+				{isAdding && <>
+					<DialogContent>
+						<DialogContentText>
+							Adding {newBagName} to your bags...
+
+							{/* TODO: Have a spinning loading symbol here maybe */}
+							{/* TODO: Just disable the button... */}
+						</DialogContentText>
+					</DialogContent>
+				</>}
+
+				{!isAdding && (
+					<>
+						<DialogContent>
+							<DialogContentText>
+								Create the best outfit anyone's ever seen in
+								their life.
+							</DialogContentText>
+							<TextField
+								autoFocus
+								required
+								margin="dense"
+								id="name"
+								name="bagname"
+								label="Bag Name"
+								fullWidth
+								variant="standard"
+								onChange={(e) => setNewBagName(e.target.value)}
+							/>
+							<TextField
+								required
+								margin="dense"
+								id="desc"
+								name="description"
+								label="Description"
+								fullWidth
+								variant="standard"
+								onChange={(e) => {
+									let desc = e.target.value;
+									if (!desc) desc = "";
+
+									setNewBagDesc(desc);
+								}}
+							/>
+						</DialogContent>
+						<DialogActions>
+							<Button onClick={submitDialog}>OK</Button>
+						</DialogActions>
+					</>
+				)}
 			</Dialog>
 		</>
 	);
 }
 
-export default NewBagDialog;
+export default AddBagDialog;
