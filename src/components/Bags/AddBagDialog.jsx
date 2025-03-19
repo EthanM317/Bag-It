@@ -79,56 +79,42 @@ function AddBagDialog({ bags, setBags }) {
 					Add a New Bag.
 				</DialogTitle>
 
-				{isAdding && <>
-					<DialogContent>
-						<DialogContentText>
-							Adding {newBagName} to your bags...
+				<DialogContent>
+					<DialogContentText>
+						Create the best outfit anyone's ever seen in their life.
+					</DialogContentText>
+					<TextField
+						autoFocus
+						required
+						margin="dense"
+						id="name"
+						name="bagname"
+						label="Bag Name"
+						fullWidth
+						variant="standard"
+						onChange={(e) => setNewBagName(e.target.value)}
+					/>
+					<TextField
+						required
+						margin="dense"
+						id="desc"
+						name="description"
+						label="Description"
+						fullWidth
+						variant="standard"
+						onChange={(e) => {
+							let desc = e.target.value;
+							if (!desc) desc = "";
 
-							{/* TODO: Have a spinning loading symbol here maybe */}
-							{/* TODO: Just disable the button... */}
-						</DialogContentText>
-					</DialogContent>
-				</>}
-
-				{!isAdding && (
-					<>
-						<DialogContent>
-							<DialogContentText>
-								Create the best outfit anyone's ever seen in
-								their life.
-							</DialogContentText>
-							<TextField
-								autoFocus
-								required
-								margin="dense"
-								id="name"
-								name="bagname"
-								label="Bag Name"
-								fullWidth
-								variant="standard"
-								onChange={(e) => setNewBagName(e.target.value)}
-							/>
-							<TextField
-								required
-								margin="dense"
-								id="desc"
-								name="description"
-								label="Description"
-								fullWidth
-								variant="standard"
-								onChange={(e) => {
-									let desc = e.target.value;
-									if (!desc) desc = "";
-
-									setNewBagDesc(desc);
-								}}
-							/>
-						</DialogContent>
-						<DialogActions>
-							<Button onClick={submitDialog}>OK</Button>
-						</DialogActions>
-					</>
-				)}
+							setNewBagDesc(desc);
+						}}
+					/>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={submitDialog} disabled={isAdding}>
+						OK
+					</Button>
+				</DialogActions>
 			</Dialog>
 		</>
 	);
