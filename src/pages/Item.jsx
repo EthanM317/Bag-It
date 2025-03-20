@@ -2,11 +2,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/Item.css";
 import TopPanelBar from "../components/TopPanelBar";
 import { Button } from "@mui/material";
+import AddButton from "../components/Bags/AddButton";
 
 export default function Item() {
   const location = useLocation();
   const navigate = useNavigate();
   const product = location.state;
+  var addClicked = false;
 
   // Redirect if no product data is found
   if (!product) {
@@ -16,6 +18,7 @@ export default function Item() {
 
   function addPressed() {
       console.log("Add clicked!")
+      addClicked = true;
     }
 
 
@@ -47,6 +50,13 @@ export default function Item() {
       <Button className="addButton" variant="contained" onClick={addPressed}>
             Add Me to a Bag!
           </Button>
+          {addClicked && (
+            <>
+              <script>console.log(addClicked)</script>
+						  <AddButton/>
+            </>
+            
+					)}
     </div>
   </>
 
