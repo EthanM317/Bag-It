@@ -7,6 +7,7 @@ import ItemList from "../components/Bags/ItemList";
 import AddItemDialog from "../components/Bags/AddItemDialog";
 import TopPanelBar from "../components/TopPanelBar";
 import { List, ListItem, ListItemText } from "@mui/material";
+import NavBar from "../components/NavBar";
 
 function BagPage() {
 	const [isLoading, setIsLoading] = useState(true);
@@ -127,6 +128,7 @@ function BagPage() {
 	return (
 		<>
 			{/* <TopPanelBar /> */}
+			<NavBar />
 
 			{!isLoading && (
 				<div>

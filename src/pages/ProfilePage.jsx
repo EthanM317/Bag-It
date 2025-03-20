@@ -16,6 +16,7 @@ import { Url } from "../constants";
 import BagList from "../components/Bags/BagList";
 import AddBagDialog from "../components/Bags/AddBagDialog";
 import TopPanelBar from "../components/TopPanelBar";
+import NavBar from "../components/NavBar";
 
 // Page displaying the user's username and bags
 
@@ -180,7 +181,8 @@ function ProfilePage() {
 
 	return (
 		<div>
-			<TopPanelBar />
+			{/* <TopPanelBar /> */}
+			<NavBar />
 			{userNotFound && <h2>Error: User not found</h2>}
 
 			{!isLoading && !userNotFound && (
