@@ -34,20 +34,32 @@
     width: 100%;
 }
 
-.addToExisting{
+.existing{
     width: 50%;
     height: 100%;
 
 }
-.addToNew{
+
+.addToExistingButton{
+    height: 100%;
+    width: 100%;
+}
+
+.addToNewButton{
+    height: 100%;
+    width: 100%;
+}
+
+.new{
     width: 50%;
     height: 100%;
 }
 
 .addButtons{
+    display: flex;
     height: 200px;
     width: 100%;
-    
+
 }
 
  
