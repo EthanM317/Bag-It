@@ -63,9 +63,8 @@ function ProductsTestPage() {
 							<h3>{product.name} {id && `- (id: ${id})`}</h3>
 							<img className="image" src={product.image} alt={product.name} />
 							<Link to="/item" state={{...product}}>
-  <span className="productPageLink"></span>
-</Link>
-								
+  								<span className="productPageLink"></span>
+							</Link>	
 						</div>
 					))
 				) : (

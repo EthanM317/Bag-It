@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/Item.css";
 import TopPanelBar from "../components/TopPanelBar";
+import { Button } from "@mui/material";
 
 export default function Item() {
   const location = useLocation();
@@ -13,8 +14,14 @@ export default function Item() {
     return null;
   }
 
+  function addPressed() {
+      console.log("Add clicked!")
+    }
+
+
   return ( <>
     <TopPanelBar />
+    
 
     <div className="ItemContainer">
 
@@ -36,6 +43,10 @@ export default function Item() {
         <h2 className="tag">Gender: {{0: "Male", 1: "Female", 2: "Unisex"}[product.gender] || "N/A"}</h2>
         <h2 className="tag">Brand: {product.brand || "N/A"}</h2>
       </div>
+
+      <Button className="addButton" variant="contained" onClick={addPressed}>
+            Add Me to a Bag!
+          </Button>
     </div>
   </>
 
