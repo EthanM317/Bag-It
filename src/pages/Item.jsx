@@ -1,14 +1,20 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import "../styles/Item.css";
 import TopPanelBar from "../components/TopPanelBar";
-import { Button } from "@mui/material";
 import AddButton from "../components/Bags/AddButton";
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
+
 
 export default function Item() {
   const location = useLocation();
   const navigate = useNavigate();
   const product = location.state;
-  var addClicked = false;
+  const [openDialog, setOpenDialog] = useState(false);
+  const [bags, setBags] = useState([]);
+
+
+  
 
   // Redirect if no product data is found
   if (!product) {
@@ -18,7 +24,7 @@ export default function Item() {
 
   function addPressed() {
       console.log("Add clicked!")
-      addClicked = true;
+      setOpenDialog(true);
     }
 
 
@@ -46,19 +52,32 @@ export default function Item() {
         <h2 className="tag">Gender: {{0: "Male", 1: "Female", 2: "Unisex"}[product.gender] || "N/A"}</h2>
         <h2 className="tag">Brand: {product.brand || "N/A"}</h2>
       </div>
+      <div className="addButtons">
+        <Button className="addToExisting" variant="contained" onClick={addPressed}>
+          Add Me to Existing Bag!
+        </Button>
 
-      <Button className="addButton" variant="contained" onClick={addPressed}>
-            Add Me to a Bag!
-          </Button>
-          {addClicked && (
-            <>
-              <script>console.log(addClicked)</script>
-						  <AddButton/>
-            </>
-            
-					)}
+        {/* pop up for choosing existing bag */}
+        <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+            <DialogTitle>Select a Bag</DialogTitle>
+            <DialogContent>
+              <p>Here you can select an existing bag to add this product to.</p>
+              {/* Future: Add a dropdown or list of bags here */}
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => setOpenDialog(false)}>Cancel</Button>
+              <Button onClick={() => { setOpenDialog(false); /* Handle selection here */ }} variant="contained">
+                Confirm
+              </Button>
+            </DialogActions>
+          </Dialog>
+        
+        <Button className="addToNew" variant="contained" onClick={addPressed}>
+          Add Me to New Bag!
+        </Button>
+      </div>      
     </div>
   </>
-
   );
 }
+

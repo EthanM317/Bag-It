@@ -34,16 +34,23 @@
     width: 100%;
 }
 
-.addButton{
-    width: 100%;
-    height: 200px;
+.addToExisting{
+    width: 50%;
+    height: 100%;
 
 }
- /* display: flex;
+.addToNew{
+    width: 50%;
     height: 100%;
+}
+
+.addButtons{
+    height: 200px;
     width: 100%;
-    position: absolute;
-    top: 100px; */
+    
+}
+
+ 
 
 .ItemContainer{
     margin-top: 100px;
