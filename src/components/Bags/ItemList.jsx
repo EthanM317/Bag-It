@@ -17,6 +17,10 @@ import { Url } from "../../constants";
 function ItemList({ items, deleteItem }) {
 	const [actualItems, setActualItems] = useState([]);
 
+	useEffect(() => {
+		getClothingItems();
+	}, [items]);
+
 	async function getClothingItems() {
 		// Horrible way of doing this
 		let temp = [];
@@ -38,10 +42,37 @@ function ItemList({ items, deleteItem }) {
 		setActualItems(temp);
 	}
 
-	useEffect(() => {
-		getClothingItems();
-	}, [items]);
+	function createListItems() {
+		// Prevent crashes
+		if (items.length != actualItems.length)
+			return;
 
+		let result = [];
+
+		for (let i = 0; i < actualItems.length; i++) {
+			let actualItem = actualItems[i];
+			let item = items[i];
+
+			result.push(
+				<ListItem>
+					<ListItemAvatar>
+						<img
+							width={64}
+							height={64}
+							src={actualItem.image}
+							alt={actualItem.name}
+						/>
+					</ListItemAvatar>
+					<ListItemText primary={actualItem.name} />
+					<Button onClick={(e) => deleteItem(e, item.id)}>
+						Delete
+					</Button>
+				</ListItem>
+			);
+		}
+
+		return result;
+	}
 
 	return (
 		<>
@@ -57,22 +88,7 @@ function ItemList({ items, deleteItem }) {
 					</ListSubheader>
 				}
 			>
-				{actualItems.map((item) => (
-					<ListItem>
-						<ListItemAvatar>
-							<img
-								width={64}
-								height={64}
-								src={item.image}
-								alt={item.name}
-							/>
-						</ListItemAvatar>
-						<ListItemText primary={item.name} />
-						<Button onClick={(e) => deleteItem(e, item.id)}>
-							Delete
-						</Button>
-					</ListItem>
-				))}
+				{createListItems()}
 			</List>
 		</>
 	);

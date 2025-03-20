@@ -15,12 +15,15 @@
 
 .topPanelBar{
   position: absolute;
+  /* position: fixed; */
+  /* position: ; */
   top: 0;
   left: 0;
   height: 100px;
   width: 100%;
-  /* display: flex
-  flex-direction: row */
+  /* display: block; */
+  /* display: flex; */
+  /* flex-direction: row; */
 }
 
 .logo{

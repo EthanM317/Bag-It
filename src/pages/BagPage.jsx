@@ -103,7 +103,7 @@ function BagPage() {
 			const res = await api.delete(Url.BACKEND_BAG_ITEM_DELETE + itemId);
 
 			// Update local list
-			let temp = bagItems;
+			let temp = structuredClone(bagItems);
 			let deleteIndex = -1;
 			for (let i = 0; i < temp.length; i++) {
 				// Linear search through this user's bags until we find the one
@@ -126,7 +126,8 @@ function BagPage() {
 
 	return (
 		<>
-			<TopPanelBar />
+			{/* <TopPanelBar /> */}
+
 			{!isLoading && (
 				<div>
 					<h1>{bag.title}'s items</h1>
@@ -137,9 +138,9 @@ function BagPage() {
 					<ItemList deleteItem={deleteItem} items={bagItems} />
 
 					{/* Test list */}
-					{bagItems.map((item) => (
+					{/* {bagItems.map((item) => (
 						<p>{item.id}</p>
-					))}
+					))} */}
 				</div>
 			)}
 		</>
