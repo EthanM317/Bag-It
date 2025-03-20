@@ -6,6 +6,7 @@ import { Autocomplete, TextField } from "@mui/material";
 import React from 'react';
 import {Link} from 'react-router-dom';
 import TopPanelBar from "../components/TopPanelBar";
+import NavBar from "../components/NavBar";
 
 // You can search the product database by adding the productID to the end of the URL
 // ex. "/products/5"
@@ -41,7 +42,8 @@ function ProductsTestPage() {
 
 	return (
 		<>
-			<TopPanelBar />
+			{/* <TopPanelBar /> */}
+			<NavBar />
 			<h1>Products List</h1>
 			{!id && <h2>Here are all the products</h2>}
 
