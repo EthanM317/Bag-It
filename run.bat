@@ -1,9 +1,13 @@
 @echo off
 
-@REM Run the npm server
-echo Running npm server... Press 'ctrl + C' to shutdown.
+@REM Install dependencies if needed
+if not exist node_modules\ (
+    call npm install
+)
 
 echo:
-npm run dev
+echo Running test server, press 'ctrl + c' to exit...
+echo:
+call npm run dev
 
 pause

@@ -17,7 +17,6 @@ import { Url } from "../../constants";
 function BagList({ bags, isAuthenticated, openDeleteDialog }) {
 	const navigate = useNavigate();
 
-
 	function clickBag(e, bagId) {
 		// e.preventDefault();
 		console.log("Clicked. bagId: " + bagId);
