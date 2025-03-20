@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/Item.css";
+import TopPanelBar from "../components/TopPanelBar";
 
 export default function Item() {
   const location = useLocation();
@@ -12,8 +13,11 @@ export default function Item() {
     return null;
   }
 
-  return (
+  return ( <>
+    <TopPanelBar />
+
     <div className="ItemContainer">
+
       {/* Conditionally render image only if `product.image` is available */}
       {product.image ? (
         <img src={product.image} alt={product.name} className="Image" />
@@ -33,5 +37,7 @@ export default function Item() {
         <h2 className="tag">Brand: {product.brand || "N/A"}</h2>
       </div>
     </div>
+  </>
+
   );
 }

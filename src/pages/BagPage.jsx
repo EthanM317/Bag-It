@@ -5,6 +5,7 @@ import { Url } from "../constants";
 import { api, Backend } from "../api";
 import ItemList from "../components/Bags/ItemList";
 import AddItemDialog from "../components/Bags/AddItemDialog";
+import TopPanelBar from "../components/TopPanelBar";
 
 function BagPage() {
 	const [isLoading, setIsLoading] = useState(true);
@@ -107,6 +108,7 @@ function BagPage() {
 
 	return (
 		<>
+			<TopPanelBar />
 			{!isLoading && (
 				<div>
 					<h1>{bag.title}'s items</h1>

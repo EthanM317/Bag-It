@@ -25,20 +25,23 @@
 
 .logo{
   position: absolute;
-  left: 0;
-  height: 50px;
-  width: 50px;
+  left: 8px;
+  top: 8px;
+  width: 100%;
+  height: 100%;
 }
 
 .searchBar{
   position: absolute;
   left: 50%;
+  top: 8px;
   transform: translateX(-50%);
+
 }
 
 .accountBar{
   position: absolute;
-  Right: 0;
+  Right: 40px;
   height: 100px;
   width: 100px;
 
@@ -124,4 +127,21 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.homePageLink {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+
+  z-index: 1;
+}
+
+.logo-div {
+  position: absolute;
+  /* left: 10 px; */
+  height: 50px;
+  width: 50px;
 }
