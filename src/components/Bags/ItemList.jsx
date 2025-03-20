@@ -14,7 +14,7 @@ import { Url } from "../../constants";
 
 // List of items used in the bag edit page
 
-function ItemList({ items, deleteItem}) {
+function ItemList({ items, deleteItem }) {
 	const [actualItems, setActualItems] = useState([]);
 
 	async function getClothingItems() {
@@ -40,7 +40,8 @@ function ItemList({ items, deleteItem}) {
 
 	useEffect(() => {
 		getClothingItems();
-	}, []);
+	}, [items]);
+
 
 	return (
 		<>
