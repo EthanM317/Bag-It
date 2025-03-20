@@ -181,64 +181,69 @@ function ProfilePage() {
 
 	return (
 		<div>
-			{/* <TopPanelBar /> */}
 			<NavBar />
-			{userNotFound && <h2>Error: User not found</h2>}
+			<div className="main-container">
+				{/* <TopPanelBar /> */}
+				{userNotFound && <h2>Error: User not found</h2>}
 
-			{!isLoading && !userNotFound && (
-				<div>
-					{/* <Button variant="contained" onClick={logoutClicked}>
+				{!isLoading && !userNotFound && (
+					<div>
+						{/* <Button variant="contained" onClick={logoutClicked}>
 						Logout
 					</Button> */}
 
-					<h1>{username}'s Profile Page</h1>
-					<h2>{username}'s Bags</h2>
+						<h1>{username}'s Profile Page</h1>
+						<h2>{username}'s Bags</h2>
 
-					{/* Add Bag button and dialog */}
-					{isAuthenticated && (
-						<AddBagDialog bags={bags} setBags={setBags} />
-					)}
-
-					{/* Search bar for bag list */}
-					<br />
-					<br />
-					<Autocomplete
-						// Use all the bag titles as keywords in the autocomplete search
-						options={bags.map((bag) => {
-							return bag.title;
-						})}
-						sx={{ width: 300 }}
-						renderInput={(params) => (
-							<TextField {...params} label="Bag" />
+						{/* Add Bag button and dialog */}
+						{isAuthenticated && (
+							<AddBagDialog bags={bags} setBags={setBags} />
 						)}
-					/>
 
-					{/* Bag list */}
-					<BagList
-						bags={bags}
-						isAuthenticated={isAuthenticated}
-						openDeleteDialog={openDeleteDialog}
-					/>
+						{/* Search bar for bag list */}
+						<br />
+						<br />
+						<Autocomplete
+							// Use all the bag titles as keywords in the autocomplete search
+							options={bags.map((bag) => {
+								return bag.title;
+							})}
+							sx={{ width: 300 }}
+							renderInput={(params) => (
+								<TextField {...params} label="Bag" />
+							)}
+						/>
 
-					{isAuthenticated && (
-						<Dialog
-							open={delDialogOpen}
-							onClose={closeDeleteDialog}
-						>
-							<DialogTitle>Delete Bag</DialogTitle>
-							<DialogContent>
-								<DialogContentText>
-									Are you sure you want to delete this bag?
-								</DialogContentText>
-								<Button onClick={deleteBag}>Delete it</Button>
-								<Button onClick={closeDeleteDialog}>
-									Cancel
-								</Button>
-							</DialogContent>
-						</Dialog>
-					)}
-				</div>
-			)}
+						{/* Bag list */}
+						<BagList
+							bags={bags}
+							isAuthenticated={isAuthenticated}
+							openDeleteDialog={openDeleteDialog}
+						/>
+
+						{isAuthenticated && (
+							<Dialog
+								open={delDialogOpen}
+								onClose={closeDeleteDialog}
+							>
+								<DialogTitle>Delete Bag</DialogTitle>
+								<DialogContent>
+									<DialogContentText>
+										Are you sure you want to delete this
+										bag?
+									</DialogContentText>
+									<Button onClick={deleteBag}>
+										Delete it
+									</Button>
+									<Button onClick={closeDeleteDialog}>
+										Cancel
+									</Button>
+								</DialogContent>
+							</Dialog>
+						)}
+					</div>
+				)}
+			</div>
 		</div>
 	);
 }
