@@ -37,32 +37,12 @@ function AddItemDialog({ productItems, addItem }) {
 	useEffect(() => {}, []);
 
 	const submitDialog = async () => {
-		// Don't let us submit the dialog if we haven't typed anything
-		// if (newBagName == "") return;
-
-		// try {
-		// 	// Create new bag in the backend based on the provided text fields
-		// 	const res = await api.post(Url.BACKEND_BAG_CREATE, {
-		// 		title: newBagName,
-		// 		description: newBagDesc,
-		// 	});
-
-		// 	// Update the local bags list
-		// 	let temp = structuredClone(bags);
-		// 	temp.push(res.data);
-		// 	setBags(temp);
-
-		// 	// Close the dialog
-		// 	setOpen(false);
-		// } catch (error) {
-		// 	alert(error);
-		// }
 
 		setOpen(false);
 	};
 
 	return (
-		<>
+		<div>
 			<Button variant="contained" onClick={openDialog}>
 				+ Add Item
 			</Button>
@@ -76,7 +56,7 @@ function AddItemDialog({ productItems, addItem }) {
 				<DialogTitle id="alert-dialog-title">
 					Item selection
 				</DialogTitle>
-				<DialogContent>
+				<DialogContent style={{margin:"10px"}}>
 					<DialogContentText>
 						Add a new item to your bag.
 					</DialogContentText>
@@ -128,7 +108,7 @@ function AddItemDialog({ productItems, addItem }) {
 					<Button onClick={submitDialog}>Back</Button>
 				</DialogActions>
 			</Dialog>
-		</>
+		</div>
 	);
 }
 

@@ -6,6 +6,7 @@ import { api, Backend } from "../api";
 import ItemList from "../components/Bags/ItemList";
 import AddItemDialog from "../components/Bags/AddItemDialog";
 import TopPanelBar from "../components/TopPanelBar";
+import { List, ListItem, ListItemText } from "@mui/material";
 
 function BagPage() {
 	const [isLoading, setIsLoading] = useState(true);
@@ -67,13 +68,30 @@ function BagPage() {
 				clothingItem: itemId,
 			});
 
-			// Add item to local list
 			let temp = structuredClone(bagItems);
 			temp.push(res.data);
 			setBagItems(temp);
 		} catch (error) {
 			alert(error);
+			return;
 		}
+
+		// try {
+		// 	// Get the actual clothing item from the backend to add to local list
+		// 	const res = await api.get(
+		// 		Url.BACKEND_CLOTHING + "?itemId=" + itemId
+		// 	);
+
+		// 	let toAdd = res.data[0];
+
+		// 	// Add item to local list
+		// 	let temp = structuredClone(bagItems);
+		// 	temp.push(toAdd);
+		// 	setBagItems(temp);
+		// } catch (error) {
+		// 	alert(error);
+		// 	return;
+		// }
 
 		console.log("added item: " + itemName);
 	}
@@ -117,6 +135,11 @@ function BagPage() {
 						productItems={productItems}
 					/>
 					<ItemList deleteItem={deleteItem} items={bagItems} />
+
+					{/* Test list */}
+					{bagItems.map((item) => (
+						<p>{item.id}</p>
+					))}
 				</div>
 			)}
 		</>
