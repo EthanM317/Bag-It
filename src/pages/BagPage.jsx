@@ -126,26 +126,28 @@ function BagPage() {
 	}
 
 	return (
-		<>
-			{/* <TopPanelBar /> */}
+		<div>
 			<NavBar />
+			<div >
+				{/* <TopPanelBar /> */}
 
-			{!isLoading && (
-				<div>
-					<h1>{bag.title}'s items</h1>
-					<AddItemDialog
-						addItem={addItem}
-						productItems={productItems}
-					/>
-					<ItemList deleteItem={deleteItem} items={bagItems} />
+				{!isLoading && (
+					<div>
+						<h1>{bag.title}'s items</h1>
+						<AddItemDialog
+							addItem={addItem}
+							productItems={productItems}
+						/>
+						<ItemList deleteItem={deleteItem} items={bagItems} />
 
-					{/* Test list */}
-					{/* {bagItems.map((item) => (
+						{/* Test list */}
+						{/* {bagItems.map((item) => (
 						<p>{item.id}</p>
-					))} */}
-				</div>
-			)}
-		</>
+						))} */}
+					</div>
+				)}
+			</div>
+		</div>
 	);
 }
 
