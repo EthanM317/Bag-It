@@ -1,7 +1,7 @@
 import { Url } from "../constants";
 import Form from "../components/Form";
-import "../styles/Login.css"
 import TopPanelBar from "../components/TopPanelBar";
+import "../styles/Login.css"
 
 function LoginPage() {
 	return (

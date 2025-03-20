@@ -5,6 +5,8 @@ import { Button, TextField } from "@mui/material";
 import { ACCESS_TOKEN, REFRESH_TOKEN, Url } from "../constants";
 import { api } from "../api";
 
+import "../styles/Form.css";
+
 // A login form
 // TODO: See if Mui already has one of these
 
@@ -84,7 +86,7 @@ function Form({ route, register }) {
 	}
 
 	return (
-		<div>
+		<div className="form-container">
 			{!register && (
 				<p>
 					Don't have an account?{" "}
@@ -98,18 +100,30 @@ function Form({ route, register }) {
 					</a>
 				</p>
 			)}
-			<TextField
-				label="Username"
-				onChange={(e) => setUsername(e.target.value)}
-			></TextField>
-			<TextField
-				type="password"
-				label="Password"
-				onChange={(e) => setPassword(e.target.value)}
-			></TextField>
-			<Button variant="contained" onClick={handleSubmit}>
-				{formTitle}
-			</Button>
+			<div className="form-item">
+				<TextField
+					className="form-input"
+					label="Username"
+					onChange={(e) => setUsername(e.target.value)}
+				></TextField>
+			</div>
+			<div className="form-item">
+				<TextField
+					className="form-input"
+					type="password"
+					label="Password"
+					onChange={(e) => setPassword(e.target.value)}
+				></TextField>
+			</div>
+			<div className="form-item">
+				<Button
+					className="form-button"
+					variant="contained"
+					onClick={handleSubmit}
+				>
+					{formTitle}
+				</Button>
+			</div>
 		</div>
 	);
 }
