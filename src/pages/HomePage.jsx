@@ -23,6 +23,7 @@ function HomePage() {
 		<>
 			<TopPanelBar />
 			<Title />
+			
 
 			{/* TODO: Fix all this weird inline styling */}
 			<div
@@ -33,7 +34,7 @@ function HomePage() {
 				<Button variant="contained" onClick={loginPressed}>
 					Login
 				</Button>
-        <Button variant="contained" onClick={registerPressed}>
+        			<Button variant="contained" onClick={registerPressed}>
 					Register
 				</Button>
 			</div>
