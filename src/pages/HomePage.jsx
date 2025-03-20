@@ -6,6 +6,7 @@ import { Button } from "@mui/material";
 import "../styles/Home.css";
 import TopPanelBar from "../components/TopPanelBar.jsx";
 import Title from "../components/Title.jsx";
+import NavBar from "../components/NavBar.jsx";
 import { Url } from "../constants.js";
 
 function HomePage() {
@@ -15,28 +16,30 @@ function HomePage() {
 		navigate(Url.LOGIN);
 	}
 
-  function registerPressed() {
-    navigate(Url.REGISTER);
-  }
+	function registerPressed() {
+		navigate(Url.REGISTER);
+	}
 
 	return (
 		<>
-			<TopPanelBar />
-			<Title />
-			
+			{/* <TopPanelBar /> */}
+			<NavBar></NavBar>
+			<div className="big-stuff">
+				<Title />
 
-			{/* TODO: Fix all this weird inline styling */}
-			<div
-				style={{
-					textAlign: "center",
-				}}
-			>
-				<Button variant="contained" onClick={loginPressed}>
-					Login
-				</Button>
-        			<Button variant="contained" onClick={registerPressed}>
-					Register
-				</Button>
+				{/* TODO: Fix all this weird inline styling */}
+				<div
+					style={{
+						textAlign: "center",
+					}}
+				>
+					<Button variant="contained" onClick={loginPressed}>
+						Login
+					</Button>
+					<Button variant="contained" onClick={registerPressed}>
+						Register
+					</Button>
+				</div>
 			</div>
 		</>
 	);

@@ -187,9 +187,9 @@ function ProfilePage() {
 
 			{!isLoading && !userNotFound && (
 				<div>
-					<Button variant="contained" onClick={logoutClicked}>
+					{/* <Button variant="contained" onClick={logoutClicked}>
 						Logout
-					</Button>
+					</Button> */}
 
 					<h1>{username}'s Profile Page</h1>
 					<h2>{username}'s Bags</h2>

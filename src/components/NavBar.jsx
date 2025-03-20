@@ -54,7 +54,7 @@ function NavBar() {
 
 	function profilePressed() {
 		navigate(Url.PROFILE);
-		handleProfileClose() 
+		handleProfileClose();
 	}
 
 	function getButtons() {
@@ -87,7 +87,9 @@ function NavBar() {
 						onClose={handleProfileClose}
 					>
 						<MenuItem onClick={profilePressed}>Profile</MenuItem>
-						<MenuItem onClick={() => navigate(Url.LOGOUT)}>Log Out</MenuItem>
+						<MenuItem onClick={() => navigate(Url.LOGOUT)}>
+							Log Out
+						</MenuItem>
 					</Menu>
 				</>
 			);

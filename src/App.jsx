@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 
 // Import URLs
@@ -15,7 +15,12 @@ import NotFoundPage from "./pages/NotFoundPage.jsx";
 import ProductsTestPage from "./pages/ProductsTestPage.jsx";
 import Item from "./pages/Item.jsx";
 import BagPage from "./pages/BagPage.jsx";
-
+import {
+	createTheme,
+	CssBaseline,
+	ThemeProvider,
+	useMediaQuery,
+} from "@mui/material";
 
 function Logout() {
 	// Clear refresh/access token
@@ -23,43 +28,86 @@ function Logout() {
 	return <Navigate to={Url.LOGIN} />;
 }
 
+const theme = createTheme({
+	palette: {
+		mode: "light",
+		// mode: "dark",
+	},
+});
+
 // -- Main page manager for the whole site --
 
 function App() {
+	// const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+	// const [darkMode, setDarkMode] = useState(prefersDarkMode);
+	// const themeString = (b) => (b ? "dark" : "light");
+
+	// const theme = useMemo(() => {
+	// 	createTheme({
+	// 		palette: {
+	// 			// mode: "light",
+	// 			mode: themeString(darkMode),
+	// 		},
+	// 	});
+	// }, [darkMode]);
+
+	// function toggleDarkMode(checked) {
+	// 	if (checked === null)
+	// 		setDarkMode(prefersDarkMode)
+	// 	else
+	// 		setDarkMode(checked);
+	// }
+
 	return (
-		<BrowserRouter>
-			<Routes>
-				{/* Link URLS to jsx pages here */}
-				<Route path="*" element={<NotFoundPage />}/>
-				<Route path={Url.HOME} element={<HomePage />} />
-				<Route path={Url.ITEM} element={<Item />} />
+		<ThemeProvider theme={theme}>
+			<CssBaseline>
+				<BrowserRouter>
+					<Routes>
+						{/* Link URLS to jsx pages here */}
+						<Route path="*" element={<NotFoundPage />} />
+						<Route path={Url.HOME} element={<HomePage />} />
+						<Route path={Url.ITEM} element={<Item />} />
 
-				{/* Account related */}
-				<Route path={Url.LOGIN} element={<LoginPage />} />
-				<Route path={Url.LOGOUT} element={<Logout />} />
-				<Route path={Url.REGISTER} element={<RegisterPage />} />
+						{/* Account related */}
+						<Route path={Url.LOGIN} element={<LoginPage />} />
+						<Route path={Url.LOGOUT} element={<Logout />} />
+						<Route path={Url.REGISTER} element={<RegisterPage />} />
 
-				{/* Bag related */}
-				<Route path={Url.BAG} element={<BagPage />} />
-				<Route path={Url.BAG + "/:bagId"} element={<BagPage />} />
+						{/* Bag related */}
+						<Route path={Url.BAG} element={<BagPage />} />
+						<Route
+							path={Url.BAG + "/:bagId"}
+							element={<BagPage />}
+						/>
 
-				{/* "ProtectedRoute" means a page can only be accessed if the user is logged in */}
-				<Route
-					path={Url.PROFILE}
-					element={
-						<ProtectedRoute>
-							<ProfilePage />
-						</ProtectedRoute>
-					}
-				/>
-				<Route path={Url.PROFILE + "/:id"} element={<ProfilePage />} />
+						{/* "ProtectedRoute" means a page can only be accessed if the user is logged in */}
+						<Route
+							path={Url.PROFILE}
+							element={
+								<ProtectedRoute>
+									<ProfilePage />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path={Url.PROFILE + "/:id"}
+							element={<ProfilePage />}
+						/>
 
-				{/* DEBUG */}
-				<Route path={Url.TEST} element={<TestPage />} />
-				<Route path={"/products"} element={<ProductsTestPage />} />
-				<Route path={"/products/:id"} element={<ProductsTestPage />} />
-			</Routes>
-		</BrowserRouter>
+						{/* DEBUG */}
+						<Route path={Url.TEST} element={<TestPage />} />
+						<Route
+							path={"/products"}
+							element={<ProductsTestPage />}
+						/>
+						<Route
+							path={"/products/:id"}
+							element={<ProductsTestPage />}
+						/>
+					</Routes>
+				</BrowserRouter>
+			</CssBaseline>
+		</ThemeProvider>
 	);
 }
 
