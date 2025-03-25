@@ -7,8 +7,8 @@
     gap: 10px; 
     width: 80%;
     border: 2px solid black;
-    padding-left: 100px;
-    padding-right: 100px;
+    padding: 20px;
+    top: 400px;
 }
 
 .itemContainer {
@@ -26,12 +26,58 @@
     height: auto;
 }
 
-.productPageLink{
-    position:absolute; 
-    width:100%;
-    height:100%;
-    top:0;
+.productPageLink {
+    position: absolute; 
+    width: 100%;
+    height: 100%;
+    top: 0;
     left: 0;
-
     z-index: 1;
+}
+
+/* Category Bar - Compact and in One Row */
+.category-bar {
+    position: absolute;
+    width: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 250px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 5px;
+    background: white;
+    border: 2px solid black;
+    border-radius: 5px;
+    gap: 5px;
+}
+
+/* Make each filter group inline */
+.filter-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 5px;
+}
+
+/* Smaller accordion headers */
+.MuiAccordionSummary-root {
+    min-height: 25px !important;
+    padding: 2px 5px;
+    font-size: 12px;
+}
+
+/* Toggle buttons - Extra Small */
+.MuiToggleButtonGroup-root {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.MuiToggleButton-root {
+    padding: 2px 5px !important;
+    font-size: 10px !important;
+    min-width: 40px !important;
+    height: 20px !important;
+    line-height: 1;
 }

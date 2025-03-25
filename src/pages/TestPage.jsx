@@ -4,9 +4,16 @@ import "../styles/Feed.css";
 import { Backend, api } from "../api";
 import { Url } from "../constants";
 import TopPanelBar from "../components/TopPanelBar";
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 
 function TestPage() {
 	const [items, setItems] = useState([]);
+
+	const [view, setView] = React.useState('list');
+
+  	const handleChange = (event, nextView) => {
+    	setView(nextView);
+  	};
 
 	// Gets called once when the component is created
 	useEffect(() => {
