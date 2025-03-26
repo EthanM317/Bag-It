@@ -21,6 +21,7 @@ import {
 	ThemeProvider,
 	useMediaQuery,
 } from "@mui/material";
+import { LandingPage } from "./pages/LandingPage.jsx";
 
 function Logout() {
 	// Clear refresh/access token
@@ -30,8 +31,28 @@ function Logout() {
 
 const theme = createTheme({
 	palette: {
-		mode: "light",
-		// mode: "dark",
+		primary: {
+			main: "#013e87",
+		},
+		secondary: {
+			main: "#2e74c9",
+		},
+		// mode: "light",
+		mode: "dark",
+	},
+	typography: {
+		h1: {
+			fontSize: "3rem",
+			fontWeight: 600,
+		},
+		h2: {
+			fontSize: "1.75rem",
+			fontWeight: 600,
+		},
+		h3: {
+			fontSize: "1.5rem",
+			fontWeight: 600,
+		},
 	},
 });
 
@@ -104,6 +125,8 @@ function App() {
 							path={"/products/:id"}
 							element={<ProductsTestPage />}
 						/>
+
+						<Route path="/landingpage" element={<LandingPage />} />
 					</Routes>
 				</BrowserRouter>
 			</CssBaseline>
