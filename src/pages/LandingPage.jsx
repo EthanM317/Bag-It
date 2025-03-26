@@ -1,62 +1,457 @@
+import {
+	Box,
+	Button,
+	ButtonGroup,
+	Card,
+	CardContent,
+	Container,
+	Grid2,
+	Icon,
+	Typography,
+	useTheme,
+} from "@mui/material";
 import React from "react";
+import { styled, alpha } from "@mui/material/styles";
+import WhatshotIcon from "@mui/icons-material/Whatshot";
 
-import "../styles/Landing.css";
-import { Box, Button, Container, Paper, Typography } from "@mui/material";
+import bagitLogo from "../assets/bagit_shadow.svg";
+import TopBar from "../components/TopBar";
+import pearLogo from "../assets/pear_outline_white.svg";
 
-export function LandingPage() {
-	return <Container>
-        
-    </Container>;
-}
+const StyledBox = styled(Box)(({ theme }) => ({
+	// alignSelf: "center",
+	// marginTop: theme.spacing(8),
+	// border: "1px solid",
+	borderRadius: (theme.vars || theme).shape.borderRadius,
+	outline: "6px solid",
+	display: "flex",
 
-export function TestLandingPage() {
-	const services = ["Service 1", "Service 2", "Service 3"];
+	padding: "20px",
+
+	backgroundSize: "cover",
+	boxShadow: "0 0 24px 12px hsla(210, 100%, 25%, 0.2)",
+	outlineColor: "hsla(220, 20%, 42%, 0.1)",
+
+	borderColor: (theme.vars || theme).palette.grey[700],
+}));
+
+function LandingPage() {
+	const test = [1, 2, 3];
 
 	return (
-		<Container>
-			<Typography
-				variant="h1"
-				sx={{
-					marginY: 4,
-					textAlign: "center",
-					color: "primary.main",
-				}}
-			>
-				Bag-It
-			</Typography>
-			<Typography variant="h2">Overview</Typography>
+		<Box
+			sx={(theme) => ({
+				bgcolor: "#080029ff",
+				minHeight: "100vh",
+				color: "#d5d6dfff",
+				padding: "2rem 0",
 
-			<Box
-				sx={{
-					pt: 4,
-					display: "flex",
-					flexDirection: { xs: "column", md: "row" },
-					justifyContent: "space-between",
-					gap: 4,
-				}}
-			>
-				{services.map((service) => (
-					<Paper elevation={3} sx={{ width: { xs: 1, md: 320 } }}>
-						<Box sx={{ m: 3 }}>
-							<Typography variant="h3">{service}</Typography>
-							<Typography sx={{ mt: 2 }}>
-								Lorem ipsum dolor sit, amet consectetur
-								adipisicing elit. Quas autem quibusdam dolor
-								neque, eligendi ipsum ab repudiandae sapiente
-								quam eum in pariatur inventore, quis
-								reprehenderit distinctio praesentium mollitia
-								libero. Impedit.
-							</Typography>
-							<Button
-								variant="contained"
-								sx={{ mt: 2, color: "secondary" }}
+				width: "100%",
+				backgroundRepeat: "no-repeat",
+				backgroundImage:
+					"radial-gradient(ellipse 80% 50% at 50% -20%, hsl(210, 100%, 90%), transparent)",
+				...theme.applyStyles("dark", {
+					backgroundImage:
+						"radial-gradient(ellipse 80% 50% at 50% -20%, hsla(310, 94.00%, 26.10%, 0.67), transparent)",
+					// "radial-gradient(ellipse 80% 50% at 50% -20%, hsl(210, 94.00%, 26.10%), transparent)",
+				}),
+			})}
+		>
+			<Container maxWidth="lg">
+				<TopBar />
+				<Grid2
+					container
+					spacing={20}
+					alignContent="center"
+					justifyContent="flex-start"
+					// justifyContent="space-between"
+
+					sx={{
+						marginTop: "80px",
+					}}
+				>
+					<Grid2
+						item
+						display="flex"
+						alignItems="center"
+						xs={12}
+						md={6}
+					>
+						<Box
+							sx={{
+								filter: "drop-shadow(0 0 70px rgba(132, 0, 255, 0.27))",
+								// marginTop: "-10px"
+							}}
+						>
+							<Typography
+								variant="h2"
+								fontWeight="bold"
+								sx={{
+									background:
+										"linear-gradient(177deg,rgb(68, 245, 127),rgb(0, 157, 219))",
+									WebkitBackgroundClip: "text",
+									WebkitTextFillColor: "transparent",
+								}}
 							>
-								Learn More
-							</Button>
+								Bag-It
+							</Typography>
+							<Typography variant="h2" fontWeight="bold" mt={1}>
+								Find Your Next Fit.
+							</Typography>
+							<Typography variant="h4" mt={2} color="gray">
+								Fashion Database Excellence.
+							</Typography>
 						</Box>
-					</Paper>
-				))}
-			</Box>
-		</Container>
+					</Grid2>
+					<Grid2
+						item
+						display="flex"
+						alignItems="center"
+						xs={12}
+						md={6}
+					>
+						<Box
+							component="img"
+							src={bagitLogo}
+							alt="Bag-It Logo"
+							sx={{
+								width: "350px",
+								filter: "drop-shadow(0 0 80px rgba(132, 0, 255, 0.36))",
+								marginTop: "30px",
+							}}
+						/>
+					</Grid2>
+				</Grid2>
+				<Grid2
+					container
+					spacing={2}
+					display="flex"
+					alignItems="flex-start"
+					marginTop="-50px"
+				>
+					<Grid2 item>
+						{" "}
+						<Button
+							variant="contained"
+							color="primary"
+							sx={{
+								borderRadius: 28,
+								textTransform: "none",
+								paddingY: "10px",
+							}}
+						>
+							<Typography fontWeight="bold">
+								Get Started
+							</Typography>
+						</Button>
+					</Grid2>
+					<Grid2 item>
+						{" "}
+						<Button
+							variant="outlined"
+							sx={{
+								borderRadius: 28,
+								textTransform: "none",
+								paddingY: "10px",
+								paddingX: "20px",
+							}}
+						>
+							<Typography fontWeight="bold">Login</Typography>
+						</Button>
+					</Grid2>
+				</Grid2>
+				<Box
+					sx={{
+						// padding: 2,
+						paddingTop: 10,
+					}}
+				>
+					<Box
+						display="flex"
+						alignContent="center"
+						sx={(theme) => ({
+							color: "secondary.main",
+						})}
+						margin={2}
+					>
+						<WhatshotIcon fontSize="large" />
+						<Typography
+							variant="h5"
+							display="flex"
+							fontWeight="bold"
+							margin={0.5}
+							color="text.default"
+						>
+							The hottest items today:
+						</Typography>
+					</Box>
+				</Box>
+
+				<Grid2 container spacing={4} padding={2} marginTop={2}>
+					{test.map((index) => (
+						<Grid2
+							size={{ xs: 12, sm: 6, md: 4 }}
+							key={index}
+							sx={{ display: "flex" }}
+						>
+							<Card
+								variant="contained"
+								sx={(theme) => ({
+									display: "flex",
+									flexDirection: "column",
+									justifyContent: "space-between",
+									flexGrow: 1,
+									bgcolor: "background.default",
+
+									borderRadius: (theme.vars || theme).shape
+										.borderRadius,
+									outline: "6px solid",
+									backgroundSize: "cover",
+									boxShadow:
+										"0 0 24px 12px hsla(210, 100%, 25%, 0.2)",
+									outlineColor: "hsla(220, 20%, 42%, 0.1)",
+									borderColor: (theme.vars || theme).palette
+										.grey[700],
+								})}
+							>
+								<CardContent
+									sx={{
+										padding: "20px",
+									}}
+								>
+									<Typography variant="h5">
+										Clothing item #{index}
+									</Typography>
+									<Typography
+										variant="body1"
+										gutterBottom
+										marginTop={1}
+										sx={{ color: "text.secondary" }}
+									>
+										Lorem ipsum dolor sit amet consectetur
+										adipisicing elit. Numquam, qui. Nam,
+										eos? Vitae provident quibusdam obcaecati
+										blanditiis ab nulla, perferendis iusto
+										voluptatem alias. Adipisci ea rerum
+										laborum magnam, dolorem facilis.
+									</Typography>
+									<Box
+										sx={{
+											display: "flex",
+											justifyContent: "flex-end",
+										}}
+									>
+										<Button
+											variant="outlined"
+											sx={{
+												// justifyContent: "flex-end",
+												marginTop: 2,
+											}}
+										>
+											See more
+										</Button>
+									</Box>
+								</CardContent>
+							</Card>
+						</Grid2>
+					))}
+				</Grid2>
+			</Container>
+
+			<Container maxWidth="lg">
+				<Box
+					sx={{
+						marginTop: 7,
+					}}
+				>
+					<Box display="flex">
+						<Box
+							component="img"
+							src={pearLogo}
+							alt="Pear Logo"
+							sx={{
+								width: "50px",
+								marginRight: "15px",
+								marginTop: "-30px",
+								filter: "drop-shadow(0 0 10px rgb(68, 55, 255))",
+							}}
+						/>
+						<Typography
+							variant="h4"
+							fontWeight="bold"
+							marginBottom={3}
+						>
+							About Us
+						</Typography>
+					</Box>
+
+					<Typography
+						variant="body1"
+						fontWeight="bold"
+						display="flex"
+					>
+						We are Peartech™!
+					</Typography>
+					<Typography>
+						Our company aims to give users an experience they shall
+						never forget...
+					</Typography>
+
+					<Typography variant="body1" marginTop={20}>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit.
+						Voluptatibus fugit pariatur labore unde dignissimos,
+						vero rerum quisquam ab eligendi consequatur, optio
+						maxime est asperiores quibusdam molestias? Illum ipsa
+						temporibus nam. Lorem ipsum dolor sit amet consectetur
+						adipisicing elit. Voluptatibus fugit pariatur labore
+						unde dignissimos, vero rerum quisquam ab eligendi
+						consequatur, optio maxime est asperiores quibusdam
+						molestias? Illum ipsa temporibus nam.Lorem ipsum dolor
+						sit amet consectetur adipisicing elit. Voluptatibus
+						fugit pariatur labore unde dignissimos, vero rerum
+						quisquam ab eligendi consequatur, optio maxime est
+						asperiores quibusdam molestias? Illum ipsa temporibus
+						nam.Lorem ipsum dolor sit amet consectetur adipisicing
+						elit. Voluptatibus fugit pariatur labore unde
+						dignissimos, vero rerum quisquam ab eligendi
+						consequatur, optio maxime est asperiores quibusdam
+						molestias? Illum ipsa temporibus nam.Lorem ipsum dolor
+						sit amet consectetur adipisicing elit. Voluptatibus
+						fugit pariatur labore unde dignissimos, vero rerum
+						quisquam ab eligendi consequatur, optio maxime est
+						asperiores quibusdam molestias? Illum ipsa temporibus
+						nam.Lorem ipsum dolor sit amet consectetur adipisicing
+						elit. Voluptatibus fugit pariatur labore unde
+						dignissimos, vero rerum quisquam ab eligendi
+						consequatur, optio maxime est asperiores quibusdam
+						molestias? Illum ipsa temporibus nam.Lorem ipsum dolor
+						sit amet consectetur adipisicing elit. Voluptatibus
+						fugit pariatur labore unde dignissimos, vero rerum
+						quisquam ab eligendi consequatur, optio maxime est
+						asperiores quibusdam molestias? Illum ipsa temporibus
+						nam.Lorem ipsum dolor sit amet consectetur adipisicing
+						elit. Voluptatibus fugit pariatur labore unde
+						dignissimos, vero rerum quisquam ab eligendi
+						consequatur, optio maxime est asperiores quibusdam
+						molestias? Illum ipsa temporibus nam.Lorem ipsum dolor
+						sit amet consectetur adipisicing elit. Voluptatibus
+						fugit pariatur labore unde dignissimos, vero rerum
+						quisquam ab eligendi consequatur, optio maxime est
+						asperiores quibusdam molestias? Illum ipsa temporibus
+						nam.Lorem ipsum dolor sit amet consectetur adipisicing
+						elit. Voluptatibus fugit pariatur labore unde
+						dignissimos, vero rerum quisquam ab eligendi
+						consequatur, optio maxime est asperiores quibusdam
+						molestias? Illum ipsa temporibus nam.Lorem ipsum dolor
+						sit amet consectetur adipisicing elit. Voluptatibus
+						fugit pariatur labore unde dignissimos, vero rerum
+						quisquam ab eligendi consequatur, optio maxime est
+						asperiores quibusdam molestias? Illum ipsa temporibus
+						nam.Lorem ipsum dolor sit amet consectetur adipisicing
+						elit. Voluptatibus fugit pariatur labore unde
+						dignissimos, vero rerum quisquam ab eligendi
+						consequatur, optio maxime est asperiores quibusdam
+						molestias? Illum ipsa temporibus nam.Lorem ipsum dolor
+						sit amet consectetur adipisicing elit. Voluptatibus
+						fugit pariatur labore unde dignissimos, vero rerum
+						quisquam ab eligendi consequatur, optio maxime est
+						asperiores quibusdam molestias? Illum ipsa temporibus
+						nam.Lorem ipsum dolor sit amet consectetur adipisicing
+						elit. Voluptatibus fugit pariatur labore unde
+						dignissimos, vero rerum quisquam ab eligendi
+						consequatur, optio maxime est asperiores quibusdam
+						molestias? Illum ipsa temporibus nam.Lorem ipsum dolor
+						sit amet consectetur adipisicing elit. Voluptatibus
+						fugit pariatur labore unde dignissimos, vero rerum
+						quisquam ab eligendi consequatur, optio maxime est
+						asperiores quibusdam molestias? Illum ipsa temporibus
+						nam.Lorem ipsum dolor sit amet consectetur adipisicing
+						elit. Voluptatibus fugit pariatur labore unde
+						dignissimos, vero rerum quisquam ab eligendi
+						consequatur, optio maxime est asperiores quibusdam
+						molestias? Illum ipsa temporibus nam.Lorem ipsum dolor
+						sit amet consectetur adipisicing elit. Voluptatibus
+						fugit pariatur labore unde dignissimos, vero rerum
+						quisquam ab eligendi consequatur, optio maxime est
+						asperiores quibusdam molestias? Illum ipsa temporibus
+						nam.Lorem ipsum dolor sit amet consectetur adipisicing
+						elit. Voluptatibus fugit pariatur labore unde
+						dignissimos, vero rerum quisquam ab eligendi
+						consequatur, optio maxime est asperiores quibusdam
+						molestias? Illum ipsa temporibus nam.Lorem ipsum dolor
+						sit amet consectetur adipisicing elit. Voluptatibus
+						fugit pariatur labore unde dignissimos, vero rerum
+						quisquam ab eligendi consequatur, optio maxime est
+						asperiores quibusdam molestias? Illum ipsa temporibus
+						nam.Lorem ipsum dolor sit amet consectetur adipisicing
+						elit. Voluptatibus fugit pariatur labore unde
+						dignissimos, vero rerum quisquam ab eligendi
+						consequatur, optio maxime est asperiores quibusdam
+						molestias? Illum ipsa temporibus nam.Lorem ipsum dolor
+						sit amet consectetur adipisicing elit. Voluptatibus
+						fugit pariatur labore unde dignissimos, vero rerum
+						quisquam ab eligendi consequatur, optio maxime est
+						asperiores quibusdam molestias? Illum ipsa temporibus
+						nam.Lorem ipsum dolor sit amet consectetur adipisicing
+						elit. Voluptatibus fugit pariatur labore unde
+						dignissimos, vero rerum quisquam ab eligendi
+						consequatur, optio maxime est asperiores quibusdam
+						molestias? Illum ipsa temporibus nam.Lorem ipsum dolor
+						sit amet consectetur adipisicing elit. Voluptatibus
+						fugit pariatur labore unde dignissimos, vero rerum
+						quisquam ab eligendi consequatur, optio maxime est
+						asperiores quibusdam molestias? Illum ipsa temporibus
+						nam.Lorem ipsum dolor sit amet consectetur adipisicing
+						elit. Voluptatibus fugit pariatur labore unde
+						dignissimos, vero rerum quisquam ab eligendi
+						consequatur, optio maxime est asperiores quibusdam
+						molestias? Illum ipsa temporibus nam.Lorem ipsum dolor
+						sit amet consectetur adipisicing elit. Voluptatibus
+						fugit pariatur labore unde dignissimos, vero rerum
+						quisquam ab eligendi consequatur, optio maxime est
+						asperiores quibusdam molestias? Illum ipsa temporibus
+						nam.Lorem ipsum dolor sit amet consectetur adipisicing
+						elit. Voluptatibus fugit pariatur labore unde
+						dignissimos, vero rerum quisquam ab eligendi
+						consequatur, optio maxime est asperiores quibusdam
+						molestias? Illum ipsa temporibus nam.Lorem ipsum dolor
+						sit amet consectetur adipisicing elit. Voluptatibus
+						fugit pariatur labore unde dignissimos, vero rerum
+						quisquam ab eligendi consequatur, optio maxime est
+						asperiores quibusdam molestias? Illum ipsa temporibus
+						nam.Lorem ipsum dolor sit amet consectetur adipisicing
+						elit. Voluptatibus fugit pariatur labore unde
+						dignissimos, vero rerum quisquam ab eligendi
+						consequatur, optio maxime est asperiores quibusdam
+						molestias? Illum ipsa temporibus nam.Lorem ipsum dolor
+						sit amet consectetur adipisicing elit. Voluptatibus
+						fugit pariatur labore unde dignissimos, vero rerum
+						quisquam ab eligendi consequatur, optio maxime est
+						asperiores quibusdam molestias? Illum ipsa temporibus
+						nam.Lorem ipsum dolor sit amet consectetur adipisicing
+						elit. Voluptatibus fugit pariatur labore unde
+						dignissimos, vero rerum quisquam ab eligendi
+						consequatur, optio maxime est asperiores quibusdam
+						molestias? Illum ipsa temporibus nam.Lorem ipsum dolor
+						sit amet consectetur adipisicing elit. Voluptatibus
+						fugit pariatur labore unde dignissimos, vero rerum
+						quisquam ab eligendi consequatur, optio maxime est
+						asperiores quibusdam molestias? Illum ipsa temporibus
+						nam.Lorem ipsum dolor sit amet consectetur adipisicing
+						elit. Voluptatibus fugit pariatur labore unde
+						dignissimos, vero rerum quisquam ab eligendi
+						consequatur, optio maxime est asperiores quibusdam
+						molestias? Illum ipsa temporibus nam.Lorem ipsum dolor
+						sit amet consectetur adipisicing elit. Voluptatibus
+						fugit pariatur labore unde dignissimos, vero rerum
+						quisquam ab eligendi consequatur, optio maxime est
+						asperiores quibusdam molestias? Illum ipsa temporibus
+						nam.
+					</Typography>
+				</Box>
+			</Container>
+		</Box>
 	);
 }
+
+export default LandingPage;
