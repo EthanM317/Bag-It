@@ -74,10 +74,11 @@ export class Backend {
 
 				return res;
 			} catch (error) {
+				// Check what type of error this is
 				let status = error.status;
 
 				switch (status) {
-					case "401":
+					case 401:
 						// User probably isn't authenticated
 						try {
 							// Try refreshing the token and requesting again
@@ -91,10 +92,6 @@ export class Backend {
 						}
 						break;
 				}
-
-				// TODO: Check what type of error this is
-				// alert("An error happened!\nResponse: " + res);
-				// return res;
 			}
 		}
 

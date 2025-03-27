@@ -15,35 +15,34 @@ function BackendTestPage() {
 		updateMessage();
 	}, []);
 
-    function updateMessage() {
-        if (
+	function updateMessage() {
+		if (
 			localStorage.getItem(ACCESS_TOKEN) == null ||
 			localStorage.getItem(REFRESH_TOKEN) == null
 		) {
 			setStatMessage("Logged out");
-            setStatColor("gray");
-            return;
+			setStatColor("gray");
+			return;
 		}
-        
-        if (loggedIn) {
-            setStatMessage("Logged in");
-            setStatColor("primary");
-        }
-        else {
-            setStatMessage("Garbage token");
-            setStatColor("secondary");
-        }
-    }
 
-    function verifyCredentials() {
-        // Backend.
-    }
+		if (loggedIn) {
+			setStatMessage("Logged in");
+			setStatColor("primary");
+		} else {
+			setStatMessage("Garbage token");
+			setStatColor("secondary");
+		}
+	}
+
+	function verifyCredentials() {
+		// Backend.
+	}
 
 	function setGarbageToken(e) {
 		localStorage.setItem(ACCESS_TOKEN, "garbage");
 		localStorage.setItem(REFRESH_TOKEN, "garbage");
 
-        verifyCredentials();
+		verifyCredentials();
 
 		console.log("Set garbage access token");
 		console.log(localStorage);
@@ -55,7 +54,7 @@ function BackendTestPage() {
 
 		await Backend.loginUser(username, password);
 
-        verifyCredentials();
+		verifyCredentials();
 
 		console.log("Set valid access token");
 		console.log(localStorage);
@@ -64,7 +63,7 @@ function BackendTestPage() {
 	function clearLocalStorage(e) {
 		localStorage.clear();
 
-        verifyCredentials();
+		verifyCredentials();
 
 		console.log("Cleared local storage");
 		console.log(localStorage);
