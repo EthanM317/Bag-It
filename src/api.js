@@ -25,6 +25,7 @@ api.interceptors.request.use(
 	}
 );
 
+// -- Request type constants --
 const GET = 0;
 const POST = 1;
 const DELETE = 2;
@@ -83,7 +84,6 @@ export class Backend {
 	}
 
 	// -- Users --
-	
 	/**
 	 * Return list of all registered users
 	 * @async
@@ -96,10 +96,32 @@ export class Backend {
 		return res.data;
 	}
 
+	/**
+	 * Login with credentials
+	 * Automatically assigns the access and refresh tokens
+	 * @returns [access token, refresh token]
+	 */
+	static async loginUser(username, password) {
+		let res = await this.#request(POST, Url.BACKEND_TOKEN, {
+			username,
+			password,
+		});
+	}
+
+	/**
+	 * Register a new user
+	 */
+	static async registerUser(username, password) {
+		let res = await this.#request(POST, Url.BACKEND_REGISTER, {
+			username,
+			password,
+		});
+	}
+
 	// -- Clothing --
 
 	/**
-	 * 
+	 *
 	 */
 	static getClothing() {
 		api.get("/clothing/")
