@@ -17,6 +17,8 @@ import WhatshotIcon from "@mui/icons-material/Whatshot";
 import bagitLogo from "../assets/bagit_shadow.svg";
 import TopBar from "../components/TopBar";
 import pearLogo from "../assets/pear_outline_white.svg";
+import { useNavigate } from "react-router";
+import { Url } from "../constants";
 
 const StyledBox = styled(Box)(({ theme }) => ({
 	// alignSelf: "center",
@@ -36,7 +38,16 @@ const StyledBox = styled(Box)(({ theme }) => ({
 }));
 
 function LandingPage() {
+	const navigate = useNavigate();
 	const test = [1, 2, 3];
+
+	function getStartedPressed(e) {
+		navigate(Url.REGISTER);
+	}
+
+	function loginPressed(e) {
+		navigate(Url.LOGIN);
+	}
 
 	return (
 		<Box
@@ -139,6 +150,7 @@ function LandingPage() {
 								textTransform: "none",
 								paddingY: "10px",
 							}}
+							onClick={getStartedPressed}
 						>
 							<Typography fontWeight="bold">
 								Get Started
@@ -155,6 +167,7 @@ function LandingPage() {
 								paddingY: "10px",
 								paddingX: "20px",
 							}}
+							onClick={loginPressed}
 						>
 							<Typography fontWeight="bold">Login</Typography>
 						</Button>
