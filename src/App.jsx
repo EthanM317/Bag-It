@@ -18,6 +18,7 @@ import BagPage from "./pages/BagPage.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
 
 import theme from "./theme.js";
+import BackendTestPage from "./pages/test/BackendTestPage.jsx";
 
 function Logout() {
 	// Clear refresh/access token
@@ -58,6 +59,7 @@ function App() {
 
 				{/* DEBUG */}
 				<Route path={Url.TEST} element={<TestPage />} />
+				<Route path={"/backendtest"} element={<BackendTestPage />} />
 				<Route path={"/products"} element={<ProductsTestPage />} />
 				<Route path={"/products/:id"} element={<ProductsTestPage />} />
 			</Routes>
