@@ -12,14 +12,11 @@ function BackendTestPage() {
 	const [statColor, setStatColor] = useState("");
 
 	useEffect(() => {
-		updateMessage();
+		updateStatus();
 	}, []);
 
-	function updateMessage() {
-		if (
-			localStorage.getItem(ACCESS_TOKEN) == null ||
-			localStorage.getItem(REFRESH_TOKEN) == null
-		) {
+	function updateStatus() {
+		if (!Backend.checkForTokens()) {
 			setStatMessage("Logged out");
 			setStatColor("gray");
 			return;
@@ -34,15 +31,31 @@ function BackendTestPage() {
 		}
 	}
 
-	function verifyCredentials() {
-		// Backend.
+	/**
+	 * Check if the user is logged in with valid token
+	 */
+	async function verifyCredentials() {
+        console.log("Check if user is logged in");
+
+		let validated = await Backend.verifyUser();
+
+        setLoggedIn(validated);
+
+        if (loggedIn)
+            console.log("user is logged in");
+        else
+            console.log("user is not logged in");
+
+		updateStatus();
 	}
 
-	function setGarbageToken(e) {
+	async function setGarbageToken(e) {
 		localStorage.setItem(ACCESS_TOKEN, "garbage");
 		localStorage.setItem(REFRESH_TOKEN, "garbage");
 
-		verifyCredentials();
+        updateStatus();
+
+		// await verifyCredentials();
 
 		console.log("Set garbage access token");
 		console.log(localStorage);
@@ -54,16 +67,16 @@ function BackendTestPage() {
 
 		await Backend.loginUser(username, password);
 
-		verifyCredentials();
+		await verifyCredentials();
 
 		console.log("Set valid access token");
 		console.log(localStorage);
 	}
 
-	function clearLocalStorage(e) {
+	async function clearLocalStorage(e) {
 		localStorage.clear();
 
-		verifyCredentials();
+		await verifyCredentials();
 
 		console.log("Cleared local storage");
 		console.log(localStorage);
@@ -99,13 +112,14 @@ function BackendTestPage() {
 			<Grid2 container display="flex" spacing={20}>
 				<Grid2 item>
 					<Typography variant="h4">Users</Typography>
-					<Button
-						sx={{ marginBottom: "10px", marginTop: "10px" }}
-						variant="outlined"
-						onClick={getUsersPressed}
-					>
-						Get Users
-					</Button>
+					<Box sx={{ marginBottom: "10px", marginTop: "10px" }}>
+						<Button variant="outlined" onClick={getUsersPressed}>
+							Get Users
+						</Button>
+						<Button variant="outlined" onClick={verifyCredentials}>
+							Get current user
+						</Button>
+					</Box>
 
 					{users &&
 						users.map((user) => (

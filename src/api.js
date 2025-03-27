@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ACCESS_TOKEN, Url } from "./constants";
+import { ACCESS_TOKEN, REFRESH_TOKEN, Url } from "./constants";
 
 // -- Communicate with backend using Axios --
 export const api = axios.create({
@@ -80,22 +80,40 @@ export class Backend {
 				switch (status) {
 					case 401:
 						// User probably isn't authenticated
-						try {
-							// Try refreshing the token and requesting again
-							const res = await api.get(Url.BACKEND_TOKEN_REFRESH);
+
+						// If localstorage is empty, there's nothing we can do
+						if (!this.checkForTokens()) {
+							// alert("Sorry! You have to be logged in to do that.");
+							return null;
 						}
-						catch (e) {
+
+						// Try refreshing the token and requesting again
+						try {
+							const res = await api.get(
+								Url.BACKEND_TOKEN_REFRESH
+							);
+						} catch (e) {
 							// Failed to refresh, so we must have some garbage data...
 							// Clear local storage and try again...
 							localStorage.clear();
-							continue;
 						}
 						break;
 				}
 			}
 		}
-
 		alert("Error: Connection timed out.");
+		return null;
+	}
+
+	/**
+	 * Check if localStorage has an access, and a refresh token.
+	 * THIS FUNCTION DOES NOT VERIFY THE TOKENS, IT SIMPLY CHECKS IF BOTH CONTAIN A VALUE
+	 */
+	static checkForTokens() {
+		return (
+			localStorage.getItem(ACCESS_TOKEN) != null &&
+			localStorage.getItem(REFRESH_TOKEN) != null
+		);
 	}
 
 	// -- Users --
@@ -117,8 +135,8 @@ export class Backend {
 	 * @returns true if verified, false if not
 	 */
 	static async verifyUser() {
-		const res = await this.#request(GET, Url.BACKEND_TOKEN_REFRESH);
-
+		const res = await this.#request(GET, Url.BACKEND_CURRENT_USER);
+		if (res != null) return true;
 		return false;
 	}
 
