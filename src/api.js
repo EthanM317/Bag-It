@@ -44,7 +44,7 @@ export class Backend {
 	 */
 	static async #request(type, url, data = null) {
 		// How many times we will try to request before stopping
-		const retries = 10;
+		const retries = 5;
 
 		// Time out after trying this a few times
 		for (let i = 0; i < retries; i++) {
@@ -74,9 +74,27 @@ export class Backend {
 
 				return res;
 			} catch (error) {
+				let status = error.status;
+
+				switch (status) {
+					case "401":
+						// User probably isn't authenticated
+						try {
+							// Try refreshing the token and requesting again
+							const res = await api.get(Url.BACKEND_TOKEN_REFRESH);
+						}
+						catch (e) {
+							// Failed to refresh, so we must have some garbage data...
+							// Clear local storage and try again...
+							localStorage.clear();
+							continue;
+						}
+						break;
+				}
+
 				// TODO: Check what type of error this is
-				alert("An error happened!\nResponse: " + res);
-				return res;
+				// alert("An error happened!\nResponse: " + res);
+				// return res;
 			}
 		}
 
@@ -94,6 +112,17 @@ export class Backend {
 
 		const res = await this.#request(GET, Url.BACKEND_USER);
 		return res.data;
+	}
+
+	/**
+	 * Verify that the current user's token is valid
+	 * If not, refresh it
+	 * @returns true if verified, false if not
+	 */
+	static async verifyUser() {
+		const res = await this.#request(GET, Url.BACKEND_TOKEN_REFRESH);
+
+		return false;
 	}
 
 	/**

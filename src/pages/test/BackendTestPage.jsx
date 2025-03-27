@@ -1,5 +1,5 @@
 import { Box, Button, Container, Grid2, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Backend } from "../../api";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../constants";
 
@@ -7,29 +7,67 @@ import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../constants";
 
 function BackendTestPage() {
 	const [users, setUsers] = useState([]);
+	const [loggedIn, setLoggedIn] = useState(false);
+	const [statMessage, setStatMessage] = useState("");
+	const [statColor, setStatColor] = useState("");
+
+	useEffect(() => {
+		updateMessage();
+	}, []);
+
+    function updateMessage() {
+        if (
+			localStorage.getItem(ACCESS_TOKEN) == null ||
+			localStorage.getItem(REFRESH_TOKEN) == null
+		) {
+			setStatMessage("Logged out");
+            setStatColor("gray");
+            return;
+		}
+        
+        if (loggedIn) {
+            setStatMessage("Logged in");
+            setStatColor("primary");
+        }
+        else {
+            setStatMessage("Garbage token");
+            setStatColor("secondary");
+        }
+    }
+
+    function verifyCredentials() {
+        // Backend.
+    }
 
 	function setGarbageToken(e) {
 		localStorage.setItem(ACCESS_TOKEN, "garbage");
 		localStorage.setItem(REFRESH_TOKEN, "garbage");
+
+        verifyCredentials();
 
 		console.log("Set garbage access token");
 		console.log(localStorage);
 	}
 
 	async function setValidToken(e) {
-        let username = import.meta.env.ADMIN_USERNAME;
-        let password = import.meta.env.ADMIN_PASSWORD;
+		let username = import.meta.env.ADMIN_USERNAME;
+		let password = import.meta.env.ADMIN_PASSWORD;
 
-        await Backend.loginUser(username, password);
+		await Backend.loginUser(username, password);
+
+        verifyCredentials();
 
 		console.log("Set valid access token");
 		console.log(localStorage);
 	}
-    
+
 	function clearLocalStorage(e) {
-        localStorage.clear();
+		localStorage.clear();
+
+        verifyCredentials();
+
 		console.log("Cleared local storage");
-        console.log(localStorage);
+		console.log(localStorage);
 	}
 
 	async function getUsersPressed(e) {
@@ -42,6 +80,7 @@ function BackendTestPage() {
 		<Container sx={{ padding: 10 }}>
 			<Typography variant="h3" marginBottom={3}>
 				Backend Test Page
+				<Typography color={statColor}>{statMessage}</Typography>
 			</Typography>
 
 			<Grid2 container marginBottom={4} spacing={1}>
