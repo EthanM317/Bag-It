@@ -39,6 +39,12 @@ function ProductsTestPage() {
     const handleFilterChange = (category, newValues) => {
         setFilters(prevFilters => ({ ...prevFilters, [category]: newValues }));
     };
+    
+    const filterMappings = {
+        size: { "Extra Small": 0, "Small": 1, "Medium": 2, "Large": 3, "Extra Large": 4 },
+        type: { "Shorts": 0, "Pants": 1, "T-Shirt": 2, "Dress": 3, "Shoes": 4, "Hat": 5, "Hoodie": 6, "Shirt": 7 },
+        gender: { "Male": 0, "Female": 1, "Unisex": 2 }
+    };
 
     return (
         <>
@@ -60,7 +66,7 @@ function ProductsTestPage() {
                 {Object.entries({
                     size: ["Extra Small", "Small", "Medium", "Large", "Extra Large"],
                     type: ["Shorts", "Pants", "T-Shirt", "Dress", "Shoes", "Hat", "Hoodie", "Shirt"],
-                    color: ["White", "Black", "Grey", "Blue", "Red", "Green", "Pink"],
+                    color: ["white", "black", "gray", "blue", "red", "green", "pink"],
                     gender: ["Male", "Female", "Unisex"],
                     brand: ["Nike", "Jordan", "Tommy Hilfiger", "Gucci"]
                 }).map(([category, options]) => (
@@ -86,21 +92,33 @@ function ProductsTestPage() {
                 ))}
             </div>
 
+
             {/* Product List */}
             <div className="container">
                 {products.length > 0 ? (
-                    products.map((product) => (
-                        <div key={product.id} className="itemContainer"> 
-                            <h3>{product.name} {id && `- (id: ${id})`}</h3>
-                            <img className="image" src={product.image} alt={product.name} />
-                            <Link to="/item" state={{...product}}>
-                                <span className="productPageLink"></span>
-                            </Link>
-                        </div>
-                    ))
-                ) : (
-                    <p>Product not found</p>
-                )}
+                    products.filter(product => {
+                            return Object.entries(filters).every(([category, selectedValues]) => {
+                                if (selectedValues.length === 0) return true; // No filter applied for this category
+                                return selectedValues.some(value => {
+                                    if (category in filterMappings) {
+                                        return filterMappings[category][value] === product[category]; // Convert label to int for comparison
+                                    }
+                                    return value === product[category]; // Direct comparison for color and brand (strings)
+                                });
+                            });
+                        })
+                        .map((product) => (
+                            <div key={product.id} className="itemContainer"> 
+                                <h3>{product.name} {id && `- (id: ${id})`}</h3>
+                                <img className="image" src={product.image} alt={product.name} />
+                                <Link to="/item" state={{...product}}>
+                                    <span className="productPageLink"></span>
+                                </Link>
+                            </div>
+                        ))
+                    ) : (
+                        <p>Product not found</p>
+                    )}
             </div>
         </>
     );
