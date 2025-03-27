@@ -150,6 +150,10 @@ export class Backend {
 			username,
 			password,
 		});
+
+		// Set token values in localStorage
+		localStorage.setItem(ACCESS_TOKEN, res.data.access);
+		localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
 	}
 
 	/**
@@ -160,6 +164,10 @@ export class Backend {
 			username,
 			password,
 		});
+		
+		// Set token values in localStorage
+		localStorage.setItem(ACCESS_TOKEN, res.data.access);
+		localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
 	}
 
 	// -- Clothing --

@@ -12,13 +12,25 @@ function BackendTestPage() {
 	const [statColor, setStatColor] = useState("");
 
 	useEffect(() => {
-		updateStatus();
+		verifyCredentials();
 	}, []);
 
-	function updateStatus() {
+	function updateStatus(validated = null) {
 		if (!Backend.checkForTokens()) {
 			setStatMessage("Logged out");
 			setStatColor("gray");
+			return;
+		}
+
+		// Stupid hack because useState vars are async updated
+		if (validated != null) {
+			if (validated) {
+				setStatMessage("Logged in");
+				setStatColor("primary");
+			} else {
+				setStatMessage("Garbage token");
+				setStatColor("secondary");
+			}
 			return;
 		}
 
@@ -35,38 +47,34 @@ function BackendTestPage() {
 	 * Check if the user is logged in with valid token
 	 */
 	async function verifyCredentials() {
-        console.log("Check if user is logged in");
+		console.log("Check if user is logged in");
 
 		let validated = await Backend.verifyUser();
 
-        setLoggedIn(validated);
+		if (validated) console.log("user is logged in");
+		else console.log("user is not logged in");
 
-        if (loggedIn)
-            console.log("user is logged in");
-        else
-            console.log("user is not logged in");
-
-		updateStatus();
+		setLoggedIn(validated);
+		updateStatus(validated);
 	}
 
 	async function setGarbageToken(e) {
 		localStorage.setItem(ACCESS_TOKEN, "garbage");
 		localStorage.setItem(REFRESH_TOKEN, "garbage");
 
-        updateStatus();
-
 		// await verifyCredentials();
+		setLoggedIn(false);
+		updateStatus(false);
 
 		console.log("Set garbage access token");
 		console.log(localStorage);
 	}
 
 	async function setValidToken(e) {
-		let username = import.meta.env.ADMIN_USERNAME;
-		let password = import.meta.env.ADMIN_PASSWORD;
+		let username = import.meta.env.VITE_ADMIN_USERNAME;
+		let password = import.meta.env.VITE_ADMIN_PASSWORD;
 
 		await Backend.loginUser(username, password);
-
 		await verifyCredentials();
 
 		console.log("Set valid access token");
@@ -77,6 +85,7 @@ function BackendTestPage() {
 		localStorage.clear();
 
 		await verifyCredentials();
+		// updateStatus();
 
 		console.log("Cleared local storage");
 		console.log(localStorage);
