@@ -160,7 +160,7 @@ export class Backend {
 	 * Register a new user
 	 */
 	static async registerUser(username, password) {
-		let res = await this.#request(POST, Url.BACKEND_REGISTER, {
+		const res = await this.#request(POST, Url.BACKEND_REGISTER, {
 			username,
 			password,
 		});
@@ -173,16 +173,21 @@ export class Backend {
 	// -- Clothing --
 
 	/**
-	 * Get all clothing from database
+	 * Get a list of all clothing items from the database
 	 */
-	static getClothing() {
-		api.get("/clothing/")
-			.then((res) => res.data)
-			.then((data) => {
-				let clothing = data;
-				// console.log(clothing);
-				return clothing;
-			})
-			.catch((err) => alert(err));
+	static async getAllClothingItems() {
+		const res = await this.#request(GET) 
+		return res.data;
 	}
+
+
+	// static getClothing() {
+	// 	api.get("/clothing/")
+	// 		.then((res) => res.data)
+	// 		.then((data) => {
+	// 			let clothing = data;
+	// 			return clothing;
+	// 		})
+	// 		.catch((err) => alert(err));
+	// }
 }
