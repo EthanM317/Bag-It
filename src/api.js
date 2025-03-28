@@ -164,7 +164,7 @@ export class Backend {
 			username,
 			password,
 		});
-		
+
 		// Set token values in localStorage
 		localStorage.setItem(ACCESS_TOKEN, res.data.access);
 		localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
@@ -176,18 +176,20 @@ export class Backend {
 	 * Get a list of all clothing items from the database
 	 */
 	static async getAllClothingItems() {
-		const res = await this.#request(GET) 
+		const res = await this.#request(GET, Url.BACKEND_CLOTHING);
 		return res.data;
 	}
 
+	/**
+	 * Get single clothing item from id
+	 * @param id The id of the clothing item you want to fetch
+	 */
+	static async getClothingItem(id) {
+		const url = Url.BACKEND_CLOTHING + "?itemId=" + id;
+		const res = await this.#request(GET, url);
+		return res.data;
+	}
 
-	// static getClothing() {
-	// 	api.get("/clothing/")
-	// 		.then((res) => res.data)
-	// 		.then((data) => {
-	// 			let clothing = data;
-	// 			return clothing;
-	// 		})
-	// 		.catch((err) => alert(err));
-	// }
+	// TODO: Get a list of clothing items from a list of ids
+	// TODO: Some kind of fuzzy search through clothing items by name?
 }

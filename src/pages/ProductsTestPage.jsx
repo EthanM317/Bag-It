@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import { api } from "../api";
+import { api, Backend } from "../api";
 import { Url } from "../constants";
 import { useEffect, useState } from "react";
 import { Autocomplete, TextField, ToggleButtonGroup, ToggleButton, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
@@ -25,15 +25,22 @@ function ProductsTestPage() {
 
         console.log(_id ? `Getting product ID: ${_id}` : "Getting all products...");
 
-        try {
-            let url = Url.BACKEND_CLOTHING;
-            if (_id) url += "?itemId=" + _id;
-
-            const res = await api.get(url);
-            setProducts(res.data);
-        } catch (error) {
-            alert(error);
+        if (_id) {
+            setProducts(await Backend.getClothingItem(_id));
+            return;
         }
+
+        setProducts(await Backend.getAllClothingItems()); 
+
+        // try {
+        //     let url = Url.BACKEND_CLOTHING;
+        //     if (_id) url += "?itemId=" + _id;
+
+        //     const res = await api.get(url);
+        //     setProducts(res.data);
+        // } catch (error) {
+        //     alert(error);
+        // }
     }
 
     const handleFilterChange = (category, newValues) => {
