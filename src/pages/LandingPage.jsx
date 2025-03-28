@@ -49,6 +49,10 @@ function LandingPage() {
 		navigate(Url.LOGIN);
 	}
 
+	function seeAllPressed(e) {
+		navigate(Url.FEED)
+	}
+
 	return (
 		<Box
 			sx={(theme) => ({
@@ -195,8 +199,12 @@ function LandingPage() {
 							margin={0.5}
 							color="text.default"
 						>
-							The hottest items today:
+							The hottest items today
 						</Typography>
+						<Button onClick={seeAllPressed} variant="contained" color="secondary" sx={{
+							// padding: 2,
+							marginLeft: "10px"
+						}}>See All</Button>
 					</Box>
 				</Box>
 

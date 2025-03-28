@@ -173,7 +173,7 @@ export class Backend {
 	// -- Clothing --
 
 	/**
-	 *
+	 * Get all clothing from database
 	 */
 	static getClothing() {
 		api.get("/clothing/")

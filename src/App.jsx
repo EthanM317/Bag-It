@@ -46,6 +46,10 @@ function App() {
 				<Route path={Url.BAG} element={<BagPage />} />
 				<Route path={Url.BAG + "/:bagId"} element={<BagPage />} />
 
+				{/* Feed related */}
+				<Route path={Url.FEED} element={<ProductsTestPage />} />
+				<Route path={Url.FEED + "/:id"} element={<ProductsTestPage />} />
+
 				{/* "ProtectedRoute" means a page can only be accessed if the user is logged in */}
 				<Route
 					path={Url.PROFILE}
@@ -60,8 +64,6 @@ function App() {
 				{/* DEBUG */}
 				<Route path={Url.TEST} element={<TestPage />} />
 				<Route path={"/backendtest"} element={<BackendTestPage />} />
-				<Route path={"/products"} element={<ProductsTestPage />} />
-				<Route path={"/products/:id"} element={<ProductsTestPage />} />
 			</Routes>
 		</BrowserRouter>
 	);
