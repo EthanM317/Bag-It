@@ -1,8 +1,17 @@
-import { AppBar, Box, Container, Toolbar, Typography } from "@mui/material";
+import {
+	AppBar,
+	Box,
+	Button,
+	Container,
+	Toolbar,
+	Typography,
+} from "@mui/material";
 import React from "react";
 
 import { styled, alpha } from "@mui/material/styles";
 import pearLogo from "../assets/bagit.svg";
+import { useNavigate } from "react-router";
+import { Url } from "../constants";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 	display: "flex",
@@ -20,7 +29,16 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 	padding: "8px 12px",
 }));
 
+/**
+ * Main navbar of the site. Contains logo, search bar, and some user-related stuff.
+ */
 function TopBar() {
+	const navigate = useNavigate();
+
+	function homeClicked(e) {
+		navigate(Url.HOME);
+	}
+
 	return (
 		<AppBar
 			position="fixed"
@@ -35,9 +53,10 @@ function TopBar() {
 			}}
 		>
 			<Container maxWidth="lg">
-				<StyledToolbar variant="dense" disableGutters sx={{
-                    // bgcolor: "black"
-                }} >
+				<StyledToolbar
+					variant="dense"
+					disableGutters
+				>
 					<Box
 						sx={{
 							flexGrow: 1,
@@ -46,17 +65,35 @@ function TopBar() {
 							px: 0,
 						}}
 					>
-						<Box
-							component="img"
-							src={pearLogo}
-							alt="Peartech Logo"
+
+						{/* Bag it button */}
+						<Button
+						onClick={homeClicked}
+						disableRipple
 							sx={{
-								width: "30px",
-                                margin: "5px",
-								filter: "drop-shadow(0 0 80px rgba(132, 0, 255, 0.36))",
+								padding: "0px",
+								textTransform: "none",
+								outline: "none",
 							}}
-						/>
-                        <Typography marginLeft="10px" color="text.default" fontWeight="bold">Bag-It</Typography>
+						>
+							<Box
+								component="img"
+								src={pearLogo}
+								alt="Peartech Logo"
+								sx={{
+									width: "30px",
+									margin: "5px",
+									filter: "drop-shadow(0 0 80px rgba(132, 0, 255, 0.36))",
+								}}
+							/>
+							<Typography
+								marginLeft="10px"
+								color="text.default"
+								fontWeight="bold"
+							>
+								Bag-It
+							</Typography>
+						</Button>
 					</Box>
 				</StyledToolbar>
 			</Container>

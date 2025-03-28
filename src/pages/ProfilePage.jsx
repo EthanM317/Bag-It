@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router";
 import {
 	Autocomplete,
 	Button,
+	Container,
 	Dialog,
 	DialogContent,
 	DialogContentText,
@@ -17,6 +18,7 @@ import BagList from "../components/Bags/BagList";
 import AddBagDialog from "../components/Bags/AddBagDialog";
 import TopPanelBar from "../components/TopPanelBar";
 import NavBar from "../components/NavBar";
+import TopBar from "../components/TopBar";
 
 // Page displaying the user's username and bags
 
@@ -180,8 +182,9 @@ function ProfilePage() {
 	}
 
 	return (
-		<div>
-			<NavBar />
+		<Container sx={{marginTop: "120px"}}>
+			{/* <NavBar /> */}
+			<TopBar />
 			<div className="main-container">
 				{/* <TopPanelBar /> */}
 				{userNotFound && <h2>Error: User not found</h2>}
@@ -244,7 +247,7 @@ function ProfilePage() {
 					</div>
 				)}
 			</div>
-		</div>
+		</Container>
 	);
 }
 

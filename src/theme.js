@@ -22,7 +22,7 @@ const theme = createTheme({
 		},
 		text: {
 			default: "#d5d6dfff",
-			// default: "#b8b9c2",	
+			// default: "#b8b9c2",
 		}
 	},
 });

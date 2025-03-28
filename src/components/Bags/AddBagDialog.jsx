@@ -111,7 +111,7 @@ function AddBagDialog({ bags, setBags }) {
 					/>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={submitDialog} disabled={isAdding}>
+					<Button onClick={submitDialog} loading={isAdding}>
 						OK
 					</Button>
 				</DialogActions>
