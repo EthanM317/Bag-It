@@ -80,25 +80,58 @@ function ProductsTestPage() {
                     gender: ["Male", "Female", "Unisex"],
                     brand: ["Nike", "Jordan", "Tommy Hilfiger", "Gucci"]
                 }).map(([category, options]) => (
-                    <Accordion key={category}>
-                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                            <h3>{category.charAt(0).toUpperCase() + category.slice(1)}</h3>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <ToggleButtonGroup
-                                value={filters[category]}
-                                onChange={(event, newValues) => handleFilterChange(category, newValues)}
-                                aria-label={category}
-                                size="small"
-                            >
-                                {options.map(option => (
-                                    <ToggleButton key={option} value={option} aria-label={option}>
-                                        {option}
-                                    </ToggleButton>
-                                ))}
-                            </ToggleButtonGroup>
-                        </AccordionDetails>
-                    </Accordion>
+                    <Accordion 
+                    key={category}
+                    sx={{
+                        backgroundColor: '#1a1a2e',
+                        color: 'white',
+                        borderRadius: 2,
+                        boxShadow: 3,
+                        marginBottom: 2
+                    }}
+                >
+                    <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: 'white' }} />}>
+                        <h3>{category.charAt(0).toUpperCase() + category.slice(1)}</h3>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <ToggleButtonGroup
+                            value={filters[category]}
+                            onChange={(event, newValues) => handleFilterChange(category, newValues)}
+                            aria-label={category}
+                            size="small"
+                        >
+                            {options.map(option => (
+  <ToggleButton
+    key={option}
+    value={option}
+    aria-label={option}
+    sx={{
+      color: 'white',
+      borderColor: '#9b59b6',
+      '&.Mui-selected': {
+        backgroundColor: '#9b59b6',
+        color: 'white',
+        transform: 'scale(1.08)',
+        boxShadow: '0px 0px 10px #9b59b6',
+      },
+      '&:hover': {
+        backgroundColor: '#6c3483',
+        color: 'white',
+        transform: 'translateY(-2px) scale(1.03)',
+        boxShadow: '0px 4px 12px rgba(155, 89, 182, 0.6)',
+      },
+      transition: 'all 0.3s ease-in-out',
+      margin: 0.5,
+      borderRadius: 2
+    }}
+  >
+    {option}
+  </ToggleButton>
+))}
+                        </ToggleButtonGroup>
+                    </AccordionDetails>
+                </Accordion>
+                
                 ))}
             </div>
 
