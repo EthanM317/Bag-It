@@ -59,14 +59,17 @@ function ProductsTestPage() {
             <h1>Products List</h1>
             {!id && <h2>Here are all the products</h2>}
 
-            <Autocomplete 
-                options={products}
-                getOptionLabel={(option) => option.name}
-                sx={{ width: 500 }}
-                renderInput={(params) => (
-                    <TextField {...params} label="Search Products..." />
-                )}
-            />
+            {/* 
+<Autocomplete 
+    options={products}
+    getOptionLabel={(option) => option.name}
+    sx={{ width: 500 }}
+    renderInput={(params) => (
+        <TextField {...params} label="Search Products..." />
+    )}
+/> 
+*/}
+
 
             {/* Category Bar */}
             <div className="category-bar">
