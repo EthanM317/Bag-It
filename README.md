@@ -25,7 +25,7 @@ Open terminal and run the following commands:
 git clone https://github.com/EthanM317/Bag-It
 ```
 
-### Install Dependencies and Run test Server
+### Install Dependencies and Run test Server 
 This project uses *Node Package Manager (npm)* to manage dependencies. Make sure to install NodeJS before proceeding to the next part of the step.
 
 The batch script `run.bat`, in the root directory, will install all dependencies for you on the first run.
@@ -34,5 +34,15 @@ After the dependencies are installed (and on every subsequent run), the script w
 On success, it will output something like this:
 
 ![Example output](./blueprint/TestExample.png)
+
+Paste http://localhost:5173/ into your browser of choice to preview the website. 
+
+## Alternative for MacOS/Linux Users [Terminal] 
+### Install the dependencies: 
+`npm install`
+### Start development server: 
+`npm run dev` or alternatively `npm start` 
+### Open the website in your browser: 
+
 
 Paste http://localhost:5173/ into your browser of choice to preview the website.
