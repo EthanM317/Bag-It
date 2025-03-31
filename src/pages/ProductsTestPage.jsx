@@ -101,33 +101,33 @@ function ProductsTestPage() {
                             size="small"
                         >
                             {options.map(option => (
-  <ToggleButton
-    key={option}
-    value={option}
-    aria-label={option}
-    sx={{
-      color: 'white',
-      borderColor: '#9b59b6',
-      '&.Mui-selected': {
-        backgroundColor: '#9b59b6',
-        color: 'white',
-        transform: 'scale(1.08)',
-        boxShadow: '0px 0px 10px #9b59b6',
-      },
-      '&:hover': {
-        backgroundColor: '#6c3483',
-        color: 'white',
-        transform: 'translateY(-2px) scale(1.03)',
-        boxShadow: '0px 4px 12px rgba(155, 89, 182, 0.6)',
-      },
-      transition: 'all 0.3s ease-in-out',
-      margin: 0.5,
-      borderRadius: 2
-    }}
-  >
-    {option}
-  </ToggleButton>
-))}
+                <ToggleButton
+                key={option}
+                value={option}
+                aria-label={option}
+                sx={{
+                color: 'white',
+                borderColor: '#9b59b6',
+                '&.Mui-selected': {
+                    backgroundColor: '#9b59b6',
+                    color: 'white',
+                    transform: 'scale(1.08)',
+                    boxShadow: '0px 0px 10px #9b59b6',
+                },
+                '&:hover': {
+                    backgroundColor: '#6c3483',
+                    color: 'white',
+                    transform: 'translateY(-2px) scale(1.03)',
+                    boxShadow: '0px 4px 12px rgba(155, 89, 182, 0.6)',
+                },
+                transition: 'all 0.3s ease-in-out',
+                margin: 0.5,
+                borderRadius: 2
+                }}
+            >
+                {option}
+            </ToggleButton>
+            ))}
                         </ToggleButtonGroup>
                     </AccordionDetails>
                 </Accordion>
@@ -151,13 +151,35 @@ function ProductsTestPage() {
                             });
                         })
                         .map((product) => (
-                            <div key={product.id} className="itemContainer"> 
-                                <h3>{product.name} {id && `- (id: ${id})`}</h3>
-                                <img className="image" src={product.image} alt={product.name} />
-                                <Link to="/item" state={{...product}}>
-                                    <span className="productPageLink"></span>
-                                </Link>
-                            </div>
+                            <div
+                            key={product.id}
+                            className="itemContainer"
+                            style={{
+                              backgroundColor: '#d4f0f7',
+                              borderRadius: '12px',
+                              padding: '10px',
+                              textAlign: 'center',
+                              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                              cursor: 'pointer',
+                              transformOrigin: 'center',
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.transform = 'scale(1.05)';
+                              e.currentTarget.style.boxShadow = '0 6px 16px rgba(0, 0, 0, 0.2)';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.transform = 'scale(1)';
+                              e.currentTarget.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
+                            }}
+                          >
+                            <h3>{product.name} {id && `- (id: ${id})`}</h3>
+                            <img className="image" src={product.image} alt={product.name} style={{ maxWidth: '100%', borderRadius: '8px' }} />
+                            <Link to="/item" state={{ ...product }}>
+                              <span className="productPageLink"></span>
+                            </Link>
+                          </div>// hover affect over products
+                          
                         ))
                     ) : (
                         <p>Product not found</p>
