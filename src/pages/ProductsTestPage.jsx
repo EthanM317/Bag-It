@@ -65,24 +65,56 @@ function ProductsTestPage() {
         return '🔹';
     }
 
+    // Filtered product list for count and display
+    const filteredProducts = products.filter(product => {
+        return Object.entries(filters).every(([category, selectedValues]) => {
+            if (selectedValues.length === 0) return true;
+            return selectedValues.some(value => {
+                if (category in filterMappings) {
+                    return filterMappings[category][value] === product[category];
+                }
+                return value === product[category];
+            });
+        });
+    });
+
     return (
         <>
             <NavBar />
-            <h1>Products List</h1>
-            {!id && <h2>Here are all the products</h2>}
+            {/* Sticky and styled header */}
+            <div style={{
+                position: 'sticky',
+                top: 0,
+                zIndex: 1000,
+                backgroundColor: '#0c002b',
+                padding: '40px 20px',
+                textAlign: 'center',
+                animation: 'fadeIn 1s ease-in-out',
+            }}>
+                <h1 style={{
+                    fontSize: '3rem',
+                    fontWeight: 'bold',
+                    color: 'white',
+                    marginBottom: '10px',
+                }}>Products List</h1>
 
-            {/* 
-            <Autocomplete 
-                options={products}
-                getOptionLabel={(option) => option.name}
-                sx={{ width: 500 }}
-                renderInput={(params) => (
-                    <TextField {...params} label="Search Products..." />
-                )}
-            /> 
-            */}
+                <p style={{
+                    fontSize: '1.2rem',
+                    color: '#ccc',
+                    marginBottom: '10px',
+                }}>Here are all the products tailored just for you. Filter, hover, explore.</p>
 
-            {/* Dropdown Filter Bar */}
+                <p style={{
+                    fontSize: '1rem',
+                    color: '#9b59b6',
+                    marginTop: '10px',
+                    fontWeight: 600,
+                }}>
+                    🛍️ Displaying {filteredProducts.length} Product{filteredProducts.length !== 1 ? 's' : ''}
+                </p>
+            </div>
+
+            {/* Category Dropdown Bar */}
             <div className="category-bar" style={{ marginBottom: '20px', textAlign: 'center' }}>
                 {Object.entries({
                     size: ["Extra Small", "Small", "Medium", "Large", "Extra Large"],
@@ -178,49 +210,38 @@ function ProductsTestPage() {
                 borderRadius: '12px',
                 marginTop: '20px'
             }}>
-                {products.length > 0 ? (
-                    products.filter(product => {
-                        return Object.entries(filters).every(([category, selectedValues]) => {
-                            if (selectedValues.length === 0) return true;
-                            return selectedValues.some(value => {
-                                if (category in filterMappings) {
-                                    return filterMappings[category][value] === product[category];
-                                }
-                                return value === product[category];
-                            });
-                        });
-                    })
-                        .map((product) => (
-                            <div
-                                key={product.id}
-                                className="itemContainer"
-                                style={{
-                                    backgroundColor: '#d4f0f7',
-                                    borderRadius: '12px',
-                                    padding: '10px',
-                                    textAlign: 'center',
-                                    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                                    cursor: 'pointer',
-                                    transformOrigin: 'center',
-                                    margin: '10px'
-                                }}
-                                onMouseEnter={(e) => {
-                                    e.currentTarget.style.transform = 'scale(1.05)';
-                                    e.currentTarget.style.boxShadow = '0 6px 16px rgba(0, 0, 0, 0.2)';
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.currentTarget.style.transform = 'scale(1)';
-                                    e.currentTarget.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
-                                }}
-                            >
-                                <h3>{product.name} {id && `- (id: ${id})`}</h3>
-                                <img className="image" src={product.image} alt={product.name} style={{ maxWidth: '100%', borderRadius: '8px' }} />
-                                <Link to="/item" state={{ ...product }}>
-                                    <span className="productPageLink"></span>
-                                </Link>
-                            </div>
-                        ))
+                {filteredProducts.length > 0 ? (
+                    filteredProducts.map((product) => (
+                        <div
+                            key={product.id}
+                            className="itemContainer"
+                            style={{
+                                backgroundColor: '#d4f0f7',
+                                borderRadius: '12px',
+                                padding: '10px',
+                                textAlign: 'center',
+                                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                                cursor: 'pointer',
+                                transformOrigin: 'center',
+                                margin: '10px'
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.transform = 'scale(1.05)';
+                                e.currentTarget.style.boxShadow = '0 6px 16px rgba(0, 0, 0, 0.2)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.transform = 'scale(1)';
+                                e.currentTarget.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
+                            }}
+                        >
+                            <h3>{product.name} {id && `- (id: ${id})`}</h3>
+                            <img className="image" src={product.image} alt={product.name} style={{ maxWidth: '100%', borderRadius: '8px' }} />
+                            <Link to="/item" state={{ ...product }}>
+                                <span className="productPageLink"></span>
+                            </Link>
+                        </div>
+                    ))
                 ) : (
                     <p>Product not found</p>
                 )}

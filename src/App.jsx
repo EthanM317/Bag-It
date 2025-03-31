@@ -1,3 +1,4 @@
+import './App.css';
 import React, { useMemo, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 
