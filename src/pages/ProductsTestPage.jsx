@@ -97,7 +97,7 @@ function ProductsTestPage() {
                     marginTop: '10px',
                     fontWeight: 600,
                 }}>
-                    🛍️ Displaying {filteredProducts.length} Product{filteredProducts.length !== 1 ? 's' : ''}
+                    🏍️ Displaying {filteredProducts.length} Product{filteredProducts.length !== 1 ? 's' : ''}
                 </p>
             </div>
 
@@ -108,17 +108,32 @@ function ProductsTestPage() {
                         onClick={() => setActiveCategory(activeCategory === category ? null : category)}
                         style={{ position: 'relative', display: 'inline-block', marginRight: '12px' }}
                     >
-                        <div style={{
-                            backgroundColor: filters[category].length > 0 ? '#6c3483' : '#1a1a2e',
-                            color: 'white',
-                            padding: '12px 24px',
-                            borderRadius: '16px',
-                            cursor: 'pointer',
-                            fontWeight: 'bold',
-                            fontSize: '1rem',
-                            boxShadow: '0 4px 12px rgba(0,0,0,0.4)',
-                            transition: '0.3s'
-                        }}>
+                        <div
+                            style={{
+                                backgroundColor: filters[category].length > 0 ? '#6c3483' : '#1a1a2e',
+                                color: 'white',
+                                padding: '12px 24px',
+                                borderRadius: '16px',
+                                cursor: 'pointer',
+                                fontWeight: 'bold',
+                                fontSize: '1rem',
+                                boxShadow: filters[category].length > 0
+                                    ? '0 0 12px #b084cc'
+                                    : '0 4px 12px rgba(0,0,0,0.4)',
+                                transition: 'all 0.3s ease',
+                                transform: 'scale(1)',
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.boxShadow = '0 0 18px #b084cc';
+                                e.currentTarget.style.transform = 'scale(1.08)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.boxShadow = filters[category].length > 0
+                                    ? '0 0 12px #b084cc'
+                                    : '0 4px 12px rgba(0,0,0,0.4)';
+                                e.currentTarget.style.transform = 'scale(1)';
+                            }}
+                        >
                             {category.toUpperCase()}
                         </div>
 
@@ -191,6 +206,16 @@ function ProductsTestPage() {
                                             alignItems: 'center',
                                             justifyContent: 'center',
                                             transition: 'all 0.3s ease',
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.boxShadow = '0 0 12px #9b59b6';
+                                            e.currentTarget.style.transform = 'scale(1.08)';
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.boxShadow = category === "color"
+                                                ? 'inset 0 0 0 2px white'
+                                                : (filters[category].includes(option) ? '0 0 6px #6c3483' : '0 0 6px rgba(0,0,0,0.2)');
+                                            e.currentTarget.style.transform = 'scale(1)';
                                         }}
                                     >
                                         {category !== "color" && (
