@@ -76,7 +76,7 @@ function ProductsTestPage() {
     });
 
     const filterOptions = {
-        size: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
+        size: ["XS", "S", "M", "L", "XL",],
         type: ["Shorts", "Pants", "T-Shirt", "Dress", "Shoes", "Hat", "Hoodie", "Shirt"],
         color: ["White", "Black", "Gray", "Blue", "Red", "Green", "Pink"],
         gender: ["Male", "Female", "Unisex"],
