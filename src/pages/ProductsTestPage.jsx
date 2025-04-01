@@ -184,14 +184,14 @@ function ProductsTestPage() {
                                 </div>
 
                                 )}
-                                {options.map(option => (
-                                    <div
-                                        key={option}
-                                        onClick={(e) => {
+                               {options.map(option => (
+                                        <div
+                                            key={option}
+                                            onClick={(e) => {
                                             e.stopPropagation();
                                             handleFilterChange(category, option);
-                                        }}
-                                        style={{
+                                            }}
+                                            style={{
                                             padding: category === "color" ? '0' : '10px 14px',
                                             borderRadius: category === "color" ? '50%' : '12px',
                                             backgroundColor: category === "color"
@@ -203,31 +203,35 @@ function ProductsTestPage() {
                                             fontWeight: '500',
                                             cursor: 'pointer',
                                             boxShadow: category === "color"
-                                                ? 'inset 0 0 0 2px white'
+                                                ? filters[category].includes(option) 
+                                                ? '0 0 20px 4px #9b59b6, inset 0 0 0 3px white' 
+                                                : 'inset 0 0 0 2px white'
                                                 : '0 0 6px rgba(0,0,0,0.2)',
-                                            height: category === "color" ? '36px' : 'auto',
-                                            width: category === "color" ? '36px' : 'auto',
+                                            height: category === "color" ? '48px' : 'auto',
+                                            width: category === "color" ? '48px' : 'auto',
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
                                             transition: 'all 0.3s ease',
-                                        }}
-                                        onMouseEnter={(e) => {
-                                            e.currentTarget.style.boxShadow = '0 0 12px #9b59b6';
+                                            }}
+                                            onMouseEnter={(e) => {
+                                            e.currentTarget.style.boxShadow = '0 0 20px #9b59b6';
                                             e.currentTarget.style.transform = 'scale(1.08)';
-                                        }}
-                                        onMouseLeave={(e) => {
+                                            }}
+                                            onMouseLeave={(e) => {
                                             e.currentTarget.style.boxShadow = category === "color"
-                                                ? 'inset 0 0 0 2px white'
+                                                ? filters[category].includes(option)
+                                                ? '0 0 20px 4px #9b59b6, inset 0 0 0 3px white'
+                                                : 'inset 0 0 0 2px white'
                                                 : (filters[category].includes(option) ? '0 0 6px #6c3483' : '0 0 6px rgba(0,0,0,0.2)');
                                             e.currentTarget.style.transform = 'scale(1)';
-                                        }}
-                                    >
-                                        {category !== "color" && (
+                                            }}
+                                        >
+                                            {category !== "color" && (
                                             <span>{option}</span>
-                                        )}
-                                    </div>
-                                ))}
+                                            )}
+                                        </div>
+                                        ))}
                             </div>
                         )}
                     </div>
