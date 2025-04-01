@@ -6,16 +6,33 @@ import { Autocomplete, TextField } from "@mui/material";
 import React from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from "../components/NavBar";
+import { useRef } from 'react';
+
 
 function ProductsTestPage() {
     const [products, setProducts] = useState([]);
     const [filters, setFilters] = useState({ size: [], type: [], color: [], gender: [], brand: [] });
     const [hoveredCategory, setHoveredCategory] = useState(null);
     const { id } = useParams();
+    const [activeCategory, setActiveCategory] = useState(null);
+    const dropdownRef = useRef(null);
 
     useEffect(() => {
         getProductFromId(id);
     }, [id]);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setActiveCategory(null);
+            }
+        };
+        
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
 
     async function getProductFromId(_id) {
         if (_id && isNaN(_id)) {
@@ -115,7 +132,7 @@ function ProductsTestPage() {
             </div>
 
             {/* Category Dropdown Bar */}
-            <div className="category-bar" style={{ marginBottom: '20px', textAlign: 'center' }}>
+            <div className="category-bar" style={{ marginBottom: '20px', textAlign: 'center' }} ref = {dropdownRef}>
                 {Object.entries({
                     size: ["Extra Small", "Small", "Medium", "Large", "Extra Large"],
                     type: ["Shorts", "Pants", "T-Shirt", "Dress", "Shoes", "Hat", "Hoodie", "Shirt"],
@@ -125,8 +142,7 @@ function ProductsTestPage() {
                 }).map(([category, options]) => (
                     <div
                         key={category}
-                        onMouseEnter={() => setHoveredCategory(category)}
-                        onMouseLeave={() => setHoveredCategory(null)}
+                        onClick={() => setActiveCategory(activeCategory === category ? null : category)}
                         style={{
                             position: 'relative',
                             display: 'inline-block',
@@ -149,7 +165,7 @@ function ProductsTestPage() {
                             {category.charAt(0).toUpperCase() + category.slice(1)}
                         </div>
 
-                        {hoveredCategory === category && (
+                        {activeCategory === category && (
                             <div
                                 style={{
                                     position: 'absolute',
