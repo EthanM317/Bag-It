@@ -218,6 +218,23 @@ function ProductsTestPage() {
                         )}
                     </div>
                 ))}
+
+                {/* Button to clear all filters */}
+                {Object.values(filters).some(filterArray => filterArray.length != 0) && (
+                    <button
+                        onClick={() => setFilters({ size: [], type: [], color: [], gender: [], brand: [] })}
+                        style={{
+                            backgroundColor: 'transparent',
+                            color: 'red',
+                            padding: '5px',
+                            fontSize: '35px',
+                            cursor: 'pointer',
+                            border: 'none',
+                        }}
+                    >
+                        ×
+                    </button>
+                )}
             </div>
 
             {/* Product List */}
