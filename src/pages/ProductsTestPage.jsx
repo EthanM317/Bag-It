@@ -65,7 +65,6 @@ function ProductsTestPage() {
     const filteredProducts = products.filter(product => {
         return Object.entries(filters).every(([category, selectedValues]) => {
             if (selectedValues.length === 0) return true;
-
             return selectedValues.some(value => {
                 if (category in filterMappings) {
                     return filterMappings[category][value] === product[category];
@@ -161,28 +160,29 @@ function ProductsTestPage() {
                                 justifyContent: category === "size" ? 'center' : 'flex-start'
                             }}>
                                 {filters[category].length > 0 && (
-                                    <div style={{
-                                        width: '100%',
-                                        display: 'flex',
-                                        justifyContent: 'flex-end',
-                                        marginBottom: '8px'
-                                    }}>
-                                        <button
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                setFilters(prev => ({ ...prev, [category]: [] }));
-                                            }}
-                                            style={{
-                                                background: 'none',
-                                                border: 'none',
-                                                color: '#ff6b6b',
-                                                fontSize: '1.2rem',
-                                                cursor: 'pointer',
-                                                fontWeight: 'bold',
-                                                transition: '0.3s'
-                                            }}
-                                        >×</button>
-                                    </div>
+                                <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', marginBottom: '8px' }}>
+                                    <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setFilters(prev => ({ ...prev, [category]: [] }));
+                                    }}
+                                    style={{
+                                        backgroundColor: '#6c3483',
+                                        border: 'none',
+                                        color: 'white',
+                                        padding: '6px 12px',
+                                        borderRadius: '8px',
+                                        fontWeight: '600',
+                                        cursor: 'pointer',
+                                        transition: 'all 0.3s ease'
+                                    }}
+                                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#9b59b6'}
+                                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#6c3483'}
+                                    >
+                                    Clear
+                                    </button>
+                                </div>
+
                                 )}
                                 {options.map(option => (
                                     <div
