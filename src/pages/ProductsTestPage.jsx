@@ -270,34 +270,35 @@ function ProductsTestPage() {
                 {filteredProducts.length > 0 ? (
                     filteredProducts.map((product) => (
                         <div
-                            key={product.id}
-                            className="itemContainer"
-                            style={{
-                                backgroundColor: '#d4f0f7',
-                                borderRadius: '12px',
-                                padding: '10px',
-                                textAlign: 'center',
-                                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                                cursor: 'pointer',
-                                transformOrigin: 'center',
-                                width: '200px'
-                            }}
-                            onMouseEnter={(e) => {
-                                e.currentTarget.style.transform = 'scale(1.05)';
-                                e.currentTarget.style.boxShadow = '0 6px 16px rgba(0, 0, 0, 0.2)';
-                            }}
-                            onMouseLeave={(e) => {
-                                e.currentTarget.style.transform = 'scale(1)';
-                                e.currentTarget.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
-                            }}
-                        >
-                            <h3>{product.name} {id && `- (id: ${id})`}</h3>
-                            <img className="image" src={product.image} alt={product.name} style={{ maxWidth: '100%', borderRadius: '8px' }} />
-                            <Link to="/item" state={{ ...product }}>
-                                <span className="productPageLink"></span>
-                            </Link>
-                        </div>
+                    key={product.id}
+                    className="itemContainer"
+                    style={{
+                        backgroundColor: '#1e1e2f', // Darker card background
+                        borderRadius: '12px',
+                        padding: '10px',
+                        textAlign: 'center',
+                        transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
+                        cursor: 'pointer',
+                        transformOrigin: 'center',
+                        width: '200px',
+                        color: 'white', // White text for readability
+                    }}
+                    onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.05)';
+                        e.currentTarget.style.boxShadow = '0 8px 24px rgba(155, 89, 182, 0.6)';
+                    }}
+                    onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                        e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.3)';
+                    }}
+                >
+                    <h3 style={{ fontSize: '1rem', fontWeight: '600', marginBottom: '8px' }}>{product.name} {id && `- (id: ${id})`}</h3>
+                    <img className="image" src={product.image} alt={product.name} style={{ maxWidth: '100%', borderRadius: '8px' }} />
+                    <Link to="/item" state={{ ...product }}>
+                        <span className="productPageLink"></span>
+                    </Link>
+                </div>
                     ))
                 ) : (
                     <p>No products match the selected filters.</p>
