@@ -9,7 +9,6 @@ import NavBar from "../components/NavBar";
 function ProductsTestPage() {
     const [products, setProducts] = useState([]);
     const [filters, setFilters] = useState({ size: [], type: [], color: [], gender: [], brand: [] });
-    const [hoveredCategory, setHoveredCategory] = useState(null);
     const { id } = useParams();
     const [activeCategory, setActiveCategory] = useState(null);
     const dropdownRef = useRef(null);
@@ -44,8 +43,14 @@ function ProductsTestPage() {
         setProducts(await Backend.getAllClothingItems());
     }
 
-    const handleFilterChange = (category, newValues) => {
-        setFilters(prev => ({ ...prev, [category]: newValues }));
+    const handleFilterChange = (category, value) => {
+        setFilters(prev => {
+            const alreadySelected = prev[category].includes(value);
+            const updatedCategory = alreadySelected
+                ? prev[category].filter(v => v !== value)
+                : [...prev[category], value];
+            return { ...prev, [category]: updatedCategory };
+        });
     };
 
     const filterMappings = {
@@ -184,7 +189,7 @@ function ProductsTestPage() {
                                         key={option}
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            handleFilterChange(category, [option]);
+                                            handleFilterChange(category, option);
                                         }}
                                         style={{
                                             padding: category === "color" ? '0' : '10px 14px',
