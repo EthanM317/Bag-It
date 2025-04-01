@@ -136,105 +136,141 @@ function ProductsTestPage() {
                 {Object.entries({
                     size: ["Extra Small", "Small", "Medium", "Large", "Extra Large"],
                     type: ["Shorts", "Pants", "T-Shirt", "Dress", "Shoes", "Hat", "Hoodie", "Shirt"],
-                    color: ["white", "black", "gray", "blue", "red", "green", "pink"],
+                    color: ["White", "Black", "Gray", "Blue", "Red", "Green", "Pink"],
                     gender: ["Male", "Female", "Unisex"],
                     brand: ["Nike", "Jordan", "Tommy Hilfiger", "Gucci"]
                 }).map(([category, options]) => (
                     <div
                         key={category}
                         onClick={() => setActiveCategory(activeCategory === category ? null : category)}
-                        style={{
-                            position: 'relative',
-                            display: 'inline-block',
-                            marginRight: '2px',
-                        }}
+                        style={{ position: 'relative', display: 'inline-block', marginRight: '10px' }}
                     >
-                        <div
-                            style={{
-                                backgroundColor: filters[category].length > 0 ? '#6c3483' : '#1a1a2e',
-                                color: 'white',
-                                padding: '18px 28px',
-                                borderRadius: '14px',
-                                cursor: 'pointer',
-                                fontWeight: 'bold',
-                                fontSize: '1.1rem',
-                                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.6)',
-                                transition: '0.3s',
-                            }}
-                        >
-                            {category.charAt(0).toUpperCase() + category.slice(1)}
+                        <div style={{
+                            backgroundColor: filters[category].length > 0 ? '#6c3483' : '#1a1a2e',
+                            color: 'white',
+                            padding: '12px 24px',
+                            borderRadius: '14px',
+                            cursor: 'pointer',
+                            fontWeight: 'bold',
+                            fontSize: '1rem',
+                            boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.6)',
+                            transition: '0.3s',
+                        }}>
+                            {category.toUpperCase()}
                         </div>
-
+                
                         {activeCategory === category && (
-                            <div
-                                style={{
-                                    position: 'absolute',
-                                    top: '100%',
-                                    left: 0,
-                                    backgroundColor: '#2d2d44',
-                                    padding: '12px',
-                                    borderRadius: '12px',
-                                    boxShadow: '0 8px 20px rgba(0,0,0,0.4)',
-                                    zIndex: 10,
-                                    marginTop: '6px',
-                                    minWidth: '180px',
-                                }}
-                            >
+                               <div style={{
+                                position: 'absolute',
+                                top: '110%',
+                                left: 0,
+                                backgroundColor: '#1f1f2f',
+                                padding: '16px',
+                                borderRadius: '16px',
+                                boxShadow: '0 10px 24px rgba(0,0,0,0.5)',
+                                zIndex: 20,
+                                marginTop: '12px',
+                                minWidth: category === "size" ? '240px' : '260px',
+                                maxWidth: '500px',
+                                display: 'flex',
+                                flexWrap: 'wrap',
+                                gap: '12px',
+                                justifyContent: category === "size" ? 'center' : 'flex-start',
+                                transition: 'opacity 0.3s ease, transform 0.3s ease',
+                                transform: 'translateY(0)',
+                            }}>
+                                    {filters[category].length > 0 && (
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setFilters(prev => ({ ...prev, [category]: [] }));
+                                            }}
+                                            style={{
+                                                background: 'none',
+                                                border: 'none',
+                                                color: '#ff6b6b',
+                                                fontSize: '1.2rem',
+                                                cursor: 'pointer',
+                                                fontWeight: 'bold',
+                                                transition: '0.3s'
+                                            }}
+                                            title={`Clear ${category}`}
+                                        >
+                                            ×
+                                        </button>
+                                    )}
+                                
+                            
                                 {options.map(option => (
                                     <div
                                         key={option}
-                                        onClick={() => handleFilterChange(category, [option])}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleFilterChange(category, [option]);
+                                        }}
                                         style={{
-                                            padding: '12px 16px',
-                                            color: 'white',
-                                            borderRadius: '8px',
+                                            padding: category === "color" ? '0' : '10px 14px',
+                                            borderRadius: category === "color" ? '50%' : '12px',
+                                            backgroundColor: category === "color" ? option.toLowerCase() : (filters[category].includes(option) ? '#6c3483' : '#2e2e40'),
+                                            color: category === "color" ? 'transparent' : 'white',
+                                            textAlign: 'center',
+                                            fontSize: '0.95rem',
+                                            fontWeight: '500',
                                             cursor: 'pointer',
-                                            fontSize: '1rem',
+                                            boxShadow: category === "color" ? 'inset 0 0 0 2px white' : '0 0 6px rgba(0,0,0,0.2)',
+                                            height: category === "color" ? '36px' : 'auto',
+                                            width: category === "color" ? '36px' : 'auto',
                                             display: 'flex',
                                             alignItems: 'center',
-                                            gap: '12px',
-                                            transition: '0.3s',
-                                            fontWeight: '500',
-                                            backgroundColor: filters[category].includes(option) > 0 ? '#9b59b6' : 'transparent',
+                                            justifyContent: 'center',
+                                            transition: 'all 0.3s ease',
                                         }}
                                         onMouseEnter={(e) => {
-                                            e.currentTarget.style.backgroundColor = '#6c3483';
-                                            e.currentTarget.style.boxShadow = '0 0 12px #9b59b6';
-                                            e.currentTarget.style.transform = 'scale(1.03)';
+                                            if (category !== "color") {
+                                                e.currentTarget.style.backgroundColor = '#9b59b6';
+                                                e.currentTarget.style.transform = 'scale(1.03)';
+                                            }
                                         }}
                                         onMouseLeave={(e) => {
-                                            e.currentTarget.style.backgroundColor = 'transparent';
-                                            e.currentTarget.style.boxShadow = 'none';
-                                            e.currentTarget.style.transform = 'scale(1)';
+                                            if (category !== "color") {
+                                                e.currentTarget.style.backgroundColor = filters[category].includes(option) ? '#6c3483' : '#2e2e40';
+                                                e.currentTarget.style.transform = 'scale(1)';
+                                            }
                                         }}
                                     >
-                                        <span style={{ fontSize: '1.2rem' }}>
-                                            {getIcon(category, option)}
-                                        </span>
-                                        {option}
+                                        {category !== "color" && (
+                                            <span>{option}</span>
+                                        )}
                                     </div>
                                 ))}
                             </div>
                         )}
                     </div>
                 ))}
-
                 {/* Button to clear all filters */}
-                {Object.values(filters).some(filterArray => filterArray.length != 0) && (
-                    <button
-                        onClick={() => setFilters({ size: [], type: [], color: [], gender: [], brand: [] })}
-                        style={{
-                            backgroundColor: 'transparent',
-                            color: 'red',
-                            padding: '5px',
-                            fontSize: '35px',
-                            cursor: 'pointer',
-                            border: 'none',
-                        }}
-                    >
-                        ×
-                    </button>
-                )}
+                {Object.values(filters).some(filterArray => filterArray.length !== 0) && (
+    <button
+        onClick={() => setFilters({ size: [], type: [], color: [], gender: [], brand: [] })}
+        style={{
+            marginLeft: '16px',
+            backgroundColor: '#ff4d4d',
+            color: 'white',
+            padding: '8px 16px',
+            fontSize: '0.95rem',
+            fontWeight: 'bold',
+            border: 'none',
+            borderRadius: '12px',
+            cursor: 'pointer',
+            boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
+            transition: '0.3s ease',
+        }}
+        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e04343'}
+        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ff4d4d'}
+    >
+        Clear All
+    </button>
+)}
+                
             </div>
 
             {/* Product List */}
