@@ -1,13 +1,10 @@
 import { useParams } from "react-router";
 import { api, Backend } from "../api";
 import { Url } from "../constants";
-import { useEffect, useState } from "react";
-import { Autocomplete, TextField } from "@mui/material";
+import { useEffect, useState, useRef } from "react";
 import React from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from "../components/NavBar";
-import { useRef } from 'react';
-
 
 function ProductsTestPage() {
     const [products, setProducts] = useState([]);
@@ -27,7 +24,6 @@ function ProductsTestPage() {
                 setActiveCategory(null);
             }
         };
-        
         document.addEventListener('click', handleClickOutside);
         return () => {
             document.removeEventListener('click', handleClickOutside);
@@ -40,8 +36,6 @@ function ProductsTestPage() {
             return;
         }
 
-        console.log(_id ? `Getting product ID: ${_id}` : "Getting all products...");
-
         if (_id) {
             setProducts(await Backend.getClothingItem(_id));
             return;
@@ -51,76 +45,52 @@ function ProductsTestPage() {
     }
 
     const handleFilterChange = (category, newValues) => {
-        setFilters(prevFilters => ({ ...prevFilters, [category]: newValues }));
+        setFilters(prev => ({ ...prev, [category]: newValues }));
     };
 
     const filterMappings = {
-        size: { "Extra Small": 0, "Small": 1, "Medium": 2, "Large": 3, "Extra Large": 4 },
-        type: { "Shorts": 0, "Pants": 1, "T-Shirt": 2, "Dress": 3, "Shoes": 4, "Hat": 5, "Hoodie": 6, "Shirt": 7 },
+        size: { "XS": 0, "S": 1, "M": 2, "L": 3, "XL": 4, "XXL": 5, "3XL": 6 },
+        type: {
+            "Shorts": 0, "Pants": 1, "T-Shirt": 2, "Dress": 3,
+            "Shoes": 4, "Hat": 5, "Hoodie": 6, "Shirt": 7
+        },
         gender: { "Male": 0, "Female": 1, "Unisex": 2 }
     };
 
-    function getIcon(category, option) {
-        if (category === 'color') {
-            const colorMap = {
-                white: '⚪', black: '⚫', gray: '⬜', blue: '🔵',
-                red: '🔴', green: '🟢', pink: '🌸'
-            };
-            return colorMap[option.toLowerCase()] || '🎨';
-        }
-
-        if (category === 'gender') {
-            if (option === 'Male') return '👨';
-            if (option === 'Female') return '👩';
-            if (option === 'Unisex') return '🧑';
-        }
-
-        if (category === 'brand') return '👜';
-        if (category === 'type') return '👕';
-        if (category === 'size') return '📏';
-
-        return '🔹';
-    }
-
-    // Filtered product list for count and display
     const filteredProducts = products.filter(product => {
         return Object.entries(filters).every(([category, selectedValues]) => {
             if (selectedValues.length === 0) return true;
+
             return selectedValues.some(value => {
                 if (category in filterMappings) {
                     return filterMappings[category][value] === product[category];
                 }
-                return value === product[category];
+                return value.toLowerCase() === String(product[category]).toLowerCase();
             });
         });
     });
 
+    const filterOptions = {
+        size: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
+        type: ["Shorts", "Pants", "T-Shirt", "Dress", "Shoes", "Hat", "Hoodie", "Shirt"],
+        color: ["White", "Black", "Gray", "Blue", "Red", "Green", "Pink"],
+        gender: ["Male", "Female", "Unisex"],
+        brand: ["Nike", "Jordan", "Tommy Hilfiger", "Gucci"]
+    };
+
     return (
         <>
             <NavBar />
-            {/* Sticky and styled header */}
             <div style={{
                 position: 'sticky',
                 top: 0,
                 zIndex: 1000,
                 backgroundColor: '#0c002b',
                 padding: '40px 20px',
-                textAlign: 'center',
-                animation: 'fadeIn 1s ease-in-out',
+                textAlign: 'center'
             }}>
-                <h1 style={{
-                    fontSize: '3rem',
-                    fontWeight: 'bold',
-                    color: 'white',
-                    marginBottom: '10px',
-                }}>Products List</h1>
-
-                <p style={{
-                    fontSize: '1.2rem',
-                    color: '#ccc',
-                    marginBottom: '10px',
-                }}>Here are all the products tailored just for you. Filter, hover, explore.</p>
-
+                <h1 style={{ fontSize: '3rem', fontWeight: 'bold', color: 'white' }}>Products List</h1>
+                <p style={{ fontSize: '1.2rem', color: '#ccc' }}>Here are all the products tailored just for you.</p>
                 <p style={{
                     fontSize: '1rem',
                     color: '#9b59b6',
@@ -131,36 +101,29 @@ function ProductsTestPage() {
                 </p>
             </div>
 
-            {/* Category Dropdown Bar */}
-            <div className="category-bar" style={{ marginBottom: '20px', textAlign: 'center' }} ref = {dropdownRef}>
-                {Object.entries({
-                    size: ["Extra Small", "Small", "Medium", "Large", "Extra Large"],
-                    type: ["Shorts", "Pants", "T-Shirt", "Dress", "Shoes", "Hat", "Hoodie", "Shirt"],
-                    color: ["White", "Black", "Gray", "Blue", "Red", "Green", "Pink"],
-                    gender: ["Male", "Female", "Unisex"],
-                    brand: ["Nike", "Jordan", "Tommy Hilfiger", "Gucci"]
-                }).map(([category, options]) => (
+            <div className="category-bar" style={{ margin: '20px auto', textAlign: 'center' }} ref={dropdownRef}>
+                {Object.entries(filterOptions).map(([category, options]) => (
                     <div
                         key={category}
                         onClick={() => setActiveCategory(activeCategory === category ? null : category)}
-                        style={{ position: 'relative', display: 'inline-block', marginRight: '10px' }}
+                        style={{ position: 'relative', display: 'inline-block', marginRight: '12px' }}
                     >
                         <div style={{
                             backgroundColor: filters[category].length > 0 ? '#6c3483' : '#1a1a2e',
                             color: 'white',
                             padding: '12px 24px',
-                            borderRadius: '14px',
+                            borderRadius: '16px',
                             cursor: 'pointer',
                             fontWeight: 'bold',
                             fontSize: '1rem',
-                            boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.6)',
-                            transition: '0.3s',
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.4)',
+                            transition: '0.3s'
                         }}>
                             {category.toUpperCase()}
                         </div>
-                
+
                         {activeCategory === category && (
-                               <div style={{
+                            <div style={{
                                 position: 'absolute',
                                 top: '110%',
                                 left: 0,
@@ -175,11 +138,15 @@ function ProductsTestPage() {
                                 display: 'flex',
                                 flexWrap: 'wrap',
                                 gap: '12px',
-                                justifyContent: category === "size" ? 'center' : 'flex-start',
-                                transition: 'opacity 0.3s ease, transform 0.3s ease',
-                                transform: 'translateY(0)',
+                                justifyContent: category === "size" ? 'center' : 'flex-start'
                             }}>
-                                    {filters[category].length > 0 && (
+                                {filters[category].length > 0 && (
+                                    <div style={{
+                                        width: '100%',
+                                        display: 'flex',
+                                        justifyContent: 'flex-end',
+                                        marginBottom: '8px'
+                                    }}>
                                         <button
                                             onClick={(e) => {
                                                 e.stopPropagation();
@@ -194,13 +161,9 @@ function ProductsTestPage() {
                                                 fontWeight: 'bold',
                                                 transition: '0.3s'
                                             }}
-                                            title={`Clear ${category}`}
-                                        >
-                                            ×
-                                        </button>
-                                    )}
-                                
-                            
+                                        >×</button>
+                                    </div>
+                                )}
                                 {options.map(option => (
                                     <div
                                         key={option}
@@ -211,31 +174,23 @@ function ProductsTestPage() {
                                         style={{
                                             padding: category === "color" ? '0' : '10px 14px',
                                             borderRadius: category === "color" ? '50%' : '12px',
-                                            backgroundColor: category === "color" ? option.toLowerCase() : (filters[category].includes(option) ? '#6c3483' : '#2e2e40'),
+                                            backgroundColor: category === "color"
+                                                ? option.toLowerCase()
+                                                : (filters[category].includes(option) ? '#6c3483' : '#2e2e40'),
                                             color: category === "color" ? 'transparent' : 'white',
                                             textAlign: 'center',
                                             fontSize: '0.95rem',
                                             fontWeight: '500',
                                             cursor: 'pointer',
-                                            boxShadow: category === "color" ? 'inset 0 0 0 2px white' : '0 0 6px rgba(0,0,0,0.2)',
+                                            boxShadow: category === "color"
+                                                ? 'inset 0 0 0 2px white'
+                                                : '0 0 6px rgba(0,0,0,0.2)',
                                             height: category === "color" ? '36px' : 'auto',
                                             width: category === "color" ? '36px' : 'auto',
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
                                             transition: 'all 0.3s ease',
-                                        }}
-                                        onMouseEnter={(e) => {
-                                            if (category !== "color") {
-                                                e.currentTarget.style.backgroundColor = '#9b59b6';
-                                                e.currentTarget.style.transform = 'scale(1.03)';
-                                            }
-                                        }}
-                                        onMouseLeave={(e) => {
-                                            if (category !== "color") {
-                                                e.currentTarget.style.backgroundColor = filters[category].includes(option) ? '#6c3483' : '#2e2e40';
-                                                e.currentTarget.style.transform = 'scale(1)';
-                                            }
                                         }}
                                     >
                                         {category !== "color" && (
@@ -247,38 +202,40 @@ function ProductsTestPage() {
                         )}
                     </div>
                 ))}
-                {/* Button to clear all filters */}
-                {Object.values(filters).some(filterArray => filterArray.length !== 0) && (
-    <button
-        onClick={() => setFilters({ size: [], type: [], color: [], gender: [], brand: [] })}
-        style={{
-            marginLeft: '16px',
-            backgroundColor: '#ff4d4d',
-            color: 'white',
-            padding: '8px 16px',
-            fontSize: '0.95rem',
-            fontWeight: 'bold',
-            border: 'none',
-            borderRadius: '12px',
-            cursor: 'pointer',
-            boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
-            transition: '0.3s ease',
-        }}
-        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e04343'}
-        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ff4d4d'}
-    >
-        Clear All
-    </button>
-)}
-                
+
+                {Object.values(filters).some(arr => arr.length > 0) && (
+                    <button
+                        onClick={() => setFilters({ size: [], type: [], color: [], gender: [], brand: [] })}
+                        style={{
+                            marginLeft: '16px',
+                            backgroundColor: '#ff4d4d',
+                            color: 'white',
+                            padding: '8px 16px',
+                            fontSize: '0.95rem',
+                            fontWeight: 'bold',
+                            border: 'none',
+                            borderRadius: '12px',
+                            cursor: 'pointer',
+                            boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
+                            transition: '0.3s ease',
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e04343'}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ff4d4d'}
+                    >
+                        Clear All
+                    </button>
+                )}
             </div>
 
-            {/* Product List */}
             <div className="container" style={{
                 backgroundColor: 'white',
                 padding: '20px',
                 borderRadius: '12px',
-                marginTop: '20px'
+                marginTop: '20px',
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '20px',
+                justifyContent: 'center'
             }}>
                 {filteredProducts.length > 0 ? (
                     filteredProducts.map((product) => (
@@ -294,7 +251,7 @@ function ProductsTestPage() {
                                 boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
                                 cursor: 'pointer',
                                 transformOrigin: 'center',
-                                margin: '10px'
+                                width: '200px'
                             }}
                             onMouseEnter={(e) => {
                                 e.currentTarget.style.transform = 'scale(1.05)';
@@ -313,7 +270,7 @@ function ProductsTestPage() {
                         </div>
                     ))
                 ) : (
-                    <p>Product not found</p>
+                    <p>No products match the selected filters.</p>
                 )}
             </div>
         </>
