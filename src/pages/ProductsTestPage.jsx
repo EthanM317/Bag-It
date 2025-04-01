@@ -151,7 +151,7 @@ function ProductsTestPage() {
                     >
                         <div
                             style={{
-                                backgroundColor: '#1a1a2e',
+                                backgroundColor: filters[category].length > 0 ? '#6c3483' : '#1a1a2e',
                                 color: 'white',
                                 padding: '18px 28px',
                                 borderRadius: '14px',
@@ -195,6 +195,7 @@ function ProductsTestPage() {
                                             gap: '12px',
                                             transition: '0.3s',
                                             fontWeight: '500',
+                                            backgroundColor: filters[category].includes(option) > 0 ? '#9b59b6' : 'transparent',
                                         }}
                                         onMouseEnter={(e) => {
                                             e.currentTarget.style.backgroundColor = '#6c3483';
