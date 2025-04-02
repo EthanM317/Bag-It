@@ -10,7 +10,7 @@ import {
 	Typography,
 	useTheme,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
 
@@ -19,6 +19,7 @@ import TopBar from "../components/TopBar";
 import pearLogo from "../assets/pear_outline_white.svg";
 import { useNavigate } from "react-router";
 import { Url } from "../constants";
+import { Backend } from "../api";
 
 const StyledBox = styled(Box)(({ theme }) => ({
 	// alignSelf: "center",
@@ -41,16 +42,39 @@ function LandingPage() {
 	const navigate = useNavigate();
 	const test = [1, 2, 3];
 
+	const [loggedIn, setLoggedIn] = useState(false);
+
+	// Stupid way to use async function inside effect
+	useEffect(() => {
+		const effect = async () => {
+			await verifyUser();
+		};
+		effect();
+	}, []);
+
+	async function verifyUser() {
+		let temp = await Backend.verifyUser();
+		setLoggedIn(temp);
+
+		if (temp) {
+			console.log("User is logged in");
+		} else {
+			console.log("User is not logged in");
+		}
+	}
+
 	function getStartedPressed(e) {
-		navigate(Url.REGISTER);
+		if (!loggedIn) navigate(Url.REGISTER);
+		else navigate(Url.PROFILE);
 	}
 
 	function loginPressed(e) {
-		navigate(Url.LOGIN);
+		if (!loggedIn) navigate(Url.LOGIN);
+		else navigate(Url.PROFILE);
 	}
 
 	function seeAllPressed(e) {
-		navigate(Url.FEED)
+		navigate(Url.FEED);
 	}
 
 	return (
@@ -201,10 +225,17 @@ function LandingPage() {
 						>
 							The hottest items today
 						</Typography>
-						<Button onClick={seeAllPressed} variant="contained" color="secondary" sx={{
-							// padding: 2,
-							marginLeft: "10px"
-						}}>See All</Button>
+						<Button
+							onClick={seeAllPressed}
+							variant="contained"
+							color="secondary"
+							sx={{
+								// padding: 2,
+								marginLeft: "10px",
+							}}
+						>
+							See All
+						</Button>
 					</Box>
 				</Box>
 
