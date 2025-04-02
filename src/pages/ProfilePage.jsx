@@ -3,13 +3,16 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import {
 	Autocomplete,
+	Box,
 	Button,
 	Container,
 	Dialog,
+	DialogActions,
 	DialogContent,
 	DialogContentText,
 	DialogTitle,
 	TextField,
+	Typography,
 } from "@mui/material";
 
 import { api } from "../api";
@@ -182,7 +185,7 @@ function ProfilePage() {
 	}
 
 	return (
-		<Container sx={{marginTop: "120px"}}>
+		<Container sx={{ marginTop: "120px" }}>
 			{/* <NavBar /> */}
 			<TopBar />
 			<div className="main-container">
@@ -235,13 +238,30 @@ function ProfilePage() {
 										Are you sure you want to delete this
 										bag?
 									</DialogContentText>
-									<Button onClick={deleteBag}>
-										Delete it
-									</Button>
-									<Button onClick={closeDeleteDialog}>
+									<DialogContentText sx={{fontSize: 13, marginTop: "10px"}}>
+										It will be gone forever...
+									</DialogContentText>
+
+									{/* <Box sx={{
+										marginTop: "10px"
+									}}>
+									</Box> */}
+								</DialogContent>
+								<DialogActions>
+									<Button
+										variant="outlined"
+										onClick={closeDeleteDialog}
+									>
 										Cancel
 									</Button>
-								</DialogContent>
+									<Button
+										variant="contained"
+										color="secondary"
+										onClick={deleteBag}
+									>
+										Delete it
+									</Button>
+								</DialogActions>
 							</Dialog>
 						)}
 					</div>

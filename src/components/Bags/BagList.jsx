@@ -49,11 +49,8 @@ function BagList({ bags, isAuthenticated, openDeleteDialog }) {
 						primary={bag.title}
 						secondary={bag.description}
 					/>
-					{/* <Button onClick={() => deleteBag(bag.id)}>
-								Delete
-							</Button> */}
 					{isAuthenticated && (
-						<Button onClick={(e) => openDeleteDialog(e, bag.id)}>
+						<Button variant="text" color="secondary" onClick={(e) => openDeleteDialog(e, bag.id)}>
 							Delete
 						</Button>
 					)}
