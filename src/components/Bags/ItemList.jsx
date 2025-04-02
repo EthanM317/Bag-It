@@ -9,7 +9,7 @@ import {
 	ListItemText,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { api } from "../../api";
+import { api, Backend } from "../../api";
 import { Url } from "../../constants";
 
 // List of items used in the bag edit page
@@ -22,37 +22,38 @@ function ItemList({ items, deleteItem }) {
 	}, [items]);
 
 	async function getClothingItems() {
-		// Horrible way of doing this
-		let temp = [];
+		// Exit if there's nothing to search for
+		if (items.length <= 0)
+			return;
 
 		try {
+			// Get list of clothing ids to send to the backend
+			let ids = [];
 			for (let i = 0; i < items.length; i++) {
-				let item = items[i];
-				const res = await api.get(
-					Url.BACKEND_CLOTHING + "?itemId=" + item.clothingItem
-				);
-
-				let addItem = res.data[0];
-				temp.push(addItem);
+				ids.push(items[i].clothingItem);
 			}
-		} catch (error) {
+
+			// Get clothing items from backend
+			let tempItems = await Backend.getClothingItems(ids);
+			setActualItems(tempItems);
+		}
+		catch (error) {
 			alert(error);
 		}
-
-		setActualItems(temp);
 	}
 
 	function createListItems() {
 		// Prevent crashes
-		if (items.length != actualItems.length)
+		if (items.length != actualItems.length) {
 			return;
+		}
 
 		let result = [];
 
 		for (let i = 0; i < actualItems.length; i++) {
 			let actualItem = actualItems[i];
 			let item = items[i];
-
+			
 			result.push(
 				<ListItem>
 					<ListItemAvatar>

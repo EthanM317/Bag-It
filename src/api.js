@@ -174,6 +174,7 @@ export class Backend {
 
 	/**
 	 * Get a list of all clothing items from the database
+	 * @returns List of ClothingItem objects
 	 */
 	static async getAllClothingItems() {
 		const res = await this.#request(GET, Url.BACKEND_CLOTHING);
@@ -182,7 +183,8 @@ export class Backend {
 
 	/**
 	 * Get single clothing item from id
-	 * @param id The id of the clothing item you want to fetch
+	 * @param id The id of the clothing item you want to fetch (can be a list to query multiple)
+	 * @returns A ClothingItem object
 	 */
 	static async getClothingItem(id) {
 		const url = Url.BACKEND_CLOTHING + "?itemId=" + id;
@@ -190,6 +192,39 @@ export class Backend {
 		return res.data;
 	}
 
-	// TODO: Get a list of clothing items from a list of ids
+	/**
+	 * Get a list of clothing items from a list of IDs
+	 * @param idList A list of clothing item IDs
+	 * @returns List of ClothingItem objects
+	 */
+	static async getClothingItems(idList) {
+		let requestData = { id: idList };
+
+		const res = await this.#request(
+			POST,
+			Url.BACKEND_CLOTHING_LIST,
+			requestData
+		);
+		let responseData = res.data;
+
+		// Backend Url
+		let backendUrl = import.meta.env.VITE_API_URL + "/media/";
+
+		// We only get unique items back from the server (no duplicates)
+		// Make sure everything it returned in the same order
+		let returnItems = [];
+		for (let i = 0; i < idList.length; i++) {
+			let id = idList[i];
+
+			// For some reason, the backend URL isn't included in the image URL...
+			// A bad fix, but will have to do for now
+			if (!responseData[id].image.startsWith(backendUrl))
+				responseData[id].image = backendUrl + responseData[id].image;
+
+			returnItems.push(responseData[id]);
+		}
+		return returnItems;
+	}
+
 	// TODO: Some kind of fuzzy search through clothing items by name?
 }
