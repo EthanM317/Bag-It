@@ -111,8 +111,19 @@ function AddBagDialog({ bags, setBags }) {
 					/>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={submitDialog} loading={isAdding}>
-						OK
+					<Button
+						onClick={closeDialog}
+						variant="outlined"
+						loading={isAdding}
+					>
+						Cancel
+					</Button>
+					<Button
+						onClick={submitDialog}
+						variant="contained"
+						loading={isAdding}
+					>
+						Create Bag
 					</Button>
 				</DialogActions>
 			</Dialog>
