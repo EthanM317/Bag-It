@@ -465,6 +465,25 @@ const scrollText = keyframes`
 										<br />
 										<br />
 										Enjoy the sights! Enjoy the sounds!
+
+<Grid2 container spacing={4} marginTop={4}>
+  {[
+	{ icon: "💡", title: "Innovative Tech", desc: "Smart fits powered by smart design." },
+	{ icon: "🛍️", title: "Curated Styles", desc: "Hand-picked looks updated daily." },
+	{ icon: "🚀", title: "Fast Delivery", desc: "From screen to street in record time." },
+	{ icon: "🌐", title: "Global Reach", desc: "We deliver style across borders." },
+  ].map((feature, i) => (
+	<Grid2 item xs={12} md={3} key={i}>
+	  <Box textAlign="center">
+		<Typography fontSize="40px">{feature.icon}</Typography>
+		<Typography variant="h6" fontWeight="bold" mt={1}>{feature.title}</Typography>
+		<Typography variant="body2" color="gray">{feature.desc}</Typography>
+	  </Box>
+	</Grid2>
+  ))}
+</Grid2>
+
+
 										<br />
 										<br />
 										<br />
