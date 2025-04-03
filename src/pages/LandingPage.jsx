@@ -292,6 +292,12 @@ function LandingPage() {
 						</Box>
 					</Box>
 
+					{!items && (
+						<Box marginBottom="500px">
+							<Typography>ok</Typography>
+						</Box>
+					)}
+
 					{items.length > 0 && (
 						<Grid2
 							container
@@ -299,7 +305,7 @@ function LandingPage() {
 							padding={2}
 							marginTop={2}
 							sx={{
-								animation: "fadeIn 1.1s ease-in-out",
+								animation: "fadeIn 0.7s ease-in-out",
 							}}
 						>
 							{items.map((item) => (
@@ -361,186 +367,197 @@ function LandingPage() {
 												{/* {item.description || "No description available."} */}
 											</Typography>
 										</CardContent>
-											<Box
+										<Box
+											sx={{
+												display: "flex",
+												justifyContent: "flex-end",
+												marginRight: "20px",
+												marginBottom: "20px",
+												marginTop: "-20px",
+											}}
+										>
+											<Button
+												variant="outlined"
 												sx={{
-													display: "flex",
-													justifyContent: "flex-end",
-													marginRight: "20px",
-													marginBottom: "20px",
-													marginTop: "-20px"
+													// justifyContent: "flex-end",
+													marginTop: 2,
 												}}
 											>
-												<Button
-													variant="outlined"
-													sx={{
-														// justifyContent: "flex-end",
-														marginTop: 2,
-													}}
+												<Link
+													to="/item"
+													state={{ ...item }}
 												>
-													<Link
-														to="/item"
-														state={{ ...item }}
-													>
-														<span className="productPageLink"></span>
-													</Link>
-													See more
-												</Button>
-											</Box>
+													<span className="productPageLink"></span>
+												</Link>
+												See more
+											</Button>
+										</Box>
 									</Card>
 								</Grid2>
 							))}
+
+							<Container
+								maxWidth="lg"
+								sx={{
+									animation: "fadeIn 0.4s ease-in-out",
+								}}
+							>
+								<Box
+									sx={{
+										marginTop: 7,
+									}}
+								>
+									<Box display="flex">
+										<Box
+											component="img"
+											src={pearLogo}
+											alt="Pear Logo"
+											sx={{
+												width: "50px",
+												marginRight: "15px",
+												marginTop: "-30px",
+												filter: "drop-shadow(0 0 10px rgb(68, 55, 255))",
+											}}
+										/>
+										<Typography
+											variant="h4"
+											fontWeight="bold"
+											marginBottom={3}
+										>
+											About Us
+										</Typography>
+									</Box>
+
+									<Typography
+										fontWeight="bold"
+										display="flex"
+										variant="h5"
+									>
+										We are Peartech™!
+									</Typography>
+									<Typography>
+										Our company aims to give users an
+										experience they shall never forget...
+										<br />
+										We hope that you continue to shop with
+										us!
+										<br />
+										<br />
+										Enjoy the sights! Enjoy the sounds!
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										We sincerely hope that you continue to
+										shop with us.
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										We truly hope that you never cease
+										shopping with us.
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<Typography
+											component="span"
+											color="secondary"
+											fontWeight="bold"
+										>
+											Please do not try to stop shopping
+											with us.
+										</Typography>
+									</Typography>
+								</Box>
+							</Container>
 						</Grid2>
 					)}
-				</Container>
+					{(!items || items.length <= 0) &&
+						<Box marginBottom="3000px">
 
-				<Container
-					maxWidth="lg"
-					sx={{
-						animation: "fadeIn 1.1s ease-in-out",
-					}}
-				>
-					<Box
-						sx={{
-							marginTop: 7,
-						}}
-					>
-						<Box display="flex">
-							<Box
-								component="img"
-								src={pearLogo}
-								alt="Pear Logo"
-								sx={{
-									width: "50px",
-									marginRight: "15px",
-									marginTop: "-30px",
-									filter: "drop-shadow(0 0 10px rgb(68, 55, 255))",
-								}}
-							/>
-							<Typography
-								variant="h4"
-								fontWeight="bold"
-								marginBottom={3}
-							>
-								About Us
-							</Typography>
 						</Box>
 
-						<Typography
-							fontWeight="bold"
-							display="flex"
-							variant="h5"
-						>
-							We are Peartech™!
-						</Typography>
-						<Typography>
-							Our company aims to give users an experience they
-							shall never forget...
-							<br />
-							We hope that you continue to shop with us!
-							<br />
-							<br />
-							Enjoy the sights! Enjoy the sounds!
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							We sincerely hope that you continue to shop with us.
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							We truly hope that you never cease shopping with us.
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<Typography
-								component="span"
-								color="secondary"
-								fontWeight="bold"
-							>
-								Please do not try to stop shopping with us.
-							</Typography>
-						</Typography>
-					</Box>
+					}
 				</Container>
+
 				<Box marginTop="200px"></Box>
 			</Box>
 			<Footer />

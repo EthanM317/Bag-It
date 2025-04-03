@@ -9,11 +9,11 @@ import theme from "./theme.js";
 // create the "App" component on the page
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-	<React.StrictMode>
+	// <React.StrictMode>
 		<ThemeProvider theme={theme}>
 			<CssBaseline>
 				<App />
 			</CssBaseline>
 		</ThemeProvider>
-	</React.StrictMode>
+	// </React.StrictMode>
 );
