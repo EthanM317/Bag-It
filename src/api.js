@@ -147,10 +147,10 @@ export class Backend {
 	 */
 	static async getCurrentUser() {
 		const res = await this.#request(GET, Url.BACKEND_CURRENT_USER);
-		if (res == null)
+		if (res == null || res.data[0] == null)
 			return null;
 
-		return res.data;
+		return res.data[0];
 	}
 
 
@@ -183,6 +183,22 @@ export class Backend {
 		localStorage.setItem(ACCESS_TOKEN, res.data.access);
 		localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
 	}
+
+	// -- Bags --
+	/**
+	 * Get a list of the user's bags
+	 * @param {*} userId The user's id
+	 */
+	static async getUsersBags(userId) {
+		const res = await this.#request(GET, Url.BACKEND_BAG + "?userId=" + userId);
+		if (res == null && res.data == null)
+			return null;
+	
+		return res.data;
+	}
+
+
+
 
 	// -- Clothing --
 

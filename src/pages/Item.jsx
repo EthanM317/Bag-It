@@ -10,14 +10,61 @@ import {
 	DialogActions,
 	Box,
 	Container,
+	List,
+	ListSubheader,
+	ListItemButton,
+	ListItemAvatar,
+	Avatar,
+	ListItemText,
 } from "@mui/material";
 import TopBar from "../components/TopBar";
 import TopContainer from "../components/TopContainer";
 import { Backend } from "../api";
 
+function ExistingBagList({bags}) {
+	return (
+		<List
+			sx={{
+				width: "100%",
+				maxWidth: 360,
+				bgcolor: "background.paper",
+			}}
+			component="nav"
+			// aria-labelledby="nested-list-subheader"
+			subheader={
+				<ListSubheader component="div" id="nested-list-subheader">
+					Bags
+				</ListSubheader>
+			}
+		>
+			{bags.map((bag) => (
+				<ListItemButton onClick={(e) => clickBag(e, bag.id)}>
+					<ListItemAvatar>
+						<Avatar>
+							<ShoppingBagOutlinedIcon />
+						</Avatar>
+					</ListItemAvatar>
+					<ListItemText
+						primary={bag.title}
+						secondary={bag.description}
+					/>
+					<Button
+						variant="text"
+						color="secondary"
+						onClick={(e) => openDeleteDialog(e, bag.id)}
+					>
+						Delete
+					</Button>
+				</ListItemButton>
+			))}
+		</List>
+	);
+}
+
 export default function Item() {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [loading, setLoading] = useState(true);
+	const [bags, setBags] = useState([]);
 
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -33,8 +80,22 @@ export default function Item() {
 
 	useEffect(() => {
 		const effect = async () => {
-			let temp = await Backend.verifyUser();
-			setLoggedIn(temp);
+			// See if user is logged in
+			let user = await Backend.getCurrentUser();
+
+			if (user == null)
+			{
+				setLoggedIn(false);
+				return;
+			}
+			setLoggedIn(true);
+
+			// If so, get bags
+			let tempBags = [];
+			tempBags = await Backend.getUsersBags(user.id);
+
+			setBags(tempBags);
+			console.log(tempBags);
 		};
 		effect();
 	}, []);
