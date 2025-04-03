@@ -68,7 +68,7 @@ function LandingPage() {
 			while (fetchedItems.length < 3 && attempts < maxAttempts) {
 				const randomId = Math.floor(Math.random() * 100) + 1; // Adjust range as needed
 				attempts++;
-				console.log("trying..." + randomId);
+				// console.log("trying..." + randomId);
 
 				try {
 					// Fetch product using Backend API
@@ -80,8 +80,8 @@ function LandingPage() {
 					// if (item && !fetchedItems.some((fetchedItem) => fetchedItem.id === item.id)) {
 					if (item && !fetchedItems.includes(item)) {
 						fetchedItems.push(item);
-						console.log(fetchedItems);
-						console.log("Got an item!");
+						// console.log(fetchedItems);
+						// console.log("Got an item!");
 					}
 				} catch (err) {
 					console.warn(`Item with ID ${randomId} not found.`);

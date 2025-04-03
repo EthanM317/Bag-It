@@ -39,12 +39,19 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
  */
 function TopBar() {
 	const [loggedIn, setLoggedIn] = useState(false);
-	
+	const [userName, setUserName] = useState("");
+
 	// Stupid way to use async function inside effect
 	useEffect(() => {
 		const effect = async () => {
-			let temp = await Backend.verifyUser();
-			setLoggedIn(temp);
+			// let temp = await Backend.verifyUser();
+			// setLoggedIn(temp);
+
+			let user = await Backend.getCurrentUser();
+			if (user != null) setLoggedIn(true);
+			else setLoggedIn(false);
+
+			setUserName(user.username);
 		};
 		effect();
 	}, []);
@@ -52,7 +59,6 @@ function TopBar() {
 	const navigate = useNavigate();
 
 	const [anchorEl, setAnchorEl] = useState(null);
-
 
 	function homeClicked(e) {
 		navigate(Url.HOME);
@@ -71,9 +77,9 @@ function TopBar() {
 	}
 
 	function profilePressed() {
-			navigate(Url.PROFILE);
-			handleProfileClose();
-		}
+		navigate(Url.PROFILE);
+		handleProfileClose();
+	}
 
 	return (
 		<AppBar
@@ -151,6 +157,14 @@ function TopBar() {
 								onClick={handleProfileMenu}
 								color="inherit"
 							>
+								<Typography
+									sx={{
+										fontWeight: "bold",
+										marginRight: "10px"
+									}}
+								>
+									{userName}
+								</Typography>
 								<AccountCircleIcon />
 							</IconButton>
 							<Menu
@@ -168,7 +182,7 @@ function TopBar() {
 								open={Boolean(anchorEl)}
 								onClose={handleProfileClose}
 								sx={{
-									marginTop:"30px"
+									marginTop: "40px",
 								}}
 							>
 								<MenuItem onClick={profilePressed}>
