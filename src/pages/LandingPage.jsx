@@ -340,9 +340,8 @@ function LandingPage() {
 											</Typography>
 											<Grid2
 												container
-												justifyItems="center"
-												alignContent="center"
-												alignItems="center"
+												alignItems="flex-start"
+												sx={{marginTop: "10px"}}
 											>
 												<Grid2 item>
 													<Box
