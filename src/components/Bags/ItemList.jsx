@@ -88,6 +88,7 @@ function ItemList({ items, deleteItem }) {
 				sx={{
 					width: "100%",
 					maxWidth: 500,
+					bgcolor: "background.paper",
 				}}
 				component="nav"
 				subheader={

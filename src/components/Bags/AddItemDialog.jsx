@@ -53,7 +53,7 @@ function AddItemDialog({ productItems, addItem }) {
 				// TODO: Figure out what this two things are
 				// aria-labelledby="alert-dialog-title"
 				// aria-describedby="alert-dialog-description"
-			>
+							>
 				<DialogTitle id="alert-dialog-title">
 					Item selection
 				</DialogTitle>
@@ -66,7 +66,7 @@ function AddItemDialog({ productItems, addItem }) {
 						sx={{
 							width: "100%",
 							maxWidth: 600,
-							bgcolor: "background.paper",
+							// bgcolor: "background.paper",
 						}}
 						component="nav"
 						// aria-labelledby="nested-list-subheader"
@@ -85,7 +85,9 @@ function AddItemDialog({ productItems, addItem }) {
 							>
 								<ListItemAvatar>
 
-            		            <img width={64} height={64} src={item.image} alt={item.name} />
+								<Box sx={{marginRight: "10px"}}>
+            		            	<img width={64} height={64} src={item.image} alt={item.name} />
+								</Box>
 
 								</ListItemAvatar>
 								<ListItemText
@@ -106,7 +108,7 @@ function AddItemDialog({ productItems, addItem }) {
 					</List>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={submitDialog}>Back</Button>
+					<Button variant="contained" onClick={submitDialog}>Back</Button>
 				</DialogActions>
 			</Dialog>
 		</Box>

@@ -18,12 +18,29 @@ const theme = createTheme({
 			main: red.A400,
 		},
 		background: {
-			default: "#080029ff",
+			default: "#080029",
+			paper: "#1b1d3d",
 		},
 		text: {
 			default: "#d5d6dfff",
 			// default: "#b8b9c2",
-		}
+		},
+	},
+	components: {
+		MuiDialog: {
+			styleOverrides: {
+				paper: {
+					backgroundColor: "#080029",
+				},
+			},
+		},
+		MuiPaper: {
+			styleOverrides: {
+			  root: {
+				backgroundColor: "#080029",
+			  },
+			},
+		  },
 	},
 });
 
