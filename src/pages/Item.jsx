@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../styles/Item.css";
 import TopPanelBar from "../components/TopPanelBar";
 import {
@@ -13,8 +13,11 @@ import {
 } from "@mui/material";
 import TopBar from "../components/TopBar";
 import TopContainer from "../components/TopContainer";
+import { Backend } from "../api";
 
 export default function Item() {
+	const [loggedIn, setLoggedIn] = useState(false);
+
 	const location = useLocation();
 	const navigate = useNavigate();
 	const product = location.state;
@@ -26,6 +29,14 @@ export default function Item() {
 		navigate("/products");
 		return null;
 	}
+
+	useEffect(() => {
+		const effect = async () => {
+			let temp = await Backend.verifyUser();
+			setLoggedIn(temp);
+		};
+		effect();
+	}, []);
 
 	return (
 		<Box>
@@ -91,87 +102,97 @@ export default function Item() {
 							</h2>
 						</div>
 
-						<div className="addButtons">
-							<div className="existing">
-								<Button
-									className="addToExistingButton"
-									variant="contained"
-									onClick={() => setOpenExistingDialog(true)}
-								>
-									Add Me to Existing Bag!
-								</Button>
+						{loggedIn && (
+							<div className="addButtons">
+								<div className="existing">
+									<Button
+										className="addToExistingButton"
+										variant="contained"
+										onClick={() =>
+											setOpenExistingDialog(true)
+										}
+									>
+										Add Me to Existing Bag!
+									</Button>
 
-								<Dialog
-									open={openExistingDialog}
-									onClose={() => setOpenExistingDialog(false)}
-								>
-									<DialogTitle>Select a Bag</DialogTitle>
-									<DialogContent>
-										<p>
-											Here you can select an existing bag
-											to add this product to.
-										</p>
-									</DialogContent>
-									<DialogActions>
-										<Button
-											onClick={() =>
-												setOpenExistingDialog(false)
-											}
-										>
-											Cancel
-										</Button>
-										<Button
-											onClick={() => {
-												setOpenExistingDialog(false);
-											}}
-											variant="contained"
-										>
-											Confirm
-										</Button>
-									</DialogActions>
-								</Dialog>
+									<Dialog
+										open={openExistingDialog}
+										onClose={() =>
+											setOpenExistingDialog(false)
+										}
+									>
+										<DialogTitle>Select a Bag</DialogTitle>
+										<DialogContent>
+											<p>
+												Here you can select an existing
+												bag to add this product to.
+											</p>
+										</DialogContent>
+										<DialogActions>
+											<Button
+												onClick={() =>
+													setOpenExistingDialog(false)
+												}
+											>
+												Cancel
+											</Button>
+											<Button
+												onClick={() => {
+													setOpenExistingDialog(
+														false
+													);
+												}}
+												variant="contained"
+											>
+												Confirm
+											</Button>
+										</DialogActions>
+									</Dialog>
+								</div>
+
+								<div className="new">
+									<Button
+										className="addToNewButton"
+										variant="contained"
+										onClick={() => setOpenNewDialog(true)}
+									>
+										Add Me to New Bag!
+									</Button>
+
+									<Dialog
+										open={openNewDialog}
+										onClose={() => setOpenNewDialog(false)}
+									>
+										<DialogTitle>
+											Create a New Bag
+										</DialogTitle>
+										<DialogContent>
+											<p>
+												Here you can create a new bag to
+												add this product to.
+											</p>
+										</DialogContent>
+										<DialogActions>
+											<Button
+												onClick={() =>
+													setOpenNewDialog(false)
+												}
+											>
+												Cancel
+											</Button>
+											<Button
+												onClick={() => {
+													setOpenNewDialog(false);
+												}}
+												variant="contained"
+											>
+												Confirm
+											</Button>
+										</DialogActions>
+									</Dialog>
+								</div>
 							</div>
-
-							<div className="new">
-								<Button
-									className="addToNewButton"
-									variant="contained"
-									onClick={() => setOpenNewDialog(true)}
-								>
-									Add Me to New Bag!
-								</Button>
-
-								<Dialog
-									open={openNewDialog}
-									onClose={() => setOpenNewDialog(false)}
-								>
-									<DialogTitle>Create a New Bag</DialogTitle>
-									<DialogContent>
-										<p>
-											Here you can create a new bag to add
-											this product to.
-										</p>
-									</DialogContent>
-									<DialogActions>
-										<Button
-											onClick={() =>
-												setOpenNewDialog(false)
-											}
-										>
-											Cancel
-										</Button>
-										<Button
-											onClick={() => {
-												setOpenNewDialog(false);
-											}}
-											variant="contained"
-										>
-											Confirm
-										</Button>
-									</DialogActions>
-								</Dialog>
-							</div>
-						</div>
+						)}
 					</div>
 				</Container>
 			</TopContainer>

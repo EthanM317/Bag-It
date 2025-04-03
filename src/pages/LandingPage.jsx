@@ -45,22 +45,12 @@ function LandingPage() {
 	// Stupid way to use async function inside effect
 	useEffect(() => {
 		const effect = async () => {
-			await verifyUser();
+			let temp = await Backend.verifyUser();
+			setLoggedIn(temp);
 		};
 		effect();
+
 	}, []);
-
-	async function verifyUser() {
-		let temp = await Backend.verifyUser();
-		setLoggedIn(temp);
-
-		if (temp) {
-			console.log("User is logged in");
-		} else {
-			console.log("User is not logged in");
-		}
-	}
-
 	function getStartedPressed(e) {
 		if (!loggedIn) navigate(Url.REGISTER);
 		else navigate(Url.PROFILE);
