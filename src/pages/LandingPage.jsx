@@ -55,7 +55,7 @@ function LandingPage() {
 
 	const getItems = async () => {
 		try {
-			const fetchedItems = [];
+			let fetchedItems = [];
 			const maxAttempts = 50; // Limit attempts to avoid infinite loops
 			let attempts = 0;
 			console.log("trying to load items")
@@ -66,12 +66,16 @@ function LandingPage() {
 	
 				try {
 					// Fetch product using Backend API
-					const response = await Backend.getClothingItem(randomId);
-					const item = response.data || response; // Ensure correct data structure
+					const item = await Backend.getClothingItem(randomId);
+
+					if (item == null)
+						continue;
 	
 					// Ensure no duplicate items are added
-					if (item && !fetchedItems.some((fetchedItem) => fetchedItem.id === item.id)) {
+					// if (item && !fetchedItems.some((fetchedItem) => fetchedItem.id === item.id)) {
+					if (item && !fetchedItems.includes(item)) {
 						fetchedItems.push(item);
+						console.log(fetchedItems);
 						console.log("Got an item!")
 					}
 				} catch (err) {
