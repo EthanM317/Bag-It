@@ -64,6 +64,8 @@ function Form({ route, register }) {
 		// TODO: Figure out what this means
 		e.preventDefault();
 
+		setLoading(true);
+
 		try {
 			// Make post request
 			let res = await api.post(route, { username, password });
@@ -83,6 +85,8 @@ function Form({ route, register }) {
 			alert(error);
 		} finally {
 		}
+
+		setLoading(false);
 	}
 
 	return (
@@ -120,6 +124,7 @@ function Form({ route, register }) {
 					className="form-button"
 					variant="contained"
 					onClick={handleSubmit}
+					loading={loading}
 				>
 					{formTitle}
 				</Button>
