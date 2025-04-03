@@ -17,6 +17,7 @@ import { Backend } from "../api";
 
 export default function Item() {
 	const [loggedIn, setLoggedIn] = useState(false);
+	const [loading, setLoading] = useState(true);
 
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -37,6 +38,29 @@ export default function Item() {
 		};
 		effect();
 	}, []);
+
+	function openDialog() {
+		// console.log("Opened");
+		setLoading(false);
+	}
+
+	function addExistingBagPressed(e) {
+		openDialog();
+		setOpenExistingDialog(true);
+	}
+
+	function confirmExistingBagPressed(e) {
+		setOpenExistingDialog(false);
+	}
+
+	function addNewBagPressed(e) {
+		openDialog();
+		setOpenNewDialog(true);
+	}
+
+	function confirmNewBagPressed(e) {
+		setOpenNewDialog(false);
+	}
 
 	return (
 		<Box>
@@ -108,9 +132,7 @@ export default function Item() {
 									<Button
 										className="addToExistingButton"
 										variant="contained"
-										onClick={() =>
-											setOpenExistingDialog(true)
-										}
+										onClick={addExistingBagPressed}
 									>
 										Add Me to Existing Bag!
 									</Button>
@@ -130,6 +152,7 @@ export default function Item() {
 										</DialogContent>
 										<DialogActions>
 											<Button
+												loading={loading}
 												onClick={() =>
 													setOpenExistingDialog(false)
 												}
@@ -137,11 +160,10 @@ export default function Item() {
 												Cancel
 											</Button>
 											<Button
-												onClick={() => {
-													setOpenExistingDialog(
-														false
-													);
-												}}
+												loading={loading}
+												onClick={
+													confirmExistingBagPressed
+												}
 												variant="contained"
 											>
 												Confirm
@@ -154,14 +176,16 @@ export default function Item() {
 									<Button
 										className="addToNewButton"
 										variant="contained"
-										onClick={() => setOpenNewDialog(true)}
+										onClick={addNewBagPressed}
 									>
 										Add Me to New Bag!
 									</Button>
 
 									<Dialog
 										open={openNewDialog}
-										onClose={() => setOpenNewDialog(false)}
+										onClose={() => {
+											setOpenNewDialog(false);
+										}}
 									>
 										<DialogTitle>
 											Create a New Bag
@@ -174,16 +198,16 @@ export default function Item() {
 										</DialogContent>
 										<DialogActions>
 											<Button
-												onClick={() =>
-													setOpenNewDialog(false)
-												}
+												loading={loading}
+												onClick={() => {
+													setOpenNewDialog(false);
+												}}
 											>
 												Cancel
 											</Button>
 											<Button
-												onClick={() => {
-													setOpenNewDialog(false);
-												}}
+												loading={loading}
+												onClick={confirmNewBagPressed}
 												variant="contained"
 											>
 												Confirm

@@ -147,7 +147,6 @@ export class Backend {
 	 */
 	static async getCurrentUser() {
 		const res = await this.#request(GET, Url.BACKEND_CURRENT_USER);
-
 		if (res == null)
 			return null;
 
