@@ -22,6 +22,8 @@ import AddBagDialog from "../components/Bags/AddBagDialog";
 import TopPanelBar from "../components/TopPanelBar";
 import NavBar from "../components/NavBar";
 import TopBar from "../components/TopBar";
+import TopContainer from "../components/TopContainer";
+import Footer from "../components/Footer";
 
 // Page displaying the user's username and bags
 
@@ -185,86 +187,103 @@ function ProfilePage() {
 	}
 
 	return (
-		<Container sx={{ marginTop: "120px" }}>
-			{/* <NavBar /> */}
-			<TopBar />
-			<div className="main-container">
-				{/* <TopPanelBar /> */}
-				{userNotFound && <h2>Error: User not found</h2>}
+		<Box>
+			<TopContainer>
+				<Container sx={{ marginTop: "120px" }}>
+					{/* <NavBar /> */}
+					<TopBar />
+					<div className="main-container">
+						{/* <TopPanelBar /> */}
+						{userNotFound && <h2>Error: User not found</h2>}
 
-				{!isLoading && !userNotFound && (
-					<div>
-						{/* <Button variant="contained" onClick={logoutClicked}>
-						Logout
-					</Button> */}
-
-						<h1>{username}'s Profile Page</h1>
-						<h2>{username}'s Bags</h2>
-
-						{/* Add Bag button and dialog */}
-						{isAuthenticated && (
-							<AddBagDialog bags={bags} setBags={setBags} />
-						)}
-
-						{/* Search bar for bag list */}
-						<br />
-						<br />
-						<Autocomplete
-							// Use all the bag titles as keywords in the autocomplete search
-							options={bags.map((bag) => {
-								return bag.title;
-							})}
-							sx={{ width: 300 }}
-							renderInput={(params) => (
-								<TextField {...params} label="Bag" />
-							)}
-						/>
-
-						{/* Bag list */}
-						<BagList
-							bags={bags}
-							isAuthenticated={isAuthenticated}
-							openDeleteDialog={openDeleteDialog}
-						/>
-
-						{isAuthenticated && (
-							<Dialog
-								open={delDialogOpen}
-								onClose={closeDeleteDialog}
+						{!isLoading && !userNotFound && (
+							<Box
+								sx={{
+									animation: "fadeIn 0.4s ease-in-out",
+								}}
 							>
-								<DialogTitle>Delete Bag</DialogTitle>
-								<DialogContent>
-									<DialogContentText>
-										Are you sure you want to delete this
-										bag?
-									</DialogContentText>
-									<DialogContentText
-										sx={{ fontSize: 13, marginTop: "10px" }}
+								{/* <Button variant="contained" onClick={logoutClicked}>
+							Logout
+						</Button> */}
+
+								<h1>{username}'s Profile</h1>
+								<h2>{username}'s Bags</h2>
+
+								{/* Add Bag button and dialog */}
+								{isAuthenticated && (
+									<AddBagDialog
+										bags={bags}
+										setBags={setBags}
+									/>
+								)}
+
+								{/* Search bar for bag list */}
+								<br />
+								<br />
+								{/* <Autocomplete
+									// Use all the bag titles as keywords in the autocomplete search
+									options={bags.map((bag) => {
+										return bag.title;
+									})}
+									sx={{ width: 300 }}
+									renderInput={(params) => (
+										<TextField {...params} label="Bag" />
+									)}
+								/> */}
+
+								{/* Bag list */}
+								<BagList
+									bags={bags}
+									isAuthenticated={isAuthenticated}
+									openDeleteDialog={openDeleteDialog}
+								/>
+
+								{isAuthenticated && (
+									<Dialog
+										open={delDialogOpen}
+										onClose={closeDeleteDialog}
 									>
-										It will be gone forever...
-									</DialogContentText>
-								</DialogContent>
-								<DialogActions>
-									<Button
-										variant="outlined"
-										onClick={closeDeleteDialog}
-									>
-										Cancel
-									</Button>
-									<Button
-										variant="contained"
-										color="secondary"
-										onClick={deleteBag}
-									>
-										Delete it
-									</Button>
-								</DialogActions>
-							</Dialog>
+										<DialogTitle>Delete Bag</DialogTitle>
+										<DialogContent>
+											<DialogContentText>
+												Are you sure you want to delete
+												this bag?
+											</DialogContentText>
+											<DialogContentText
+												sx={{
+													fontSize: 13,
+													marginTop: "10px",
+												}}
+											>
+												It will be gone forever...
+											</DialogContentText>
+										</DialogContent>
+										<DialogActions>
+											<Button
+												variant="outlined"
+												onClick={closeDeleteDialog}
+											>
+												Cancel
+											</Button>
+											<Button
+												variant="contained"
+												color="secondary"
+												onClick={deleteBag}
+											>
+												Delete it
+											</Button>
+										</DialogActions>
+									</Dialog>
+								)}
+							</Box>
 						)}
 					</div>
-				)}
-			</div>
-		</Container>
+				</Container>
+			</TopContainer>
+			<Box >
+				<Footer />
+			</Box>
+		</Box>
 	);
 }
 
