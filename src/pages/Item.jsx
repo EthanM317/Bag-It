@@ -22,10 +22,16 @@ import TopContainer from "../components/TopContainer";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { Backend } from "../api";
 
-function ExistingBagList({bags}) {
+function ExistingBagList({bags, product}) {
+	const [isLoading, setIsLoading] = useState(false);
 
-	function addToExisting(e, bagName) {
-		console.log("Added to " + bagName);
+	async function addToExisting(e, bag) {
+		setIsLoading(true);
+		
+		await Backend.addItem(product.id, bag.id);
+		setIsLoading(false);
+		
+		// console.log("Added " + product.name + " to " + bag.title);
 	}
 
 	return (
@@ -59,7 +65,8 @@ function ExistingBagList({bags}) {
 					<Button
 						variant="contained"
 						color="primary"
-						onClick={(e) => addToExisting(e, bag.title)}
+						onClick={(e) => addToExisting(e, bag)}
+						loading={isLoading}
 					>
 						Add
 					</Button>
@@ -103,7 +110,6 @@ export default function Item() {
 			tempBags = await Backend.getUsersBags(user.id);
 
 			setBags(tempBags);
-			console.log(tempBags);
 		};
 		effect();
 	}, []);
@@ -220,7 +226,7 @@ export default function Item() {
 												Here you can select an existing
 												bag to add this product to.
 											</p>
-											<ExistingBagList bags={bags} />
+											<ExistingBagList bags={bags} product={product} />
 										</DialogContent>
 										<DialogActions>
 											<Button

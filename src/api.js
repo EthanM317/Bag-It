@@ -197,7 +197,19 @@ export class Backend {
 		return res.data;
 	}
 
-
+	/**
+	 * Add item to bag
+	 */
+	static async addItem(itemId, bagId) {
+		const res = await this.#request(POST, Url.BACKEND_BAG_ITEM_CREATE, {
+			bagParent: bagId,
+			clothingItem: itemId,
+		});
+		if (res == null || res.data == null)
+			return null;
+		
+		return res.data;
+	}
 
 
 	// -- Clothing --
