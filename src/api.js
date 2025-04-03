@@ -203,7 +203,7 @@ export class Backend {
 	static async getClothingItem(id) {
 		const url = Url.BACKEND_CLOTHING + "?itemId=" + id;
 		const res = await this.#request(GET, url);
-		return res.data;
+		return res.data[0];
 	}
 
 	/**
