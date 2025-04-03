@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import TopContainer from "../components/TopContainer;";
 import TopBar from "../components/TopBar";
-import { Box, Container } from "@mui/material";
+import { Box, Container, Typography, useTheme } from "@mui/material";
 
 function ProductsTestPage() {
 	const [products, setProducts] = useState([]);
@@ -21,6 +21,15 @@ function ProductsTestPage() {
 	const { id } = useParams();
 	const [activeCategory, setActiveCategory] = useState(null);
 	const dropdownRef = useRef(null);
+
+    const cardBgColor = "#080029";
+    const categoryButtonColor = "#282870";
+    const categoryButtonColorPressed = "#6c3483";
+    const clearButtonColor = "#bf365d";
+
+    // -- Old colors --
+    // const cardBgColor = "#1e1e2f";
+    // const categoryButtonColorPressed = "#556cd6";
 
 	useEffect(() => {
 		getProductFromId(id);
@@ -127,6 +136,7 @@ function ProductsTestPage() {
 						padding: "40px 20px",
 						textAlign: "center",
                         animation: 'fadeIn 1s ease-in-out',
+                        marginTop: "30px"
 					}}
 				>
 					<h1
@@ -155,8 +165,8 @@ function ProductsTestPage() {
 				</div>
 
 				<div
-					className="category-bar"
-					style={{ margin: "20px auto", textAlign: "center" }}
+					// className="category-bar"
+					style={{ margin: "0px", textAlign: "center" }}
 					ref={dropdownRef}
 				>
 					{Object.entries(filterOptions).map(
@@ -180,14 +190,15 @@ function ProductsTestPage() {
 									style={{
 										backgroundColor:
 											filters[category].length > 0
-												? "#6c3483"
-												: "#1a1a2e",
+												? categoryButtonColorPressed
+												: categoryButtonColor,
 										color: "white",
 										padding: "12px 24px",
 										borderRadius: "16px",
 										cursor: "pointer",
 										fontWeight: "bold",
 										fontSize: "1rem",
+                                        // outline: "1px solid",
 										boxShadow:
 											filters[category].length > 0
 												? "0 0 12px #b084cc"
@@ -385,7 +396,7 @@ function ProductsTestPage() {
 							}
 							style={{
 								marginLeft: "16px",
-								backgroundColor: "#ff4d4d",
+								backgroundColor: clearButtonColor,
 								color: "white",
 								padding: "8px 16px",
 								fontSize: "0.95rem",
@@ -413,10 +424,9 @@ function ProductsTestPage() {
 				<div
 					className="container"
 					style={{
-						backgroundColor: "white",
 						padding: "20px",
-						borderRadius: "12px",
-						marginTop: "20px",
+						borderRadius: "6px",
+						marginTop: "-60px",
 						display: "flex",
 						flexWrap: "wrap",
 						gap: "20px",
@@ -429,7 +439,7 @@ function ProductsTestPage() {
 								key={product.id}
 								className="itemContainer"
 								style={{
-									backgroundColor: "#1e1e2f", // Darker card background
+									backgroundColor: cardBgColor, // Darker card background
 									borderRadius: "12px",
 									padding: "10px",
 									textAlign: "center",
@@ -440,6 +450,8 @@ function ProductsTestPage() {
 									transformOrigin: "center",
 									width: "200px",
 									color: "white", // White text for readability
+                                    outline: "2px solid #282870",
+                                    animation: 'fadeIn 0.2s ease-in-out',
 								}}
 								onMouseEnter={(e) => {
 									e.currentTarget.style.transform =
