@@ -19,9 +19,15 @@ import {
 } from "@mui/material";
 import TopBar from "../components/TopBar";
 import TopContainer from "../components/TopContainer";
+import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { Backend } from "../api";
 
 function ExistingBagList({bags}) {
+
+	function addToExisting(e, bagName) {
+		console.log("Added to " + bagName);
+	}
+
 	return (
 		<List
 			sx={{
@@ -38,7 +44,7 @@ function ExistingBagList({bags}) {
 			}
 		>
 			{bags.map((bag) => (
-				<ListItemButton onClick={(e) => clickBag(e, bag.id)}>
+				<ListItemButton disableRipple={true}>
 					<ListItemAvatar>
 						<Avatar>
 							<ShoppingBagOutlinedIcon />
@@ -48,12 +54,14 @@ function ExistingBagList({bags}) {
 						primary={bag.title}
 						secondary={bag.description}
 					/>
+
+					{/* Add button */}
 					<Button
-						variant="text"
-						color="secondary"
-						onClick={(e) => openDeleteDialog(e, bag.id)}
+						variant="contained"
+						color="primary"
+						onClick={(e) => addToExisting(e, bag.title)}
 					>
-						Delete
+						Add
 					</Button>
 				</ListItemButton>
 			))}
@@ -199,6 +207,7 @@ export default function Item() {
 										Add Me to Existing Bag!
 									</Button>
 
+									{/* Existing bag dialog */}
 									<Dialog
 										open={openExistingDialog}
 										onClose={() =>
@@ -211,6 +220,7 @@ export default function Item() {
 												Here you can select an existing
 												bag to add this product to.
 											</p>
+											<ExistingBagList bags={bags} />
 										</DialogContent>
 										<DialogActions>
 											<Button
@@ -221,7 +231,7 @@ export default function Item() {
 											>
 												Cancel
 											</Button>
-											<Button
+											{/* <Button
 												loading={loading}
 												onClick={
 													confirmExistingBagPressed
@@ -229,7 +239,7 @@ export default function Item() {
 												variant="contained"
 											>
 												Confirm
-											</Button>
+											</Button> */}
 										</DialogActions>
 									</Dialog>
 								</div>
@@ -243,6 +253,7 @@ export default function Item() {
 										Add Me to New Bag!
 									</Button>
 
+									{/* New bag dialog */}
 									<Dialog
 										open={openNewDialog}
 										onClose={() => {
@@ -267,13 +278,13 @@ export default function Item() {
 											>
 												Cancel
 											</Button>
-											<Button
+											{/* <Button
 												loading={loading}
 												onClick={confirmNewBagPressed}
 												variant="contained"
 											>
 												Confirm
-											</Button>
+											</Button> */}
 										</DialogActions>
 									</Dialog>
 								</div>
