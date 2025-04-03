@@ -17,7 +17,7 @@ import WhatshotIcon from "@mui/icons-material/Whatshot";
 import bagitLogo from "../assets/bagit_shadow.svg";
 import TopBar from "../components/TopBar";
 import pearLogo from "../assets/pear_outline_white.svg";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { Url } from "../constants";
 import { Backend } from "../api";
 import Footer from "../components/Footer";
@@ -340,8 +340,9 @@ function LandingPage() {
 											</Typography>
 											<Grid2
 												container
-												alignItems="flex-start"
-												sx={{marginTop: "10px"}}
+												alignItems="center"
+												display="flex"
+												sx={{ marginTop: "10px" }}
 											>
 												<Grid2 item>
 													<Box
@@ -359,10 +360,14 @@ function LandingPage() {
 											>
 												{/* {item.description || "No description available."} */}
 											</Typography>
+										</CardContent>
 											<Box
 												sx={{
 													display: "flex",
 													justifyContent: "flex-end",
+													marginRight: "20px",
+													marginBottom: "20px",
+													marginTop: "-20px"
 												}}
 											>
 												<Button
@@ -372,10 +377,15 @@ function LandingPage() {
 														marginTop: 2,
 													}}
 												>
+													<Link
+														to="/item"
+														state={{ ...item }}
+													>
+														<span className="productPageLink"></span>
+													</Link>
 													See more
 												</Button>
 											</Box>
-										</CardContent>
 									</Card>
 								</Grid2>
 							))}
