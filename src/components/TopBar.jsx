@@ -32,7 +32,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 /**
  * Main navbar of the site. Contains logo, search bar, and some user-related stuff.
  */
-function TopBar() {
+function TopBar(loggedIn) {
 	const navigate = useNavigate();
 
 	function homeClicked(e) {
@@ -49,16 +49,12 @@ function TopBar() {
 				backgroundImage: "none",
 				// animation: "fadeIn 0.3s ease-in-out",
 
-
 				// TODO: Wtf is this
 				mt: "calc(var(--template-frame-height, 0px) + 28px)",
 			}}
 		>
 			<Container maxWidth="lg">
-				<StyledToolbar
-					variant="dense"
-					disableGutters
-				>
+				<StyledToolbar variant="dense" disableGutters>
 					<Box
 						sx={{
 							flexGrow: 1,
@@ -67,11 +63,10 @@ function TopBar() {
 							px: 0,
 						}}
 					>
-
 						{/* Bag it button */}
 						<Button
-						onClick={homeClicked}
-						disableRipple
+							onClick={homeClicked}
+							disableRipple
 							sx={{
 								padding: "0px",
 								textTransform: "none",
@@ -97,6 +92,16 @@ function TopBar() {
 							</Typography>
 						</Button>
 					</Box>
+					{loggedIn && (
+						<Button color="text.default" variant="text">
+							Profile
+						</Button>
+					)}
+					{!loggedIn && (
+						<Button color="text.default" variant="text">
+							Login
+						</Button>
+					)}
 				</StyledToolbar>
 			</Container>
 		</AppBar>

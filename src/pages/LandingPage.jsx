@@ -370,7 +370,8 @@ function LandingPage() {
 						</Typography>
 						<Typography>
 							Our company aims to give users an experience they
-							shall never forget...<br />
+							shall never forget...
+							<br />
 							
 							We hope that you continue to shop with us!
 							<br />
@@ -474,7 +475,7 @@ function LandingPage() {
 							<br />
 							<br />
 							<br />
-							<Typography color="secondary" fontWeight="bold">
+							<Typography component="span" color="secondary" fontWeight="bold">
 							Please do not try to stop shopping with us.
 							</Typography>
 
