@@ -104,6 +104,7 @@ function LandingPage() {
 
 					sx={{
 						marginTop: "80px",
+						animation: "fadeIn 0.5s ease-in-out",
 					}}
 				>
 					<Grid2
@@ -164,6 +165,9 @@ function LandingPage() {
 					display="flex"
 					alignItems="flex-start"
 					marginTop="-50px"
+					sx={{
+						animation: "fadeIn 0.8s ease-in-out",
+					}}
 				>
 					<Grid2 item>
 						{" "}
@@ -202,6 +206,7 @@ function LandingPage() {
 					sx={{
 						// padding: 2,
 						paddingTop: 10,
+						animation: "fadeIn 1s ease-in-out",
 					}}
 				>
 					<Box
@@ -236,7 +241,15 @@ function LandingPage() {
 					</Box>
 				</Box>
 
-				<Grid2 container spacing={4} padding={2} marginTop={2}>
+				<Grid2
+					container
+					spacing={4}
+					padding={2}
+					marginTop={2}
+					sx={{
+						animation: "fadeIn 1.1s ease-in-out",
+					}}
+				>
 					{test.map((index) => (
 						<Grid2
 							size={{ xs: 12, sm: 6, md: 4 }}
@@ -307,13 +320,18 @@ function LandingPage() {
 				</Grid2>
 			</Container>
 
-			<Container maxWidth="lg">
+				
+			<Container maxWidth="lg" sx={{
+					animation: "fadeIn 1.1s ease-in-out",
+				}}>
 				<Box
 					sx={{
 						marginTop: 7,
 					}}
 				>
-					<Box display="flex">
+					<Box
+						display="flex"
+					>
 						<Box
 							component="img"
 							src={pearLogo}
