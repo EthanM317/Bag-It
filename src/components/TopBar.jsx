@@ -16,6 +16,7 @@ import { styled, alpha } from "@mui/material/styles";
 import pearLogo from "../assets/bagit.svg";
 import { useNavigate } from "react-router";
 import { Url } from "../constants";
+import { Backend } from "../api";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 	display: "flex",
@@ -36,7 +37,18 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 /**
  * Main navbar of the site. Contains logo, search bar, and some user-related stuff.
  */
-function TopBar({ loggedIn }) {
+function TopBar() {
+	const [loggedIn, setLoggedIn] = useState(false);
+	
+	// Stupid way to use async function inside effect
+	useEffect(() => {
+		const effect = async () => {
+			let temp = await Backend.verifyUser();
+			setLoggedIn(temp);
+		};
+		effect();
+	}, []);
+
 	const navigate = useNavigate();
 
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -155,6 +167,9 @@ function TopBar({ loggedIn }) {
 								}}
 								open={Boolean(anchorEl)}
 								onClose={handleProfileClose}
+								sx={{
+									marginTop:"30px"
+								}}
 							>
 								<MenuItem onClick={profilePressed}>
 									Profile
