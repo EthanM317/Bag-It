@@ -136,7 +136,13 @@ function BagPage() {
 					<Box marginTop="120px">
 						{!isLoading && (
 							<div>
-								<h1>{bag.title}'s items</h1>
+								<Box
+									sx={{
+										animation: "fadeIn 0.3s ease-in-out",
+									}}
+								>
+									<h1>{bag.title}'s items</h1>
+								</Box>
 								<AddItemDialog
 									addItem={addItem}
 									productItems={productItems}

@@ -23,8 +23,7 @@ function ItemList({ items, deleteItem }) {
 
 	async function getClothingItems() {
 		// Exit if there's nothing to search for
-		if (items.length <= 0)
-			return;
+		if (items.length <= 0) return;
 
 		try {
 			// Get list of clothing ids to send to the backend
@@ -36,8 +35,7 @@ function ItemList({ items, deleteItem }) {
 			// Get clothing items from backend
 			let tempItems = await Backend.getClothingItems(ids);
 			setActualItems(tempItems);
-		}
-		catch (error) {
+		} catch (error) {
 			alert(error);
 		}
 	}
@@ -53,10 +51,15 @@ function ItemList({ items, deleteItem }) {
 		for (let i = 0; i < actualItems.length; i++) {
 			let actualItem = actualItems[i];
 			let item = items[i];
-			
+
 			result.push(
-				<ListItem>
-					<ListItemAvatar>
+				<ListItem
+					sx={{
+						animation: "fadeIn 0.2s ease-in-out",
+						// outline: "1px solid"
+					}}
+				>
+					<ListItemAvatar sx={{ marginRight: "10px" }}>
 						<img
 							width={64}
 							height={64}
@@ -65,7 +68,11 @@ function ItemList({ items, deleteItem }) {
 						/>
 					</ListItemAvatar>
 					<ListItemText primary={actualItem.name} />
-					<Button onClick={(e) => deleteItem(e, item.id)}>
+					<Button
+						color="secondary"
+						variant="outlined"
+						onClick={(e) => deleteItem(e, item.id)}
+					>
 						Delete
 					</Button>
 				</ListItem>

@@ -199,7 +199,7 @@ function ProfilePage() {
 						{!isLoading && !userNotFound && (
 							<Box
 								sx={{
-									animation: "fadeIn 0.4s ease-in-out",
+									animation: "fadeIn 0.2s ease-in-out",
 								}}
 							>
 								{/* <Button variant="contained" onClick={logoutClicked}>

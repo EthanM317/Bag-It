@@ -13,6 +13,7 @@ import {
 	ListItemText,
 	ListSubheader,
     ListItem,
+	Box,
 } from "@mui/material";
 
 import { use, useEffect, useState } from "react";
@@ -42,7 +43,7 @@ function AddItemDialog({ productItems, addItem }) {
 	};
 
 	return (
-		<div>
+		<Box sx={{marginBottom:"20px"}}>
 			<Button variant="contained" onClick={openDialog}>
 				+ Add Item
 			</Button>
@@ -108,7 +109,7 @@ function AddItemDialog({ productItems, addItem }) {
 					<Button onClick={submitDialog}>Back</Button>
 				</DialogActions>
 			</Dialog>
-		</div>
+		</Box>
 	);
 }
 
