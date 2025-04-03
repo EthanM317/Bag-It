@@ -17,12 +17,27 @@ class CreateUser(generics.CreateAPIView):
     permission_classes = [AllowAny]
 
 
-# DEBUG
 class GetUsers(generics.ListAPIView): 
-    # Request a dump of all registered users
-    queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = []
+
+    def get_queryset(self):
+        userId = self.request.query_params.get("userId")
+        if userId:
+            # Use parameter to return user
+            return User.objects.filter(id=userId)
+        else:
+            # Request a dump of all registered users
+            return User.objects.all()
+
+
+class GetAuthenticatedUser(generics.ListAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        userId = self.request.user.id
+        return User.objects.filter(id=userId)
 
 
 # -- Bags --
@@ -51,9 +66,12 @@ class BagListGet(generics.ListAPIView):
     def get_queryset(self):
         # Get query param for bags
         userId = self.request.query_params.get("userId")
+        bagId = self.request.query_params.get("bagId")
+
+        if bagId:
+            return Bag.objects.filter(id=bagId)
+
         if userId:
-            # print("Requested search")
-            # print(f"userId: {userId}")
             return Bag.objects.filter(author=userId)
         else:
             # Get all bags
@@ -112,5 +130,12 @@ class BagItemDelete(generics.DestroyAPIView):
     def get_queryset(self):
         # Get the authenticated user
         user = self.request.user
+
         # Make sure the user can only destroy items from a bag that they own
-        return BagItem.objects.filter(bagParent=user.bags.id)
+        bagIds = []
+        for bag in Bag.objects.filter(author=user):
+            bagIds.append(bag.id)
+
+        return BagItem.objects.filter(bagParent__in=bagIds)
+        # return BagItem.objects.filter(bagParent=user.bags.id)
+        # return BagItem.objects.all()

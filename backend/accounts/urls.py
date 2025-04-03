@@ -5,8 +5,10 @@ from . import views
 urlpatterns = [
     # Create a new user
     path("signup/", views.CreateUser.as_view(), name="signup"),
-    # DEBUG get all users
+    # Get all users or a specific user
     path("users/", views.GetUsers.as_view(), name="get_users"),
+    # Get the currently signed-in user
+    path("users/current/", views.GetAuthenticatedUser.as_view(), name="get_authenticated_user"),
 
     # Get/refresh token
     path("token/", TokenObtainPairView.as_view(), name="get_token"),
@@ -20,5 +22,5 @@ urlpatterns = [
     # Bag items
     path("bag/item/create/", views.BagItemListCreate.as_view(), name="bag_item_create"),
     path("bag/item/", views.BagItemListGet.as_view(), name="bag_item_list"),
-    path("bag/item/delete/<int:pk>", views.BagItemListCreate.as_view(), name="bag_item_delete"),
+    path("bag/item/delete/<int:pk>", views.BagItemDelete.as_view(), name="bag_item_delete"),
 ]

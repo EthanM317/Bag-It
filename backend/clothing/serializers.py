@@ -6,11 +6,12 @@ class ClothingSerializer(serializers.ModelSerializer):
     class Meta:
         model = ClothingItem
         fields = [
+            "id",
             "name",
             "description",
-            "price",
             "size",
             "type",
+            "color",
             "gender",
             "brand",
             "image",
