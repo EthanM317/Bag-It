@@ -22,9 +22,6 @@ import { Url } from "../constants";
 import { Backend } from "../api";
 
 const StyledBox = styled(Box)(({ theme }) => ({
-	// alignSelf: "center",
-	// marginTop: theme.spacing(8),
-	// border: "1px solid",
 	borderRadius: (theme.vars || theme).shape.borderRadius,
 	outline: "6px solid",
 	display: "flex",
