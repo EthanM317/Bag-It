@@ -12,6 +12,7 @@ import {
 	useTheme,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { keyframes } from "@emotion/react";
 import { styled, alpha } from "@mui/material/styles";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
 import "../styles/Landing.css"
@@ -39,6 +40,12 @@ const StyledBox = styled(Box)(({ theme }) => ({
 }));
 
 function LandingPage() {
+
+const scrollText = keyframes`
+  0% { left: 100%; }
+  100% { left: -100%; }
+`;
+
 	const navigate = useNavigate();
 	const test = [1, 2, 3];
 	const [items, setItems] = useState([]);
@@ -574,7 +581,34 @@ function LandingPage() {
 
 				<Box marginTop="200px"></Box>
 			</Box>
-			<Footer />
+			
+{/* Scrolling Quote Section */}
+<Box
+  sx={{
+	marginTop: 10,
+	display: "flex",
+	justifyContent: "center",
+	alignItems: "center",
+	height: "100px",
+	overflow: "hidden",
+	position: "relative",
+  }}
+>
+  <Typography
+	variant="h4"
+	fontWeight="bold"
+	sx={{
+	  position: "absolute",
+	  animation: `${scrollText} 10s linear infinite`,
+	  whiteSpace: "nowrap",
+	  color: "#00ffc3",
+	}}
+  >
+	Minimalist streetwear. Built different. → Where tech meets texture.
+  </Typography>
+</Box>
+
+<Footer />
 		</Box>
 	);
 }
