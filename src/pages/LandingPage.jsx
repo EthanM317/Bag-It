@@ -42,51 +42,58 @@ function LandingPage() {
 	const [items, setItems] = useState([]);
 
 	const [loggedIn, setLoggedIn] = useState(false);
+	const [gettingItems, setGettingItems] = useState(false);
 
 	// Stupid way to use async function inside effect
 	useEffect(() => {
 		const effect = async () => {
 			let temp = await Backend.verifyUser();
 			setLoggedIn(temp);
+
+			getItems();
 		};
 		effect();
-		getItems();
 	}, []);
 
 	const getItems = async () => {
+		if (gettingItems) return;
+
+		setGettingItems(true);
+
 		try {
 			let fetchedItems = [];
 			const maxAttempts = 50; // Limit attempts to avoid infinite loops
 			let attempts = 0;
-			console.log("trying to load items")
+			console.log("trying to load items");
 			while (fetchedItems.length < 3 && attempts < maxAttempts) {
 				const randomId = Math.floor(Math.random() * 100) + 1; // Adjust range as needed
 				attempts++;
-				console.log("trying..." + randomId)
-	
+				console.log("trying..." + randomId);
+
 				try {
 					// Fetch product using Backend API
 					const item = await Backend.getClothingItem(randomId);
 
-					if (item == null)
-						continue;
-	
+					if (item == null) continue;
+
 					// Ensure no duplicate items are added
 					// if (item && !fetchedItems.some((fetchedItem) => fetchedItem.id === item.id)) {
 					if (item && !fetchedItems.includes(item)) {
 						fetchedItems.push(item);
 						console.log(fetchedItems);
-						console.log("Got an item!")
+						console.log("Got an item!");
 					}
 				} catch (err) {
 					console.warn(`Item with ID ${randomId} not found.`);
 				}
 			}
-	
+
 			setItems(fetchedItems);
 		} catch (err) {
 			alert("Error loading items: " + err.message);
 		}
+
+		setGettingItems(false);
 	};
 	async function verifyUser() {
 		let temp = await Backend.verifyUser();
@@ -285,81 +292,96 @@ function LandingPage() {
 						</Box>
 					</Box>
 
-					<Grid2
-						container
-						spacing={4}
-						padding={2}
-						marginTop={2}
-						sx={{
-							animation: "fadeIn 1.1s ease-in-out",
-						}}
-					>
-						{items.map((item) => (
-							<Grid2
-								size={{ xs: 12, sm: 6, md: 4 }}
-								key={item.id}
-								sx={{ display: "flex" }}
-							>
-								<Card
-									variant="contained"
-									sx={(theme) => ({
-										display: "flex",
-										flexDirection: "column",
-										justifyContent: "space-between",
-										flexGrow: 1,
-										bgcolor: "background.default",
-
-										borderRadius: (theme.vars || theme)
-											.shape.borderRadius,
-										outline: "6px solid",
-										backgroundSize: "cover",
-										boxShadow:
-											"0 0 24px 12px hsla(210, 100%, 25%, 0.2)",
-										outlineColor:
-											"hsla(220, 20%, 42%, 0.1)",
-										borderColor: (theme.vars || theme)
-											.palette.grey[700],
-									})}
+					{items.length > 0 && (
+						<Grid2
+							container
+							spacing={4}
+							padding={2}
+							marginTop={2}
+							sx={{
+								animation: "fadeIn 1.1s ease-in-out",
+							}}
+						>
+							{items.map((item) => (
+								<Grid2
+									size={{ xs: 12, sm: 6, md: 4 }}
+									key={item.id}
+									sx={{ display: "flex" }}
 								>
-									
-									<CardContent
-										sx={{
-											padding: "20px",
-										}}
+									<Card
+										variant="contained"
+										sx={(theme) => ({
+											display: "flex",
+											flexDirection: "column",
+											justifyContent: "space-between",
+											flexGrow: 1,
+											bgcolor: "background.default",
+
+											borderRadius: (theme.vars || theme)
+												.shape.borderRadius,
+											outline: "6px solid",
+											backgroundSize: "cover",
+											boxShadow:
+												"0 0 24px 12px hsla(210, 100%, 25%, 0.2)",
+											outlineColor:
+												"hsla(220, 20%, 42%, 0.1)",
+											borderColor: (theme.vars || theme)
+												.palette.grey[700],
+										})}
 									>
-										<Typography variant="h5">
-										{item.name || `Clothing Item #${item.id}`}
-										</Typography>
-										<Typography
-											variant="body1"
-											gutterBottom
-											marginTop={1}
-											sx={{ color: "text.secondary" }}
-										>
-											{item.description || "No description available."}
-										</Typography>
-										<Box
+										<CardContent
 											sx={{
-												display: "flex",
-												justifyContent: "flex-end",
+												padding: "20px",
 											}}
 										>
-											<Button
-												variant="outlined"
+											<Typography variant="h5">
+												{item.name ||
+													`Clothing Item #${item.id}`}
+											</Typography>
+											<Grid2
+												container
+												justifyItems="center"
+												alignContent="center"
+												alignItems="center"
+											>
+												<Grid2 item>
+													<Box
+														component="img"
+														src={item.image}
+														sx={{ width: "200px" }}
+													></Box>
+												</Grid2>
+											</Grid2>
+											<Typography
+												variant="body1"
+												gutterBottom
+												marginTop={1}
+												sx={{ color: "text.secondary" }}
+											>
+												{/* {item.description || "No description available."} */}
+											</Typography>
+											<Box
 												sx={{
-													// justifyContent: "flex-end",
-													marginTop: 2,
+													display: "flex",
+													justifyContent: "flex-end",
 												}}
 											>
-												See more
-											</Button>
-										</Box>
-									</CardContent>
-								</Card>
-						
-							</Grid2>
-						))}
-					</Grid2>
+												<Button
+													variant="outlined"
+													sx={{
+														// justifyContent: "flex-end",
+														marginTop: 2,
+													}}
+												>
+													See more
+												</Button>
+											</Box>
+										</CardContent>
+									</Card>
+								</Grid2>
+							))}
+						</Grid2>
+					)}
 				</Container>
 
 				<Container
@@ -405,15 +427,10 @@ function LandingPage() {
 							Our company aims to give users an experience they
 							shall never forget...
 							<br />
-							
 							We hope that you continue to shop with us!
 							<br />
 							<br />
-
 							Enjoy the sights! Enjoy the sounds!
-
-
-
 							<br />
 							<br />
 							<br />
@@ -429,8 +446,6 @@ function LandingPage() {
 							<br />
 							<br />
 							We sincerely hope that you continue to shop with us.
-
-
 							<br />
 							<br />
 							<br />
@@ -460,7 +475,6 @@ function LandingPage() {
 							<br />
 							<br />
 							We truly hope that you never cease shopping with us.
-
 							<br />
 							<br />
 							<br />
@@ -508,8 +522,12 @@ function LandingPage() {
 							<br />
 							<br />
 							<br />
-							<Typography component="span" color="secondary" fontWeight="bold">
-							Please do not try to stop shopping with us.
+							<Typography
+								component="span"
+								color="secondary"
+								fontWeight="bold"
+							>
+								Please do not try to stop shopping with us.
 							</Typography>
 						</Typography>
 					</Box>
