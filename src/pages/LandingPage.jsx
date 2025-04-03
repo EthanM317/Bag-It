@@ -46,7 +46,8 @@ function LandingPage() {
 	// Stupid way to use async function inside effect
 	useEffect(() => {
 		const effect = async () => {
-			await verifyUser();
+			let temp = await Backend.verifyUser();
+			setLoggedIn(temp);
 		};
 		effect();
 		getItems();
@@ -129,7 +130,7 @@ function LandingPage() {
 				})}
 			>
 				<Container maxWidth="lg">
-					<TopBar />
+					<TopBar loggedIn={loggedIn} />
 					<Grid2
 						container
 						spacing={20}
@@ -506,7 +507,6 @@ function LandingPage() {
 							<Typography component="span" color="secondary" fontWeight="bold">
 							Please do not try to stop shopping with us.
 							</Typography>
-
 						</Typography>
 					</Box>
 				</Container>
