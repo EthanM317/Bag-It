@@ -238,14 +238,11 @@ function ProfilePage() {
 										Are you sure you want to delete this
 										bag?
 									</DialogContentText>
-									<DialogContentText sx={{fontSize: 13, marginTop: "10px"}}>
+									<DialogContentText
+										sx={{ fontSize: 13, marginTop: "10px" }}
+									>
 										It will be gone forever...
 									</DialogContentText>
-
-									{/* <Box sx={{
-										marginTop: "10px"
-									}}>
-									</Box> */}
 								</DialogContent>
 								<DialogActions>
 									<Button
