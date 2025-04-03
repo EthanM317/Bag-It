@@ -141,6 +141,21 @@ export class Backend {
 	}
 
 	/**
+	 * Get the current user's information
+	 * @returns user object if user is logged in
+	 * @returns null if not logged in 
+	 */
+	static async getCurrentUser() {
+		const res = await this.#request(GET, Url.BACKEND_CURRENT_USER);
+
+		if (res == null)
+			return null;
+
+		return res.data;
+	}
+
+
+	/**
 	 * Login with credentials
 	 * Automatically assigns the access and refresh tokens
 	 * @returns [access token, refresh token]
