@@ -2,7 +2,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "../styles/Item.css";
 import TopPanelBar from "../components/TopPanelBar";
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Box } from "@mui/material";
+import TopBar from "../components/TopBar";
+import TopContainer from "../components/TopContainer";
 
 export default function Item() {
   const location = useLocation();
@@ -18,8 +20,9 @@ export default function Item() {
   }
 
   return (
-    <>
-      <TopPanelBar />
+    <Box>
+      <TopContainer>
+        <TopBar />
 
       <div className="ItemContainer">
         {product.image ? (
@@ -105,6 +108,7 @@ export default function Item() {
           </div>
         </div>
       </div>
-    </>
+      </TopContainer>
+    </Box>
   );
 }
