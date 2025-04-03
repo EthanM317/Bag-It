@@ -186,6 +186,27 @@ export class Backend {
 
 	// -- Bags --
 	/**
+	 * Create new bag
+	 * Title and description are both required to be non-empty strings.
+	 * This function WILL return null otherwise.
+	 * @returns The newly created bag
+	 */
+	static async createNewBag(title, description) {
+		if (title == null || description == null || title == "" || description == "")
+			return null;
+		
+		const res = await this.#request(POST, Url.BACKEND_BAG_CREATE, {
+			title: title,
+			description: description,
+		})
+		if (res == null || res.data == null)
+			return null;
+		
+		return res.data;
+	}
+
+
+	/**
 	 * Get a list of the user's bags
 	 * @param {*} userId The user's id
 	 */
