@@ -1,4 +1,5 @@
 import {
+	autocompleteClasses,
 	Box,
 	Button,
 	ButtonGroup,
@@ -13,6 +14,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
+import "../styles/Landing.css"
 
 import bagitLogo from "../assets/bagit_shadow.svg";
 import TopBar from "../components/TopBar";
@@ -309,6 +311,7 @@ function LandingPage() {
 							}}
 						>
 							{items.map((item) => (
+						
 								<Grid2
 									size={{ xs: 12, sm: 6, md: 4 }}
 									key={item.id}
@@ -347,15 +350,25 @@ function LandingPage() {
 											<Grid2
 												container
 												alignItems="center"
+												justifyContent="center"
 												display="flex"
-												sx={{ marginTop: "10px" }}
+												sx={{ marginTop: "10px" , height: "250px" }}
 											>
 												<Grid2 item>
 													<Box
 														component="img"
 														src={item.image}
-														sx={{ width: "200px" }}
-													></Box>
+														alt={item.name || `Clothing Item #${item.id}`}
+														sx={{
+															maxWidth: "100%",
+															maxHeight: "100%",
+															width: "auto",
+															height: "auto",
+															objectFit: "contain", 
+															display: "block",
+															margin: "0 auto"
+														}}
+													/>
 												</Grid2>
 											</Grid2>
 											<Typography
@@ -394,6 +407,7 @@ function LandingPage() {
 										</Box>
 									</Card>
 								</Grid2>
+					
 							))}
 
 							<Container
