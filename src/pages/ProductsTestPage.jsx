@@ -124,9 +124,9 @@ function ProductsTestPage() {
 						position: "sticky",
 						top: 0,
 						zIndex: 1000,
-						// backgroundColor: "#0c002b",
 						padding: "40px 20px",
 						textAlign: "center",
+                        animation: 'fadeIn 1s ease-in-out',
 					}}
 				>
 					<h1
