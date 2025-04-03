@@ -362,7 +362,6 @@ function LandingPage() {
 						</Box>
 
 						<Typography
-							variant="body1"
 							fontWeight="bold"
 							display="flex"
 							variant="h5"
