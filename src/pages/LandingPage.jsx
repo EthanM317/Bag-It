@@ -39,6 +39,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 function LandingPage() {
 	const navigate = useNavigate();
 	const test = [1, 2, 3];
+	const [items, setItems] = useState([]);
 
 	const [loggedIn, setLoggedIn] = useState(false);
 
@@ -48,8 +49,40 @@ function LandingPage() {
 			await verifyUser();
 		};
 		effect();
+		getItems();
 	}, []);
 
+	const getItems = async () => {
+		try {
+			const fetchedItems = [];
+			const maxAttempts = 50; // Limit attempts to avoid infinite loops
+			let attempts = 0;
+			console.log("trying to load items")
+			while (fetchedItems.length < 3 && attempts < maxAttempts) {
+				const randomId = Math.floor(Math.random() * 100) + 1; // Adjust range as needed
+				attempts++;
+				console.log("trying..." + randomId)
+	
+				try {
+					// Fetch product using Backend API
+					const response = await Backend.getClothingItem(randomId);
+					const item = response.data || response; // Ensure correct data structure
+	
+					// Ensure no duplicate items are added
+					if (item && !fetchedItems.some((fetchedItem) => fetchedItem.id === item.id)) {
+						fetchedItems.push(item);
+						console.log("Got an item!")
+					}
+				} catch (err) {
+					console.warn(`Item with ID ${randomId} not found.`);
+				}
+			}
+	
+			setItems(fetchedItems);
+		} catch (err) {
+			alert("Error loading items: " + err.message);
+		}
+	};
 	async function verifyUser() {
 		let temp = await Backend.verifyUser();
 		setLoggedIn(temp);
@@ -256,10 +289,10 @@ function LandingPage() {
 							animation: "fadeIn 1.1s ease-in-out",
 						}}
 					>
-						{test.map((index) => (
+						{items.map((item) => (
 							<Grid2
 								size={{ xs: 12, sm: 6, md: 4 }}
-								key={index}
+								key={item.id}
 								sx={{ display: "flex" }}
 							>
 								<Card
@@ -283,13 +316,14 @@ function LandingPage() {
 											.palette.grey[700],
 									})}
 								>
+									
 									<CardContent
 										sx={{
 											padding: "20px",
 										}}
 									>
 										<Typography variant="h5">
-											Clothing item #{index}
+										{item.name || `Clothing Item #${item.id}`}
 										</Typography>
 										<Typography
 											variant="body1"
@@ -297,14 +331,7 @@ function LandingPage() {
 											marginTop={1}
 											sx={{ color: "text.secondary" }}
 										>
-											Lorem ipsum dolor sit amet
-											consectetur adipisicing elit.
-											Numquam, qui. Nam, eos? Vitae
-											provident quibusdam obcaecati
-											blanditiis ab nulla, perferendis
-											iusto voluptatem alias. Adipisci ea
-											rerum laborum magnam, dolorem
-											facilis.
+											{item.description || "No description available."}
 										</Typography>
 										<Box
 											sx={{
@@ -324,6 +351,7 @@ function LandingPage() {
 										</Box>
 									</CardContent>
 								</Card>
+						
 							</Grid2>
 						))}
 					</Grid2>

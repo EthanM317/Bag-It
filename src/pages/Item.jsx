@@ -90,6 +90,7 @@ export default function Item() {
 								Brand: {product.brand || "N/A"}
 							</h2>
 						</div>
+						<p>Item ID: {product.id}</p>
 
 						<div className="addButtons">
 							<div className="existing">
