@@ -375,7 +375,7 @@ const scrollText = keyframes`
 															objectFit: "contain", 
 															display: "block",
 															margin: "0 auto",
-															padding: "60px"
+															padding: "2px"
 														}}
 													/>
 												</Grid2>
@@ -400,7 +400,7 @@ const scrollText = keyframes`
 												variant="outlined"
 												sx={{
 													// justifyContent: "flex-end",
-													marginTop: 2,
+													marginTop: 18,
 												}}
 											>
 												<Link
