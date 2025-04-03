@@ -6,8 +6,11 @@ import { api, Backend } from "../api";
 import ItemList from "../components/Bags/ItemList";
 import AddItemDialog from "../components/Bags/AddItemDialog";
 import TopPanelBar from "../components/TopPanelBar";
-import { List, ListItem, ListItemText } from "@mui/material";
+import { Box, Container, List, ListItem, ListItemText } from "@mui/material";
 import NavBar from "../components/NavBar";
+import TopContainer from "../components/TopContainer";
+import TopBar from "../components/TopBar";
+import Footer from "../components/Footer";
 
 function BagPage() {
 	const [isLoading, setIsLoading] = useState(true);
@@ -126,28 +129,36 @@ function BagPage() {
 	}
 
 	return (
-		<div>
-			<NavBar />
-			<div >
-				{/* <TopPanelBar /> */}
+		<Box>
+			<TopContainer>
+				<TopBar />
+				<Container maxWidth="lg">
+					<Box marginTop="120px">
+						{!isLoading && (
+							<div>
+								<h1>{bag.title}'s items</h1>
+								<AddItemDialog
+									addItem={addItem}
+									productItems={productItems}
+								/>
+								<ItemList
+									deleteItem={deleteItem}
+									items={bagItems}
+								/>
 
-				{!isLoading && (
-					<div>
-						<h1>{bag.title}'s items</h1>
-						<AddItemDialog
-							addItem={addItem}
-							productItems={productItems}
-						/>
-						<ItemList deleteItem={deleteItem} items={bagItems} />
-
-						{/* Test list */}
-						{/* {bagItems.map((item) => (
-						<p>{item.id}</p>
-						))} */}
-					</div>
-				)}
-			</div>
-		</div>
+								{/* Test list */}
+								{/* {bagItems.map((item) => (
+									<p>{item.id}</p>
+									))} */}
+							</div>
+						)}
+					</Box>
+				</Container>
+			</TopContainer>
+			<Box>
+				<Footer />
+			</Box>
+		</Box>
 	);
 }
 
