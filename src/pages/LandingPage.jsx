@@ -341,6 +341,7 @@ function LandingPage() {
 										<CardContent
 											sx={{
 												padding: "20px",
+												flexGrow: 1
 											}}
 										>
 											<Typography variant="h5">
@@ -366,7 +367,8 @@ function LandingPage() {
 															height: "auto",
 															objectFit: "contain", 
 															display: "block",
-															margin: "0 auto"
+															margin: "0 auto",
+															padding: "60px"
 														}}
 													/>
 												</Grid2>
@@ -384,9 +386,7 @@ function LandingPage() {
 											sx={{
 												display: "flex",
 												justifyContent: "flex-end",
-												marginRight: "20px",
-												marginBottom: "20px",
-												marginTop: "-20px",
+												padding: "10px 20px",
 											}}
 										>
 											<Button
