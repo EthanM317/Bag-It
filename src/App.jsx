@@ -24,7 +24,7 @@ import BackendTestPage from "./pages/test/BackendTestPage.jsx";
 function Logout() {
 	// Clear refresh/access token
 	localStorage.clear();
-	return <Navigate to={Url.LOGIN} />;
+	return <Navigate to={Url.HOME} />;
 }
 
 // -- Main page manager for the whole site --

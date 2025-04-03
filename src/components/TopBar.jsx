@@ -3,10 +3,14 @@ import {
 	Box,
 	Button,
 	Container,
+	IconButton,
+	Menu,
+	MenuItem,
 	Toolbar,
 	Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import { styled, alpha } from "@mui/material/styles";
 import pearLogo from "../assets/bagit.svg";
@@ -32,12 +36,32 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 /**
  * Main navbar of the site. Contains logo, search bar, and some user-related stuff.
  */
-function TopBar(loggedIn) {
+function TopBar({ loggedIn }) {
 	const navigate = useNavigate();
+
+	const [anchorEl, setAnchorEl] = useState(null);
+
 
 	function homeClicked(e) {
 		navigate(Url.HOME);
 	}
+
+	function loginPressed(e) {
+		navigate(Url.LOGIN);
+	}
+
+	function handleProfileMenu(e) {
+		setAnchorEl(e.currentTarget);
+	}
+
+	function handleProfileClose() {
+		setAnchorEl(null);
+	}
+
+	function profilePressed() {
+			navigate(Url.PROFILE);
+			handleProfileClose();
+		}
 
 	return (
 		<AppBar
@@ -92,15 +116,54 @@ function TopBar(loggedIn) {
 							</Typography>
 						</Button>
 					</Box>
-					{loggedIn && (
-						<Button color="text.default" variant="text">
-							Profile
-						</Button>
-					)}
-					{!loggedIn && (
-						<Button color="text.default" variant="text">
+
+					{/* Login button */}
+					{loggedIn == false && (
+						<Button
+							onClick={loginPressed}
+							color="text.default"
+							variant="text"
+						>
 							Login
 						</Button>
+					)}
+
+					{/* Profile button */}
+					{loggedIn == true && (
+						<Box>
+							<IconButton
+								// size="large"
+								aria-label="account of current user"
+								aria-controls="menu-appbar"
+								aria-haspopup="true"
+								onClick={handleProfileMenu}
+								color="inherit"
+							>
+								<AccountCircleIcon />
+							</IconButton>
+							<Menu
+								id="menu-appbar"
+								anchorEl={anchorEl}
+								anchorOrigin={{
+									vertical: "top",
+									horizontal: "right",
+								}}
+								keepMounted
+								transformOrigin={{
+									vertical: "top",
+									horizontal: "right",
+								}}
+								open={Boolean(anchorEl)}
+								onClose={handleProfileClose}
+							>
+								<MenuItem onClick={profilePressed}>
+									Profile
+								</MenuItem>
+								<MenuItem onClick={() => navigate(Url.LOGOUT)}>
+									Log Out
+								</MenuItem>
+							</Menu>
+						</Box>
 					)}
 				</StyledToolbar>
 			</Container>

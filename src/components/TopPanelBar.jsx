@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import "../styles/Home.css";
 import { Url } from "../constants";
+import { useEffect } from "react";
 
 //Top panel bar of the homepage. Contains logo, search bar, as well as account&bag icons
 
@@ -20,6 +21,8 @@ import { Url } from "../constants";
 //change account and bag icons to buttons
 function TopPanelBar() {
 	const navigate = useNavigate();
+
+	
 
 	function pearPressed() {
 		navigate(Url.HOME);
