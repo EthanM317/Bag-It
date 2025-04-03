@@ -47,6 +47,8 @@ function TopBar() {
 				boxShadow: 0,
 				bgcolor: "transparent",
 				backgroundImage: "none",
+				// animation: "fadeIn 0.3s ease-in-out",
+
 
 				// TODO: Wtf is this
 				mt: "calc(var(--template-frame-height, 0px) + 28px)",

@@ -2,7 +2,7 @@ import { useNavigate } from "react-router";
 import { Url } from "../constants";
 import TopPanelBar from "../components/TopPanelBar";
 import { Box, Container } from "@mui/material";
-import TopContainer from "../components/TopContainer;";
+import TopContainer from "../components/TopContainer";
 import TopBar from "../components/TopBar";
 
 function NotFoundPage() {

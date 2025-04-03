@@ -19,5 +19,4 @@ const TopContainer = styled(Box)(({ theme }) => ({
 	}),
 }));
 
-
 export default TopContainer;

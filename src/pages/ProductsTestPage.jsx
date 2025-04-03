@@ -5,7 +5,7 @@ import { useEffect, useState, useRef } from "react";
 import React from "react";
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
-import TopContainer from "../components/TopContainer;";
+import TopContainer from "../components/TopContainer";
 import TopBar from "../components/TopBar";
 import { Box, Container, Typography, useTheme } from "@mui/material";
 
