@@ -8,15 +8,21 @@ Bag-It! aims to be an accessible and intuitive tool for people who want to put t
 
 ## Clothing Categories
 ### Sizes
-- Extra Small | Small | Medium | Large | Extra Large
+`Extra Small` | `Small` | `Medium` | `Large` | `Extra Large`
+
 ### Types
-- Shorts | Pants | T-Shirts | Dresses | Shoes | Hats | Hoodies | Shirts
+`Shorts` | `Pants` | `T-Shirts` | `Dresses` | `Shoes` | `Hats` | `Hoodies` | `Shirts`
+
 ### Colors
-- White | Black | Gray | Blue | Red | Green | Pink
+`White` | `Black` | `Gray` | `Blue` | `Red` | `Green` | `Pink`
+
 ### Genders
-- Male | Female | Unisex
+`Male` | `Female` | `Unisex`
+
 ### Brands
-- Nike | Jordan | Tommy Hilfiger | Gucci
+`Nike` | `Jordan` | `Tommy Hilfiger` | `Gucci`
+
+---
 
 ## Build Instructions
 ### Clone the Repository
