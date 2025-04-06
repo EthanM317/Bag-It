@@ -1,5 +1,8 @@
-# Project Overview
-Bag-It! is an online fashion platform that allows users to browse a vast catalog of clothing through search functions. 
+# 🛍️ Bag-It!
+
+## 📌 Project Overview
+
+**Bag-It!** ! is an online fashion platform that allows users to browse a vast catalog of clothing through search functions. 
 Users can add items to a virtual bag, which can be shared with other users or displayed on their profile.
 It offers a diverse range of clothing categories to suit all styles.
 To keep up with trends, users can view the most bagged items to see what's baggin' and to inspire their own bags.
