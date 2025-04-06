@@ -55,3 +55,11 @@ Paste http://localhost:5173/ into your browser of choice to preview the website.
 
 
 Paste http://localhost:5173/ into your browser of choice to preview the website.
+
+### Backend 
+To run Django backend unit tests: 
+
+1.) `cd backend`
+
+2.) `python manage.py test`
+
