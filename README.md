@@ -56,6 +56,29 @@ Paste http://localhost:5173/ into your browser of choice to preview the website.
 
 Paste http://localhost:5173/ into your browser of choice to preview the website.
 
+### 🧩 Test Credentials Format
+
+Usernames and passwords used for testing in this project follow a simple format suitable for local development. Here's what to know:
+
+#### ✅ Username Format
+- Begins with an **uppercase letter** (e.g., `N`)
+- Followed by lowercase letters or numbers (e.g., `ewUser1`)
+- No special characters are required
+- Example: `NewUser1`
+
+#### ✅ Password Format
+- For testing purposes, passwords are **short and simple**
+- They may consist of:
+  - **Lowercase or uppercase letters**
+  - **Optional symbols or numbers**
+
+> ⚠️ **Note:** These formats are intentionally minimal for convenience during testing. For real user accounts, implement strong password rules and validation.
+
+
+
+
+
+
 ### Backend 
 To run Django backend unit tests: 
 
