@@ -44,7 +44,7 @@ On success, it will output something like this:
 
 ![Example output](./blueprint/TestExample.png)
 
-Paste http://localhost:5173/ into your browser of choice to preview the website. 
+Paste the link (in this example http://localhost:5173/) into your browser of choice to preview the website. 
 
 ## Alternative for MacOS/Linux Users [Terminal] 
 ### Install the dependencies: 
@@ -54,35 +54,4 @@ Paste http://localhost:5173/ into your browser of choice to preview the website.
 ### Open the website in your browser: 
 
 
-Paste http://localhost:5173/ into your browser of choice to preview the website.
-
-### 🧩 Test Credentials Format
-
-Usernames and passwords used for testing in this project follow a simple format suitable for local development. Here's what to know:
-
-#### ✅ Username Format
-- Begins with an **uppercase letter** (e.g., `N`)
-- Followed by lowercase letters or numbers (e.g., `ewUser1`)
-- No special characters are required
-- Example: `NewUser1`
-
-#### ✅ Password Format
-- For testing purposes, passwords are **short and simple**
-- They may consist of:
-  - **Lowercase or uppercase letters**
-  - **Optional symbols or numbers**
-
-> ⚠️ **Note:** These formats are intentionally minimal for convenience during testing. For real user accounts, implement strong password rules and validation.
-
-
-
-
-
-
-### Backend 
-To run Django backend unit tests: 
-
-1.) `cd backend`
-
-2.) `python manage.py test`
-
+Paste the link (in this example http://localhost:5173/) into your browser of choice to preview the website.
